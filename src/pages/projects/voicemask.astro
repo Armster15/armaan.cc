@@ -1,0 +1,45 @@
+---
+import Layout from "$/components/Layout.astro";
+import Header from "$/components/Header.astro";
+import Project from "$/components/Project.astro";
+---
+
+<Layout title="Projects">
+  <Header />
+
+  <h1 class="mb-5 text-3xl font-bold">VoiceMask</h1>
+
+  <div class="mb-8 space-y-5 text-lg text-gray-700">
+    <p>
+      VoiceMask was a Discord bot I made back in August 2020. Discord has a feature where you can
+      join a "voice channel," which are mini spaces for voice chat. Although they are quite useful,
+      for those that do not have a mic or feel uncomfortable talking in a voice channel, voice
+      channels quickly become limitations.
+    </p>
+
+    <p>
+      In short, VoiceMask was a text-to-speech bot: users typed what they wanted to say and then the
+      bot would say it out loud in the voice channel.
+    </p>
+
+    <p>At its peak, VoiceMask reached 1,500 Discord servers and served thousands of users.</p>
+
+    <p>Unfortunately I had to take it down as the costs to host it became too high.</p>
+
+    <p>
+      However, despite the fact that I had to take it down, I learned a lot from building it and
+      watching it grow.
+    </p>
+
+    <p>
+      One memory of the bot that I still remember is one person telling me how their community used
+      the bot to hold a local dating session where participants got to know each other by talking
+      through the bot, with the goal being that the participants would get to know each other's
+      personalities and base their decisions on those interactions, rather than on physical traits
+      which may warrant implicit bias. I would have never thought that people could use my simple
+      Discord bot to find love.
+    </p>
+  </div>
+
+  <a href="/projects" class="text-lg text-gray-500 underline">{`<- Projects`}</a>
+</Layout>

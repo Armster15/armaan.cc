@@ -1,0 +1,45 @@
+---
+import Layout from "$/components/Layout.astro";
+import Header from "$/components/Header.astro";
+import Project from "$/components/Project.astro";
+
+import bessyImg from "$/images/projects/bessy.png";
+import doblarImg from "$/images/projects/doblar.svg";
+import voicemaskImg from "$/images/projects/voicemask.png";
+---
+
+<Layout title="Projects">
+  <Header />
+
+  <h1 class="mb-8 text-3xl font-bold">Projects</h1>
+
+  <div class="grid grid-cols-2 gap-8">
+    <Project
+      title="Bessy"
+      description="A better way to use Schoology"
+      imgSrc={bessyImg}
+      imgBgClass="bg-blue-100"
+      href="https://www.bessy.io"
+      tags={["React", "Next.js", "Expo", "Redis"]}
+    />
+
+    <Project
+      title="Doblar"
+      description="An open source fully local image converter that runs in your browser"
+      imgSrc={doblarImg}
+      imgBgClass="bg-green-200/80"
+      href="https://doblar.armaan.cc"
+      tags={["React", "Vite", "ImageMagick"]}
+    />
+
+    <Project
+      title="VoiceMask"
+      description="A Discord bot that allowed you to talk in a voice channel without using your actual voice"
+      imgSrc={voicemaskImg}
+      imgBgClass="bg-gray-400"
+      href="/projects/voicemask"
+      target="_self"
+      tags={["Python", "discord.py", "MongoDB", "AWS"]}
+    />
+  </div>
+</Layout>

@@ -1,0 +1,55 @@
+---
+import { Image, type LocalImageProps } from "astro:assets";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props {
+  title: string;
+  description: string;
+  imgSrc: LocalImageProps["src"];
+  imgBgClass: string;
+  href: string;
+  tags: string[];
+  target?: HTMLAttributes<"a">["target"];
+}
+
+const { title, description, imgSrc, imgBgClass, href, tags, target = "_blank" } = Astro.props;
+
+const TAG_CLASS_MAP = [
+  "bg-gray-100 text-gray-800",
+  "bg-blue-100 text-blue-800",
+  "bg-indigo-100 text-indigo-800",
+  "bg-green-100 text-green-800",
+];
+---
+
+<a
+  href={href}
+  target={target}
+  class="min-h-64 flex h-full flex-col rounded-2xl shadow duration-200 hover:shadow-lg focus:shadow-lg"
+>
+  <div class:list={["flex items-center justify-center rounded-t-2xl py-6", imgBgClass]}>
+    <Image src={imgSrc} alt="" width="256" class="w-20 rounded-2xl shadow" />
+  </div>
+
+  <div class="flex flex-1 flex-col justify-between p-5">
+    <div>
+      <h2 class="mb-3 text-xl font-medium">{title}</h2>
+      <p class="my-2 text-gray-700">{description}</p>
+    </div>
+
+    <div class="my-5 gap-6">
+      {
+        tags.map((tag, index) => (
+          <span
+            class:list={[
+              "mr-2 inline-flex rounded  px-2 py-0.5 text-xs font-medium",
+              TAG_CLASS_MAP[index],
+            ]}
+          >
+            {tag}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</a>

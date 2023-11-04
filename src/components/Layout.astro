@@ -1,0 +1,37 @@
+---
+interface Props {
+  title: string;
+  class?: string;
+}
+
+const { class: className, title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="flex min-h-screen justify-center bg-white p-10">
+    <div
+      class:list={[
+        // basically max-w-2xl except no `max-`
+        "w-[42rem] pb-16",
+        className,
+      ]}
+    >
+      <slot />
+    </div>
+  </body>
+</html>
