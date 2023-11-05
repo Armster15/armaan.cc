@@ -32,8 +32,10 @@ const { Content } = await post.render();
 <Layout title={title}>
   <Header title={title} />
 
+  <p class="-mt-2 mb-6 text-lg text-gray-600">{formatDate(date)}</p>
+
   <div class="prose mb-8 text-lg text-gray-700">
-    <Content />
+    <Content components={{ a: Link }} />
   </div>
 
   <Link href="/blog">{`<- Blog`}</Link>

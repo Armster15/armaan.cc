@@ -12,11 +12,11 @@ const posts = sortPostsByDate(await getCollection("blog"));
 <Layout title="About Me">
   <Header title="Blog" />
 
-  <div class="prose text-lg">
-    <ul>
+  <div class="text-lg">
+    <ul class="pl-0">
       {
         posts.map(({ data: { title, date }, slug }) => (
-          <li>
+          <li class="mb-7">
             <Link class="font-normal" href={`/blog/${slug}`}>
               {title}
             </Link>
