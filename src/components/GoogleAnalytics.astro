@@ -1,0 +1,21 @@
+---
+// Source: https://github.com/Destiner/astro-analytics/blob/main/src/GoogleAnalytics.astro
+
+export interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+
+const gtagUrl = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+---
+
+<script async src={gtagUrl}></script>
+<script define:vars={{ id }}>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", id);
+</script>
