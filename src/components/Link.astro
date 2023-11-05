@@ -5,6 +5,13 @@ interface Props extends HTMLAttributes<"a"> {}
 const { class: className, ...props } = Astro.props;
 ---
 
-<a class:list={["text-lg text-gray-500 underline", className]} {...props}>
+<a
+  class:list={[
+    "text-lg text-gray-600 underline decoration-neutral-400 underline-offset-4",
+    "hover:decoration-neutral-500 focus:decoration-neutral-500",
+    className,
+  ]}
+  {...props}
+>
   <slot />
 </a>
