@@ -3,7 +3,12 @@ import Layout from "$/components/Layout.astro";
 import Header from "$/components/Header.astro";
 ---
 
-<Layout title="About Me">
+<Layout
+  seo={{
+    title: "About Me",
+    description: "All about armaan",
+  }}
+>
   <Header title="About Me" />
 
   <div class="space-y-5 text-lg lowercase text-gray-700">

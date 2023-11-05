@@ -9,7 +9,12 @@ import Link from "$/components/Link.astro";
 const posts = sortPostsByDate(await getCollection("blog"));
 ---
 
-<Layout title="About Me">
+<Layout
+  seo={{
+    title: "Blog",
+    description: "armaan's Blog on the internet",
+  }}
+>
   <Header title="Blog" />
 
   <div class="text-lg">

@@ -4,7 +4,12 @@ import Header from "$/components/Header.astro";
 import Project from "$/components/Project.astro";
 ---
 
-<Layout title="Projects">
+<Layout
+  seo={{
+    title: "VoiceMask",
+    description: "VoiceMask was a Discord bot I made in August 2020 that became quite popular",
+  }}
+>
   <Header title="VoiceMask" />
 
   <div class="mb-8 space-y-5 text-lg text-gray-700">

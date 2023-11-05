@@ -29,7 +29,12 @@ const {
 const { Content } = await post.render();
 ---
 
-<Layout title={title}>
+<Layout
+  seo={{
+    title,
+    description,
+  }}
+>
   <Header title={title} />
 
   <p class="-mt-2 mb-6 text-lg text-gray-600">{formatDate(date)}</p>
