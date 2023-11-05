@@ -23,6 +23,8 @@ const { class: className, seo } = Astro.props;
     <link rel="sitemap" href="/sitemap-index.xml" />
     <SEO {...seo} />
 
+    {import.meta.env.MODE === "production" && <script async data-api="/_hive" src="/bee.js" />}
+
     <!-- Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
