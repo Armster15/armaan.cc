@@ -21,12 +21,20 @@ const { class: className, title } = Astro.props;
     <link rel="sitemap" href="/sitemap-index.xml" />
     <title>{title}</title>
 
+    <!-- Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Prevents code blocks from overflowing -->
+    <style is:global>
+      .expressive-code {
+        max-width: 85vw;
+      }
+    </style>
   </head>
 
   <body class="flex min-h-screen justify-center bg-white p-8 max-sm:pt-6">
