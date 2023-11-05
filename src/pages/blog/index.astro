@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import { formatDate, sortPostsByDate } from "$/lib/date";
+
+import Layout from "$/components/Layout.astro";
+import Header from "$/components/Header.astro";
+import Link from "$/components/Link.astro";
+
+const posts = sortPostsByDate(await getCollection("blog"));
+---
+
+<Layout title="About Me">
+  <Header title="Blog" />
+
+  <div class="prose text-lg">
+    <ul>
+      {
+        posts.map(({ data: { title, date }, slug }) => (
+          <li>
+            <Link class="font-normal" href={`/blog/${slug}`}>
+              {title}
+            </Link>
+
+            <p class="mb-0 mt-1 text-gray-600">{formatDate(date)}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Layout>

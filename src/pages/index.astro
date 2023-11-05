@@ -1,5 +1,6 @@
 ---
 import Layout from "$/components/Layout.astro";
+import Link from "$/components/Link.astro";
 ---
 
 <Layout title="armaan" class="sm:pt-14">
@@ -20,9 +21,9 @@ import Layout from "$/components/Layout.astro";
     </p>
   </div>
 
-  <div class="mt-8 flex gap-5 text-lg lowercase sm:mt-5">
-    <a href="/blog" class="text-gray-500 underline hover:text-blue-600">Blog</a>
-    <a href="/projects" class="text-gray-500 underline hover:text-green-700">Projects</a>
-    <a href="/about" class="text-gray-500 underline hover:text-purple-600">More About Me</a>
+  <div class="mt-8 flex gap-5 lowercase sm:mt-5">
+    <Link href="/blog" class="hover:text-blue-600">Blog</Link>
+    <Link href="/projects" class="hover:text-green-700">Projects</Link>
+    <Link href="/about" class="hover:text-purple-600">More About Me</Link>
   </div>
 </Layout>
