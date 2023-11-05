@@ -1,0 +1,119 @@
+---
+title: "How to quickly add FTP/SFTP support in Linux"
+description: "A simple and straightforward guide to adding FTP/SFTP to your Linux setup"
+date: "June 30, 2020"
+---
+
+Enabling FTP in Linux is actually really simple and not that daunting.
+Here is a quick, simple tutorial on how to enable FTP in Linux!
+
+## Installation
+
+Our first step is to install `vsftpd`. We can do this by running:
+
+```bash
+sudo apt-get upgrade
+sudo apt-get install vsftpd
+```
+
+Now after we install it, we need to start it. To do this, run:
+
+```bash
+sudo systemctl start vsftpd
+sudo systemctl enable vsftpd
+```
+
+And that's the basic setup! You now should have an FTP server up and running!
+
+## Configuration
+
+This part is optional really, since most of the configuration settings that are essential
+are already enabled but it's really important to know about configuring vsftpd.
+
+First, before we configure vsftpd, lets make a backup of the original configuration file:
+
+```bash
+sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.original
+```
+
+And configuring the file is just a matter of opening up the configuration file!
+Remember that the location of the configuration file is at `/etc/vsftpd.conf`
+
+## Basic Setup of the Configuration File
+
+To disable anonymous login and to enable local users login and give them write permissions:
+
+```bash title="/etc/vsftpd.conf"
+# No anonymous login
+anonymous_enable=NO
+
+# Let local users login
+# If you connect from the internet with local users, you should enable TLS/SSL/FTPS
+local_enable=YES
+
+# Write permissions
+write_enable=YES
+```
+
+To deny some users to login, add the following options in the end of the file:
+
+```bash title="/etc/vsftpd.conf"
+userlist_deny=YES
+userlist_file=/etc/vsftpd.denied_users
+```
+
+To allow just some users to login:
+
+```bash title="/etc/vsftpd.conf"
+userlist_deny=NO
+userlist_enable=YES
+userlist_file=/etc/vsftpd.allowed_users
+```
+
+To use vsftpd with encryption (it's safer), change or add the following options
+(some options aren't on the original config file, so add them):
+
+```bash title="/etc/vsftpd.conf"
+ssl_enable=YES
+allow_anon_ssl=NO
+force_local_data_ssl=YES
+force_local_logins_ssl=YES
+ssl_tlsv1=YES
+ssl_sslv2=YES
+ssl_sslv3=YES
+
+# Filezilla uses port 21 if you don't set any port
+# in Servertype "FTPES - FTP over explicit TLS/SSL"
+# Port 990 is the default used for FTPS protocol.
+# Uncomment it if you want/have to use port 990.
+
+# listen_port=990
+```
+
+Here are other additional options that may come handy:
+
+```bash title="/etc/vsftpd.conf"
+# Show hidden files and the "." and ".." folders.
+# Useful to not write over hidden files:
+force_dot_files=YES
+
+# Hide the info about the owner (user and group) of the files.
+hide_ids=YES
+
+# Connection limit for each IP:
+max_per_ip=2
+
+# Maximum number of clients:
+max_clients=20
+```
+
+## Apply Configuration Changes
+
+If you have modified the configuration file, remember that we need to apply them! To do this, run:
+
+```bash
+sudo /etc/init.d/vsftpd restart
+```
+
+And that is pretty much it for this tutorial! You now successfully
+have enabled FTP/SFTP on Linux! I hope this tutorial helped you!

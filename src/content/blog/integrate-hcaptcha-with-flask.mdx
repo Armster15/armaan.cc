@@ -1,0 +1,252 @@
+---
+title: "How to integrate hCaptcha with Flask"
+description: "This post goes over all the steps needed to add hCaptcha to your Flask app, from start to finish!"
+date: "November 12, 2020"
+---
+
+import { Image } from "astro:assets";
+
+import hCaptchaDashboardOverviewImg from "$/images/blog-images/integrate-hcaptcha-with-flask/hcaptcha-dashboard-overview.png";
+import hCaptchaDashboardSitesImg from "$/images/blog-images/integrate-hcaptcha-with-flask/hcaptcha-dashboard-sites.png";
+import hCaptchaDashboardSettingsImg from "$/images/blog-images/integrate-hcaptcha-with-flask/hcaptcha-dashboard-settings.png";
+import hCaptchaInitialDemoImg from "$/images/blog-images/integrate-hcaptcha-with-flask/hcaptcha-initial-demo.png";
+import hCaptchaDarkModeImg from "$/images/blog-images/integrate-hcaptcha-with-flask/hcaptcha-dark-mode.png";
+import hCaptchaCompactImg from "$/images/blog-images/integrate-hcaptcha-with-flask/hcaptcha-compact.png";
+
+If you need a captcha that not only helps prevent bots from spamming your website but also want a
+captcha that respects privacy, hCaptcha is an awesome service. This tutorial will show step by step
+how to integrate hCaptcha into your Flask application.
+
+## Setting up our hCaptcha account
+
+First, we need to setup an hCaptcha account to get our credentials to integrate hCaptcha with our website.
+Head over to https://hcaptcha.com and make an account and go to its dashboard.
+
+Once we make an account, you should be greeted to a dashboard like this
+
+<Image src={hCaptchaDashboardOverviewImg} alt="The home page of the hCaptcha dashboard" />
+
+Click on the "Sites" tab on the top left corner (next to the "Overview" and "Settings" tab). You should see a site.
+
+<Image src={hCaptchaDashboardSitesImg} alt="The Sites page of the hCaptcha dashboard" />
+
+Click on the "Settings" button where your site is. Now this is where your sitekey will be. Store your sitekey
+somewhere now as we are going to need it later.
+
+Now that we have retrieved our sitekey, we need to get our Secret Key. Go to the "Settings" tab.
+
+<Image src={hCaptchaDashboardSettingsImg} alt="The Settings page of the hCaptcha dashboard" />
+
+Your secret key should be in the Settings tab. Store it somewhere, as we are going
+to be needing it.
+
+## Installing `Flask-xCaptcha`
+
+Flask-xCaptcha is a Python library that allows us to seamlessly integrate captchas into our Flask applications.
+
+Its PyPi page is https://pypi.org/project/Flask-xCaptcha/,
+
+Its GitHub at https://github.com/benjilev08/flask-xcaptcha
+
+Installing it is a breeze. In your Terminal, just run
+
+```bash
+pip install Flask-xCaptcha
+```
+
+## Actually coding our Flask app
+
+Lets make a basic Flask app with a simple form:
+
+```py title="app.py"
+from flask import *
+app = Flask(__name__)
+
+@app.route("/", methods=["GET", "POST"])
+def home():
+  if request.method == "GET":
+    return render_template("index.html")
+
+app.run()
+```
+
+<div class="my-8" />
+
+```html title="templates/index.html"
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hCaptcha Demo</title>
+  </head>
+  <body>
+    <form method="POST">
+      <label for="text_input">Name</label>
+      <input type="text" id="text_input" name="text_input" />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
+```
+
+Now that we have a basic app.py and template, lets actually add the hCaptcha integration!
+
+First, lets import the `XCaptcha` class from our package we just installed
+
+```py
+from flask_xcaptcha import XCaptcha
+```
+
+Next, lets set our app config variables to these parameters
+
+```py
+app.config['XCAPTCHA_SITE_KEY'] = "SITE KEY GOES HERE"
+app.config['XCAPTCHA_SECRET_KEY'] = "SECRET KEY GOES HERE"
+app.config['XCAPTCHA_VERIFY_URL'] = "https://hcaptcha.com/siteverify"
+app.config['XCAPTCHA_API_URL'] = "https://hcaptcha.com/1/api.js"
+app.config['XCAPTCHA_DIV_CLASS'] = "h-captcha"
+```
+
+And finally, create an object from our XCaptcha class:
+
+```py
+xcaptcha = XCaptcha(app=app)
+```
+
+Your app.py file should now look something like this
+
+```diff lang="py" title="app.py"
+from flask import *
++from flask_xcaptcha import XCaptcha
+
+app = Flask(**name**)
+
++app.config['XCAPTCHA_SITE_KEY'] = "SITE KEY GOES HERE"
++app.config['XCAPTCHA_SECRET_KEY'] = "SECRET KEY GOES HERE"
++app.config['XCAPTCHA_VERIFY_URL'] = "https://hcaptcha.com/siteverify"
++app.config['XCAPTCHA_API_URL'] = "https://hcaptcha.com/1/api.js"
++app.config['XCAPTCHA_DIV_CLASS'] = "h-captcha"
+
++xcaptcha = XCaptcha(app=app)
+
+@app.route("/", methods=["GET", "POST"])
+def home():
+  if request.method == "GET":
+    return render_template("index.html")
+
+app.run()
+```
+
+Now that we have configured our back-end, lets add hCaptcha to our front-end.
+This is just a matter of adding one extra line.
+
+```diff lang="html" title="templates/index.html"
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hCaptcha Demo</title>
+  </head>
+  <body>
+    <form method="POST">
+      <label for="text_input">Name</label>
+      <input type="text" id="text_input" name="text_input" />
+      <input type="submit" value="Submit" />
+
++      {{ xcaptcha }}
+    </form>
+  </body>
+</html>
+```
+
+The `{{ xcaptcha }}` line will automatically be converted into an hCaptcha
+
+And that is it! Run your app.py file and see for yourself the rendered hCaptcha!
+
+<Image
+  src={hCaptchaInitialDemoImg}
+  alt="A screenshot of the rendered HTML which includes our newly created hCaptcha"
+/>
+
+## Validating if the user has completed the captcha
+
+This is really easy to do, and it involves just a few extra lines.
+
+```py
+xcaptcha.verify()
+```
+
+The verify method returns a boolean (True/False) on whether the user
+has completed the captcha or not. Implementation is as easy as the following:
+
+```py
+if xcaptcha.verify():
+  return "You have completed the captcha!"
+else:
+  return "Please complete the captcha"
+```
+
+The complete app.py code:
+
+```diff lang="py" title="app.py"
+from flask import *
+from flask_xcaptcha import XCaptcha
+
+app = Flask(**name**)
+
+app.config['XCAPTCHA_SITE_KEY'] = "SITE KEY GOES HERE"
+app.config['XCAPTCHA_SECRET_KEY'] = "SECRET KEY GOES HERE"
+app.config['XCAPTCHA_VERIFY_URL'] = "https://hcaptcha.com/siteverify"
+app.config['XCAPTCHA_API_URL'] = "https://hcaptcha.com/1/api.js"
+app.config['XCAPTCHA_DIV_CLASS'] = "h-captcha"
+
+xcaptcha = XCaptcha(app=app)
+
+@app.route("/", methods=["GET", "POST"])
+def home():
+  if request.method == "GET":
+    return render_template("index.html")
+
++  elif request.method == "POST":
++    if xcaptcha.verify():
++      return "You have completed the captcha!"
++    else:
++      return "Please complete the captcha"
+
+app.run()
+```
+
+## Customizing the hCaptcha
+
+Now there are a few ways you can customize the hCaptcha.
+
+If we want to make our captcha dark mode:
+
+```py
+app.config['XCAPTCHA_THEME'] = 'dark'
+```
+
+This is how a dark mode captcha would look like:
+
+<Image src={hCaptchaDarkModeImg} alt="A screenshot of the hCaptcha in dark mode" />
+
+If we want a compact captcha:
+
+```py
+app.config['XCAPTCHA_SIZE'] = 'compact'
+```
+
+And this is how a compact captcha looks like:
+
+<Image src={hCaptchaCompactImg} alt="A screenshot of the hCaptcha in compact mode" />
+
+Compact captchas are great if you want the captcha to be suitable for smaller screens.
+
+## Conclusion
+
+And that is how to implement hCaptchas into your Flask application! As we see, the code is
+super simple and short and implementing them is a breeze. Not only are you doing yourself
+a favor, you are also doing people who visit your website a favor, by using a service that
+respects user privacy, so you and your users can feel safe when browsing your website.
