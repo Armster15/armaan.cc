@@ -2,6 +2,7 @@
 import { ViewTransitions } from "astro:transitions";
 import GoogleAnalytics from "$/components/GoogleAnalytics.astro";
 import faviconImg from "$/icons/icon.svg";
+import "@fontsource-variable/inter";
 
 interface Props {
   class?: string;
@@ -95,14 +96,6 @@ const canonicalURL = new URL(Astro.url).href;
         </>
       )
     }
-
-    <!-- Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
 
     <!-- Prevents code blocks from overflowing -->
     <style is:global>
