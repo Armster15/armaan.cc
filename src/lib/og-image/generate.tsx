@@ -1,11 +1,11 @@
 import React from "react";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
+import * as emojis from "./emoji";
 import InterRegular from "@fontsource/inter/files/inter-latin-400-normal.woff";
 import InterMedium from "@fontsource/inter/files/inter-latin-500-normal.woff";
 import InterSemibold from "@fontsource/inter/files/inter-latin-600-normal.woff";
 import InterBold from "@fontsource/inter/files/inter-latin-700-normal.woff";
-import { formatDate } from "./date";
 
 const dimensions = {
   width: 1200,
@@ -14,10 +14,10 @@ const dimensions = {
 
 interface GenerateOgImage {
   title: string;
-  date: Date;
+  subtitle: string;
 }
 
-export async function generateOgImage({ title, date }: GenerateOgImage) {
+export async function generateOgImage({ title, subtitle }: GenerateOgImage) {
   const markup = (
     <div tw="flex p-10 h-full w-full bg-white flex-col">
       <header tw="flex items-center text-[36px] w-full">
@@ -33,10 +33,18 @@ export async function generateOgImage({ title, date }: GenerateOgImage) {
 
       <main tw="flex grow pb-3 flex-col justify-center">
         <div tw="flex">
-          <div tw="text-7xl pb-5 font-medium rounded-md leading-1.25">{title}</div>
+          <div
+            tw="text-7xl pb-5 pr-5 font-bold rounded-md leading-1.25 text-transparent"
+            style={{
+              backgroundImage: "linear-gradient(319deg, #663dff 0%, #aa00ff 37%, #cc4499 100%)",
+              backgroundClip: "text",
+            }}
+          >
+            {title}
+          </div>
         </div>
 
-        <div tw="mt-5 flex text-3xl text-gray-500">{formatDate(date)}</div>
+        <div tw="mt-5 flex text-3xl text-gray-500">{subtitle}</div>
       </main>
     </div>
   );
@@ -66,6 +74,18 @@ export async function generateOgImage({ title, date }: GenerateOgImage) {
     ],
     height: dimensions.height,
     width: dimensions.width,
+    // @ts-expect-error - You can return promises with this but the TS type thinks you can't
+    loadAdditionalAsset: async (code, text) => {
+      if (code === "emoji") {
+        // It's an emoji, load the image.
+        return (
+          `data:image/svg+xml;base64,` +
+          Buffer.from(await emojis.loadEmoji("twemoji", emojis.getIconCode(text))).toString(
+            "base64",
+          )
+        );
+      }
+    },
   });
 
   const image = new Resvg(svg, {

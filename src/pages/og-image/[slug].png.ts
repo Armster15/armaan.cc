@@ -1,17 +1,49 @@
 import { getCollection } from "astro:content";
 import type { APIContext } from "astro";
-import { generateOgImage } from "$/lib/generate-og-image";
+import { generateOgImage } from "$/lib/og-image/generate";
+import { formatDate } from "$/lib/date";
 
 interface Props {
   title: string;
-  pubDate: Date;
+  subtitle: string;
+}
+
+export async function getStaticPaths() {
+  const regularPaths = [
+    {
+      slug: "home",
+      title: "👋 hey, i'm armaan!",
+      subtitle: "i'm a student who likes to build stuff with code",
+    },
+    { slug: "projects", title: "Projects", subtitle: "Check out what I've built" },
+  ].map(({ slug, title, subtitle }) => {
+    return {
+      params: { slug },
+      props: { title, subtitle } satisfies Props,
+    };
+  });
+
+  const posts = await getCollection("blog");
+  const postsPaths = posts.map((post) => {
+    return {
+      params: {
+        slug: post.slug,
+      },
+      props: {
+        title: post.data.title,
+        subtitle: formatDate(post.data.date),
+      } satisfies Props,
+    };
+  });
+
+  return [...postsPaths, ...regularPaths];
 }
 
 export async function GET(context: APIContext) {
-  const { title, pubDate } = context.props as Props;
+  const { title, subtitle } = context.props as Props;
 
   try {
-    const image = await generateOgImage({ title, date: pubDate });
+    const image = await generateOgImage({ title, subtitle });
 
     return new Response(image, {
       headers: {
@@ -25,20 +57,4 @@ export async function GET(context: APIContext) {
       status: 500,
     });
   }
-}
-
-export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  const paths = posts.map((post) => {
-    return {
-      params: {
-        slug: post.slug,
-      },
-      props: {
-        title: post.data.title,
-        pubDate: post.data.date,
-      },
-    };
-  });
-  return paths;
 }
