@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from "astro:transitions";
 import GoogleAnalytics from "$/components/GoogleAnalytics.astro";
 import faviconImg from "$/icons/icon.svg";
 import "@fontsource-variable/inter";
@@ -39,10 +38,8 @@ const imageURL = seo.image?.src ? new URL(seo.image?.src, Astro.site).href : und
 const canonicalURL = new URL(Astro.url).href;
 ---
 
-<html lang="en" transition:animate="none">
+<html lang="en">
   <head>
-    <ViewTransitions />
-
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href={faviconImg.src} />
     <meta name="viewport" content="width=device-width" />
