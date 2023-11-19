@@ -74,8 +74,8 @@ const canonicalURL = new URL(Astro.url).href;
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={seo.title} />
     <meta property="twitter:description" content={seo.description} />
+    <meta property="twitter:card" content={seo.twitter?.card_type ?? "summary_large_image"} />
     {imageURL && <meta property="twitter:image" content={imageURL} />}
-    {seo.twitter?.card_type && <meta property="twitter:card" content={seo.twitter.card_type} />}
     {
       seo.twitter?.creator && (
         <>
