@@ -33,7 +33,10 @@ const { Content } = await post.render();
   seo={{
     title,
     description,
-    image_url: `/og-image/${post.slug}.png`,
+    image: {
+      src: `/og-image/${post.slug}.png`,
+      isLargeImage: true,
+    },
   }}
 >
   <Header title={title} />

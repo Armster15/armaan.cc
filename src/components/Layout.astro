@@ -9,7 +9,12 @@ interface Props {
   seo: {
     title: string;
     description: string;
-    image_url?: string;
+    image?: {
+      src: string;
+      alt?: string;
+      /** Whether to make the image large in embeds. Defaults to false. */
+      isLargeImage?: boolean;
+    };
 
     /** https://ogp.me/ */
     og?: {
@@ -28,7 +33,7 @@ interface Props {
 
 const { class: className, seo } = Astro.props;
 
-const imageURL = seo.image_url ? new URL(seo.image_url, Astro.site).href : undefined;
+const imageURL = seo.image?.src ? new URL(seo.image?.src, Astro.site).href : undefined;
 const canonicalURL = new URL(Astro.url).href;
 ---
 
@@ -74,7 +79,13 @@ const canonicalURL = new URL(Astro.url).href;
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={seo.title} />
     <meta property="twitter:description" content={seo.description} />
-    <meta property="twitter:card" content={seo.twitter?.card_type ?? "summary_large_image"} />
+    {
+      seo.twitter?.card_type ? (
+        <meta property="twitter:card" content={seo.twitter?.card_type} />
+      ) : seo.image?.isLargeImage ? (
+        <meta property="twitter:card" content="summary_large_image" />
+      ) : null
+    }
     {imageURL && <meta property="twitter:image" content={imageURL} />}
     {
       seo.twitter?.creator && (
