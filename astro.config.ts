@@ -21,9 +21,6 @@ export default defineConfig({
   ],
   vite: {
     plugins: [rawFonts([".ttf", ".woff"])],
-    optimizeDeps: {
-      exclude: ["@resvg/resvg-js"],
-    },
   },
 });
 

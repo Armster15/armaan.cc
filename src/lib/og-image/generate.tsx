@@ -1,11 +1,16 @@
 import React from "react";
 import satori from "satori";
-import { Resvg } from "@resvg/resvg-js";
+import { Resvg, initWasm } from "@resvg/resvg-wasm";
+import fs from "node:fs/promises";
+import path from "node:path";
 import * as emojis from "./emoji";
+
 import InterRegular from "@fontsource/inter/files/inter-latin-400-normal.woff";
 import InterMedium from "@fontsource/inter/files/inter-latin-500-normal.woff";
 import InterSemibold from "@fontsource/inter/files/inter-latin-600-normal.woff";
 import InterBold from "@fontsource/inter/files/inter-latin-700-normal.woff";
+
+let isWasmInit = false;
 
 const dimensions = {
   width: 1200,
@@ -18,6 +23,13 @@ interface GenerateOgImage {
 }
 
 export async function generateOgImage({ title, subtitle }: GenerateOgImage) {
+  if (!isWasmInit) {
+    await initWasm(
+      fs.readFile(path.join(process.cwd(), "./node_modules/@resvg/resvg-wasm/index_bg.wasm")),
+    );
+    isWasmInit = true;
+  }
+
   const markup = (
     <div tw="flex p-10 h-full w-full bg-white flex-col">
       <header tw="flex items-center w-full">
