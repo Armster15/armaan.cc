@@ -19,6 +19,7 @@ interface Props {
     /** https://ogp.me/ */
     og?: {
       site_name?: string;
+      locale?: string;
     };
 
     /** https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup */
@@ -70,9 +71,9 @@ const canonicalURL = new URL(Astro.url).href;
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={seo.title} />
     <meta property="og:description" content={seo.description} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={seo.og?.locale ?? "en_US"} />
+    <meta property="og:site_name" content={seo.og?.site_name ?? "armaan"} />
     {imageURL && <meta property="og:image" content={imageURL} />}
-    {seo.og?.site_name && <meta property="og:site_name" content={seo.og.site_name} />}
 
     <!-- Twitter -->
     <meta property="twitter:url" content={canonicalURL} />
