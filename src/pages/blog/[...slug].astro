@@ -27,12 +27,24 @@ const {
   },
 } = Astro.props;
 const { Content } = await post.render();
+
+const ogImageUrl = new URL(`/og-image/${post.slug}.png`, Astro.site).href;
 ---
 
 <Layout
   seo={{
     title,
     description,
+    openGraph: {
+      basic: {
+        title,
+        type: "website",
+        image: ogImageUrl,
+      },
+    },
+    twitter: {
+      image: ogImageUrl,
+    },
   }}
 >
   <Header title={title} />
