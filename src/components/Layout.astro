@@ -1,16 +1,35 @@
 ---
 import { ViewTransitions } from "astro:transitions";
-import { SEO, type Props as SEOProps } from "astro-seo";
 import GoogleAnalytics from "$/components/GoogleAnalytics.astro";
 import faviconImg from "$/icons/icon.svg";
-import type { SetRequired } from "type-fest";
 
 interface Props {
-  seo: SetRequired<SEOProps, "title" | "description">;
   class?: string;
+
+  seo: {
+    title: string;
+    description: string;
+    image_url?: string;
+
+    /** https://ogp.me/ */
+    og?: {
+      site_name?: string;
+    };
+
+    /** https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup */
+    twitter?: {
+      /** @username of content creator */
+      creator?: string;
+      /** Corresponds to twitter:card */
+      card_type?: string;
+    };
+  };
 }
 
 const { class: className, seo } = Astro.props;
+
+const imageURL = seo.image_url ? new URL(seo.image_url, Astro.site).href : undefined;
+const canonicalURL = new URL(Astro.url).href;
 ---
 
 <html lang="en" transition:animate="none">
@@ -22,7 +41,6 @@ const { class: className, seo } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <SEO {...seo} />
 
     {
       import.meta.env.MODE === "production" && (
@@ -32,6 +50,37 @@ const { class: className, seo } = Astro.props;
           {import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID && (
             <GoogleAnalytics id={import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID} />
           )}
+        </>
+      )
+    }
+
+    <!-- Basic SEO -->
+    <title>{seo.title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="title" content={seo.title} />
+    <meta name="description" content={seo.description} />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:locale" content="en_US" />
+    {imageURL && <meta property="og:image" content={imageURL} />}
+    {seo.og?.site_name && <meta property="og:site_name" content={seo.og.site_name} />}
+
+    <!-- Twitter -->
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={seo.title} />
+    <meta property="twitter:description" content={seo.description} />
+    <meta property="twitter:image" content={imageURL} />
+    {seo.twitter?.card_type && <meta property="twitter:card" content={seo.twitter.card_type} />}
+    {
+      seo.twitter?.creator && (
+        <>
+          <meta name="twitter:creator" content={seo.twitter.creator} />
+          <meta name="twitter:site" content={seo.twitter.creator} />
         </>
       )
     }
