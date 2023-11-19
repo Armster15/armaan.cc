@@ -61,7 +61,6 @@ const canonicalURL = new URL(Astro.url).href;
 
     <!-- Basic SEO -->
     <title>{seo.title}</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="title" content={seo.title} />
     <meta name="description" content={seo.description} />
