@@ -34,7 +34,7 @@ interface Props {
 
 const { class: className, seo } = Astro.props;
 
-const imageURL = seo.image?.src ? new URL(seo.image?.src, Astro.site).href : undefined;
+const imageURL = seo.image?.src ? new URL(seo.image?.src, Astro.url).href : undefined;
 const canonicalURL = new URL(Astro.url).href;
 ---
 
