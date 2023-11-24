@@ -9,6 +9,11 @@ interface Props {
   seo: {
     title: string;
     description: string;
+    /**
+     * Should be a valid HTML color
+     * Corresponds to <meta property="theme-color" content="" />
+     */
+    themeColor?: string;
     image?: {
       src: string;
       alt?: string;
@@ -63,6 +68,7 @@ const canonicalURL = new URL(Astro.url).href;
     <link rel="canonical" href={canonicalURL} />
     <meta name="title" content={seo.title} />
     <meta name="description" content={seo.description} />
+    {seo.themeColor && <meta property="theme-color" content={seo.themeColor} />}
 
     <!-- OpenGraph -->
     <meta property="og:type" content="website" />
