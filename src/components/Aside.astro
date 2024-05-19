@@ -1,0 +1,54 @@
+---
+import { Icon } from "astro-icon";
+import { match } from "ts-pattern";
+
+export interface Props {
+  type?: "note" | "warning" | "danger" | "tip";
+}
+
+const type = Astro.props.type ?? "note";
+---
+
+<aside
+  class:list={[
+    "not-prose border-l-4 p-4",
+    { "border-blue-400 bg-blue-200": type === "note" },
+    { "border-yellow-400 bg-yellow-200": type === "warning" },
+    { "border-red-400 bg-red-200": type === "danger" },
+    { "border-purple-400 bg-purple-200": type === "tip" },
+  ]}
+>
+  <div
+    class:list={[
+      "mb-2 mt-0 flex gap-1 font-semibold",
+      { "text-blue-900": type === "note" },
+      { "text-yellow-900": type === "warning" },
+      { "text-red-900": type === "danger" },
+      { "text-purple-900": type === "tip" },
+    ]}
+  >
+    <Icon
+      width={24}
+      name={match(type)
+        .with("note", () => "ion:information-circle-outline")
+        .with("warning", () => "ion:warning-outline")
+        .with("danger", () => "ic:outline-dangerous")
+        .with("tip", () => "ion:ios-lightbulb-outline")
+        .exhaustive()}
+      aria-hidden
+    />
+    <p>
+      {
+        match(type)
+          .with("note", () => "Note")
+          .with("warning", () => "Warning")
+          .with("danger", () => "Danger")
+          .with("tip", () => "Tip")
+          .exhaustive()
+      }
+    </p>
+  </div>
+  <section>
+    <slot />
+  </section>
+</aside>
