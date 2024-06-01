@@ -22,6 +22,8 @@ export default defineConfig({
           frameBoxShadowCssValue: "",
         },
       },
+      themes: ["github-light"],
+      useDarkModeMediaQuery: false,
     }),
     mdx(),
     sitemap({
