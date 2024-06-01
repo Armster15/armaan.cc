@@ -115,13 +115,7 @@ const canonicalURL = new URL(Astro.url).href;
   </head>
 
   <body class="flex min-h-screen justify-center bg-white p-8 max-sm:pt-6">
-    <div
-      class:list={[
-        // basically max-w-2xl except no `max-`
-        "w-[42rem] pb-14",
-        className,
-      ]}
-    >
+    <div class:list={["w-full max-w-2xl pb-14", className]}>
       <slot />
     </div>
   </body>
