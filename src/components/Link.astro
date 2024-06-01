@@ -11,7 +11,10 @@ const { class: className, ...props } = Astro.props;
     "hover:decoration-gray-500 focus:decoration-gray-500",
     className,
   ]}
-  {...props}
+  {...props}><slot /></a
 >
-  <slot />
-</a>
+
+<!-- 
+  As hideous as this formatting looks, this is required in order to prevent a space after the link content.
+  See https://github.com/withastro/astro/issues/5737
+-->
