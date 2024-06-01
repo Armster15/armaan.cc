@@ -17,19 +17,17 @@ const posts = sortPostsByDate(await getCollection("blog"));
 >
   <Header title="Blog" />
 
-  <div class="text-lg">
-    <ul class="pl-0">
-      {
-        posts.map(({ data: { title, date }, slug }) => (
-          <li class="mb-7">
-            <Link class="font-normal" href={`/blog/${slug}`}>
-              {title}
-            </Link>
+  <ul class="space-y-6">
+    {
+      posts.map(({ data: { title, date }, slug }) => (
+        <li class="space-y-1">
+          <Link class="font-normal" href={`/blog/${slug}`}>
+            {title}
+          </Link>
 
-            <p class="mb-0 mt-1 text-gray-600">{formatDate(date)}</p>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+          <p class="text-gray-600">{formatDate(date)}</p>
+        </li>
+      ))
+    }
+  </ul>
 </Layout>

@@ -41,9 +41,9 @@ const { Content } = await post.render();
 >
   <Header title={title} />
 
-  <p class="-mt-2 mb-6 text-lg text-gray-600">{formatDate(date)}</p>
+  <p class="-mt-2 mb-6 text-base text-gray-600">{formatDate(date)}</p>
 
-  <div class="prose mb-8 text-lg text-gray-700">
+  <div class="prose mb-8 text-gray-700">
     <Content components={{ a: Link }} />
   </div>
 

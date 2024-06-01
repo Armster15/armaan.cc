@@ -15,38 +15,42 @@ import Link from "$/components/Link.astro";
   }}
   class="pt-2 sm:pt-8 2xl:pt-14"
 >
-  <Icon name="icon" width="108" class="rounded-full" aria-hidden />
-  <h1 class="my-5 text-3xl font-bold">armaan</h1>
+  <div class="space-y-6">
+    <div class="space-y-2 text-3xl">
+      <Icon name="icon" class="w-[6ch] rounded-full" aria-hidden />
+      <h1 class="font-semibold">armaan</h1>
+    </div>
 
-  <div class="space-y-5 text-lg lowercase text-gray-700">
-    <p>I'm a student who likes to build stuff with computers.</p>
-    <p>I want to build stuff that solve real problems for real people.</p>
-  </div>
+    <div class="space-y-2 text-lg lowercase text-gray-700">
+      <p>I'm a student who likes to build stuff with computers.</p>
+      <p>I want to build stuff that solve real problems for real people.</p>
+    </div>
 
-  <div class="mt-8 flex gap-5 lowercase sm:mt-5">
-    <Link href="/blog" class="hover:text-blue-600 focus:text-blue-600">Blog</Link>
-    <Link href="/projects" class="hover:text-green-700 focus:text-green-700">Projects</Link>
-    <Link href="/about" class="hover:text-purple-600 focus:text-purple-600">More About Me</Link>
-  </div>
+    <div class="flex gap-5 lowercase">
+      <Link href="/blog" class="hover:text-blue-600 focus:text-blue-600">Blog</Link>
+      <Link href="/projects" class="hover:text-green-700 focus:text-green-700">Projects</Link>
+      <Link href="/about" class="hover:text-purple-600 focus:text-purple-600">More About Me</Link>
+    </div>
 
-  <div class="mt-8 flex gap-5">
-    <a href="https://github.com/Armster15" target="_blank" aria-label="GitHub" title="GitHub">
-      <Icon
-        class="h-6 w-6 text-gray-400 duration-100 hover:text-gray-600 focus:text-gray-600"
-        name="simple-icons:github"
-      />
-    </a>
+    <div class="flex gap-5">
+      <a href="https://github.com/Armster15" target="_blank" aria-label="GitHub" title="GitHub">
+        <Icon
+          class="h-6 w-6 text-gray-400 duration-100 hover:text-gray-600 focus:text-gray-600"
+          name="simple-icons:github"
+        />
+      </a>
 
-    <a
-      href="https://twitter.com/ArmsterDev"
-      target="_blank"
-      aria-label="X (formerly known as Twitter)"
-      title="X (formerly known as Twitter)"
-    >
-      <Icon
-        class="h-6 w-6 text-gray-400 duration-100 hover:text-gray-600 focus:text-gray-600"
-        name="twitter-as-x"
-      />
-    </a>
+      <a
+        href="https://twitter.com/ArmsterDev"
+        target="_blank"
+        aria-label="X (formerly known as Twitter)"
+        title="X (formerly known as Twitter)"
+      >
+        <Icon
+          class="h-6 w-6 text-gray-400 duration-100 hover:text-gray-600 focus:text-gray-600"
+          name="twitter-as-x"
+        />
+      </a>
+    </div>
   </div>
 </Layout>

@@ -39,7 +39,7 @@ interface Props {
 
 const { class: className, seo } = Astro.props;
 
-const imageURL = seo.image?.src ? new URL(seo.image?.src, Astro.url).href : undefined;
+const imageURL = seo.image?.src ? new URL(seo.image.src, Astro.url).href : undefined;
 const canonicalURL = new URL(Astro.url).href;
 ---
 
@@ -114,7 +114,7 @@ const canonicalURL = new URL(Astro.url).href;
     }
   </head>
 
-  <body class="flex min-h-screen justify-center bg-white pb-14 pt-6 sm:pt-8">
+  <body class="flex min-h-screen justify-center bg-white pb-14 pt-6 text-lg sm:pt-8">
     <div class:list={["w-full max-w-2xl", className]}>
       <slot />
     </div>
