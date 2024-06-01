@@ -120,7 +120,7 @@ Your app.py file should now look something like this
 from flask import *
 +from flask_xcaptcha import XCaptcha
 
-app = Flask(**name**)
+app = Flask(__name__)
 
 +app.config['XCAPTCHA_SITE_KEY'] = "SITE KEY GOES HERE"
 +app.config['XCAPTCHA_SECRET_KEY'] = "SECRET KEY GOES HERE"
@@ -194,7 +194,7 @@ The complete app.py code:
 from flask import *
 from flask_xcaptcha import XCaptcha
 
-app = Flask(**name**)
+app = Flask(__name__)
 
 app.config['XCAPTCHA_SITE_KEY'] = "SITE KEY GOES HERE"
 app.config['XCAPTCHA_SECRET_KEY'] = "SECRET KEY GOES HERE"
