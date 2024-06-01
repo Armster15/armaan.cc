@@ -15,7 +15,14 @@ export default defineConfig({
   },
   integrations: [
     tailwind(),
-    expressiveCode(),
+    expressiveCode({
+      // remove box shadow from code snippets
+      styleOverrides: {
+        frames: {
+          frameBoxShadowCssValue: "",
+        },
+      },
+    }),
     mdx(),
     sitemap({
       changefreq: "weekly",
