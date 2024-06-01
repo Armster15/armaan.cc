@@ -48,4 +48,16 @@ const { Content } = await post.render();
   </div>
 
   <Link href="/blog">{`<- Blog`}</Link>
+
+  <style>
+    .prose :global(.expressive-code) {
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+
+    .prose :global(aside) {
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+  </style>
 </Layout>
