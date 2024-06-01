@@ -2,19 +2,24 @@
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"a"> {}
-const { class: className, ...props } = Astro.props;
+const { class: className, href, target: _target, ...props } = Astro.props;
+
+// If target is not provided, set it to _blank if link is external, else let it be its default
+const target = _target ?? !href?.toString().startsWith("/") ? "_blank" : undefined;
 ---
 
+<!-- 
+  As hideous as this formatting looks, this is required in order to prevent a space after the link content.
+  Astro seems to be very sensitive to whitespace.
+  See https://github.com/withastro/astro/issues/5737
+-->
 <a
   class:list={[
     "not-prose text-lg text-gray-600 underline decoration-gray-400/70 underline-offset-4",
     "hover:decoration-gray-500 focus:decoration-gray-500",
     className,
   ]}
+  href={href}
+  target={target}
   {...props}><slot /></a
 >
-
-<!-- 
-  As hideous as this formatting looks, this is required in order to prevent a space after the link content.
-  See https://github.com/withastro/astro/issues/5737
--->
