@@ -1,0 +1,518 @@
+---
+title: "Liked Songs Shenanigans"
+date: "June 1, 2024"
+description: "<ADD HERE>"
+---
+
+import Aside from "$/components/Aside.astro";
+
+I have a friend who has built up an amazing collection of songs on Spotify. They did this by over the years simply using the “Like” feature when they like a song. As a result, they have a collection of over a thousand songs representing their diverse music taste.
+
+When I learned about this, I became jealous. I too wanted such a collection, but I didn’t want to wait years for it to build up into something formidable.
+
+For a couple of years now I’ve been using [Last.fm](https://last.fm). It’s overall pretty nice: it tracks everything you listen to automatically, meaning you can set it up once and never touch it again and it’ll still continue collecting the data for you.
+
+Since I was already using Last.fm, I thought why not I get my data from the site and put all the songs I’ve determined to “like” into my Liked Songs?
+
+## Part 1: Getting My Data
+
+First I needed to get my data from Last.fm. I [stumbled upon](https://www.reddit.com/r/lastfm/comments/mfz407/i_created_a_lastfm_statistics_website/) a project called [lastfmstats.com](http://lastfmstats.com). It’s a really cool website: I highly recommend checking it out for its own merits as the graphs and the analyses it provides are quite fascinating. For the sake of this post, however, we will be using it simply to get our data in a machine-readable format.
+
+Simply type your Last.fm username and let it do its thing. Depending on how many scrobbles you have it may take a while for it to collect your data but after it finishes you have the option to download your scrobbles as a JSON file.
+
+Now that we have our data, let’s get to processing it!
+
+## Part 2: Processing My Scrobbles
+
+I used Python for my scripting, so I will use Python in this post as well, but really you can use anything.
+
+To note ahead of time, “dicts” in Python are simply key-value stores. Since the scripts are written in Python, I will be using the word “dict” throughout the post, but just know it can be any key-value store in your respective language.
+
+First, let’s load our JSON file into a variable called `contents`:
+
+```python
+with open("./lastfmstats.json", "r") as f:
+	# Rough schema of the `contents` dict
+	# {
+	# 	username: string;
+	# 	scrobbles: {
+	# 		track: string;
+	# 		artist: string;
+	# 		album: string;
+	# 		date: number; // Unix epoch
+	# 	}[]
+	# }
+	contents = json.load(f)
+```
+
+Now let’s get how many times a track has been scrobbled:
+
+```python
+times_track_scrobbled = {} # { [serialized_track: string]: number }
+
+for scrobble in contents["scrobbles"]:
+	key = serialize_track(scrobble["track"], scrobble["artist"])
+
+	if key in times_track_scrobbled:
+		times_track_scrobbled[key] = times_track_scrobbled[key] + 1
+	else:
+		times_track_scrobbled[key] = 1
+```
+
+<Aside icon={{text: "❓"}}>
+**“What’s up with the `serialize_track` stuff?”**
+
+To differentiate tracks we need to consider both the track’s name and the artist. There are a million songs out there named “Die for You” for example. However, we can’t use dicts as keys of dicts. We could make the key something like `track_name + " - " + artist_name` but I needed to be able to retrieve the artist name and title and wasn’t comfortable with this simple concatenation since I was dealing with unknown data (what if the track or artist had a dash in their names?). Therefore, I created the following two methods:
+
+```python
+import json
+
+# This serializing/deserializing logic is required because we can't use dicts as keys for dicts
+
+def serialize_track(title: str, artist: str):
+	# `ensure_ascii` flag required to __not__ turn something like "夜" to "\u591c"
+	return json.dumps({ "title": title, "artist": artist }, ensure_ascii=False)
+
+def deserialize_track(serialized_str: str):
+	return json.loads(serialized_str)
+```
+
+As you can see, it’s nothing crazy complicated: just two methods that turn JSON into a string and vice versa. Slight over-engineering but it does the job 🤷
+
+</Aside>
+
+Now we have a dict that maps each song we have ever listened to to how many times in total we’ve listened to it.
+
+## Part 3: Filtering Tracks
+
+We don’t like every song we’ve ever scrobbled. Therefore, we need to narrow down our list to the tracks we actually like. We could manually review every song, but I decided to try to automate as much of this as possible.
+
+My methodology was as follows:
+
+- Songs that had 35 or more scrobbles were “for sure” likes. These were automatic adds.
+- Songs that had 10 or more scrobbles but less than 35 were “questionable” likes. These I would manually review to see whether I actually liked them or not.
+- Songs below 10 scrobbles would not be included whatsoever.
+
+Of course, everyone is different, so pick different numbers. I settled on these numbers by going through my Last.fm library and generalizing around what scrobble count I was confident in a song and what scrobble count it seemed more fuzzy.
+
+There is one major flaw with this: just because you don’t listen to a song 10 or more times doesn’t necessarily mean you don’t like it. However, personally I was fine with this compromise; after all it would be unrealistic to expect a perfect collection from automation.
+
+Here is an implementation of the filtering:
+
+```python
+# Edit as you please
+THRESHOLD_FOR_SURE = 35
+THRESHOLD_FOR_QUESTIONABLE = 10
+
+# { title: string; artist: string; times_scrobbled: number; threshold: "questionable" | "for_sure" }
+filtered_tracks = []
+
+# Iterate through the dict, where first param is the key while the second is the value
+for serialized_track, times_scrobbled in times_track_scrobbled.items():
+	track = deserialize_track(serialized_track)
+
+	if times_scrobbled >= THRESHOLD_FOR_SURE:
+		filtered_tracks.append({
+			"title": track["title"],
+			"artist": track["artist"],
+			"times_scrobbled": times_scrobbled,
+			"threshold": "for_sure",
+		})
+
+	elif times_scrobbled >= THRESHOLD_FOR_QUESTIONABLE:
+		filtered_tracks.append({
+			"title": track["title"],
+			"artist": track["artist"],
+			"times_scrobbled": times_scrobbled,
+			"threshold": "questionable",
+		})
+
+```
+
+I then sorted `filtered_tracks` by the total number of times I listened to a song purely for organization purposes, split the `filtered_tracks` list into two lists: `questionable_tracks` and `for_sure_tracks`, and then dumped the contents of these two lists into two JSON files:
+
+```python
+# Sort `filtered_tracks` by number of times a song has been listened to
+filtered_tracks.sort(key=lambda x: x["times_scrobbled"], reverse=False)
+
+# Split `filtered_tracks` into two lists: `questionable_tracks` and `for_sure_tracks`
+questionable_tracks = list(filter(lambda x: x["threshold"] == "questionable", filtered_tracks))
+for_sure_tracks = list(filter(lambda x: x["threshold"] == "for_sure", filtered_tracks))
+
+# Dump the contents of the two lists into JSON files
+with open("./for_sure_tracks.json", "w") as f:
+	json.dump(for_sure_tracks, f, indent=2, ensure_ascii=False)
+with open("./questionable_tracks.json", "w") as f:
+	json.dump(questionable_tracks, f, indent=2, ensure_ascii=False)
+
+```
+
+Now we end up with two files: `for_sure_tracks.json` and `questionable_tracks.json`.
+
+I left the “for sure” tracks file as is. As for the file with the “questionable” tracks, I just went ahead and manually removed songs that I did not deem fit to be added to my Liked Songs collection.
+
+And with that, filtering my data has been done!
+
+## Part 4: Dumping the Songs into Spotify
+
+We now have two files containing the songs we want to dump into our Liked Songs collection. Let’s now actually import our songs into Spotify!
+
+First, get a token you can use to authenticate yourself with the API. I simply went to the [Spotify for Developers website](https://developer.spotify.com/) and scrolled down to the “See it in action” section, where there is an auth token of mine I could use to authenticate.
+
+Next, I created a new playlist and found it’s ID by opening the playlist in the Spotify web app and investigating it’s URL:
+
+```bash
+https://open.spotify.com/playlist/<id> # <- <id> is what you want
+```
+
+<Aside icon={{text: "❓"}}>
+**Wasn’t this blog post on liked songs?**
+
+Yes, but when scripting I first dumped them all into a separate playlist so if in some case something goes wrong it’s easy to just delete the playlist and start over. After I made sure the playlist seemed good I then dumped that playlist to my liked songs.
+
+</Aside>
+
+Let’s now load back the two JSON files we created:
+
+```python
+# {
+# 	"title": string,
+#   "artist": string,
+#   "times_scrobbled": number,
+#   "threshold": "for_sure" | "questionable"
+# }[]
+tracks_data = []
+
+with open("./for_sure_tracks.json") as f:
+	tracks_data = tracks_data + json.load(f)
+with open("./questionable_tracks.json") as f:
+	tracks_data = tracks_data + json.load(f)
+```
+
+Now the next step we’d want to do is iterate through each song and add each song to our playlist. Seems easy right?
+
+Things get slightly weird here.
+
+### Dealing with Spotify URIs
+
+If you wish to add a song to a playlist via the Spotify API, the API expects that you provide the Spotify URI of that song.
+
+For example, the Spotify URI of “Never Gonna Give You Up” by Rick Astley is `spotify:track:4PTG3Z6ehGkBFwjybzWkR8`
+
+As one can see, the Spotify URI for a track is composed of the song’s ID with a prefix of `spotify:track:`
+
+But our data does not have the Spotify URIs of each track: we only know the track’s title and the artist.
+
+This means that before we can add songs from our data to a playlist, we must figure out their Spotify URIs.
+
+#### Option 1: Searching the Spotify API
+
+The Spotify API has a [`/search` endpoint](https://developer.spotify.com/documentation/web-api/reference/search) which you can use to search songs by a query, similar to how you search normally. We can use this API endpoint to search for a song and then get its Spotify URI:
+
+```python
+import requests
+import time
+
+SPOTIFY_TOKEN = ""
+
+def search_track_on_spotify(title: str, artist: str):
+	query = title + " " + artist
+
+	# This is the important part
+	r = requests.get(
+		"https://api.spotify.com/v1/search",
+		params={
+			"q": query,
+			"type": "track",
+		},
+		headers={
+			"Authorization": "Bearer " + SPOTIFY_TOKEN
+		}
+	)
+
+	# If an error occurred
+	if r.status_code >= 400:
+		# If we've been rate limited sleep until rate limit is over
+		if "Retry-After" in r.headers:
+			sleep_time = int(r.headers["Retry-After"])
+		# If it's something else just sleep for 20 seconds
+		else:
+			sleep_time = 20
+
+		print(f"Error occurred searching for song on Spotify for {title} by {artist}. Trying again after {sleep_time}s...", r.status_code)
+		time.sleep(sleep_time)
+		return search_track_on_spotify(title, artist)
+
+	data = r.json()
+
+	raw_track = data["tracks"]["items"][0]
+
+	return {
+		"title": raw_track["name"],
+		"spotify_link": raw_track["external_urls"]["spotify"],
+		"spotify_uri": raw_track["uri"],
+		"spotify_id": raw_track["id"],
+		"artist_name": raw_track["artists"][0]["name"],
+		"album_name": raw_track["album"]["name"],
+		"album_type": raw_track["album"]["album_type"],
+	}
+
+```
+
+Then getting the Spotify URIs for each song should be a piece of cake:
+
+```python
+track_uris = []
+for raw_track in tracks_data:
+	track = search_track_on_spotify(raw_track["title"], raw_track["artist"])
+	track_uris.append(track["spotify_uri"])
+```
+
+Although this approach works well in cases where there are not many tracks, in cases where you are dealing with hundreds or possibly thousands of unique tracks, this method crumbles thanks to everyone’s favorite friend: rate limiting.
+
+[Spotify doesn’t have a fixed rate limit](https://developer.spotify.com/documentation/web-api/concepts/rate-limits): it is calculated automatically based on the number of requests made in a 30 second time frame. This isn’t fun since this means that we can’t write a specific back off plan in order to avoid getting rate limited.
+
+Additionally, the search API does not provide a way to batch requests, which means we have to send one HTTP request for every song, which scales terribly when you are dealing with large song counts as you will be forced to deal with rate limits.
+
+When I first ran my script querying the Spotify API for every track, it worked for approximately the first 400 or 500 tracks, but then I got rate limited for 24 hours. This is not ideal whatsoever, so this option isn’t great.
+
+#### Option 2: Getting Spotify URIs from Last.fm
+
+If you’ve ever used the Last.fm website, you may have noticed that the webpages for tracks contain the URLs of various streaming services where you can listen to the track.
+
+This is wonderful since this means that we can get our Spotify URIs from Last.fm and avoid dealing with the rate limits of Spotify.
+
+Unfortunately, the Last.fm API doesn’t seem to have a method to retrieve these URLs, so we will resort to web scraping.
+
+As of writing, the `a` tag which links to the Spotify URL of the song has a class of `play-this-track-playlink--spotify`. If this ever changes you can always use the DevTools of your browser to see what HTML attributes and classes can be used to identify the Spotify link.
+
+Here is a method that retrieves the Spotify URI for a track via scraping Last.fm:
+
+```python
+from urllib.parse import quote as encode_uri_component
+import requests
+from bs4 import BeautifulSoup as BSoup
+import time
+
+def get_spotify_uri_of_song_from_lastfm(title: str, artist: str):
+	url = f"https://www.last.fm/music/{encode_uri_component(artist)}/_/{encode_uri_component(title)}"
+
+	# Fetch raw HTML
+	r = requests.get(url)
+
+	# Handle errors
+	if r.status_code >= 400:
+		if r.status_code == 404:
+			print(f"Couldn't find {title} by {artist}. SKIPPING.")
+			return None
+
+		elif r.status_code == 429:
+			if "Retry-After" in r.headers:
+				sleep_time = int(r.headers["Retry-After"])
+			else:
+				sleep_time = 20
+
+			print(f"Rate limited when searching Last.fm for {title} by {artist}. Trying again after {sleep_time}s...", r.status_code)
+			time.sleep(sleep_time)
+			return get_spotify_uri_of_song_from_lastfm(title, artist)
+
+		else:
+			print(f"Unexpected error occurred searching Last.fm for {title} by {artist}. SKIPPING.", r.status_code)
+			return None
+
+	# Convert raw HTML into a "soup" that is traversable
+	soup = BSoup(r.text, 'html.parser')
+
+	# Select all `a` elements with the class `play-this-track-playlink--spotify`
+	all_spotify_links = soup.find_all("a", class_="play-this-track-playlink--spotify")
+
+	if len(all_spotify_links) <= 0:
+		return None
+
+	spotify_web_url = all_spotify_links[0]["href"] # Will be something like https://open.spotify.com/track/4PTG3Z6ehGkBFwjybzWkR8
+	spotify_id = spotify_web_url.split("/")[-1] # Extract spotify id
+
+	return f"spotify:track:{spotify_id}" # Compose the spotify URI
+```
+
+Although we're still making one HTTP request for every song, Last.fm seems to be far more tolerant than Spotify. In my case I never ran into rate limits, but if you do end up running into rate limits from Last.fm, proxies could potentially be used as a workaround since we are simply making unauthenticated GET requests.
+
+### Getting the Spotify URIs
+
+We now have two options to determine the Spotify URI of a track. Retrieving the URI via Last.fm is overall much better as it avoids the rate limits of Spotify. However, that doesn’t mean Option 1 won’t be used: not all Last.fm pages have the respective Spotify links, so for the tracks where Last.fm doesn't provide a Spotify link, we will use Spotify’s API to search for the URI.
+
+```python
+track_uris = []
+
+for raw_track in tracks_data:
+	# First try to retrieve Spotify URI from Last.fm
+	track_uri = get_spotify_uri_of_song_from_lastfm(raw_track["title"], raw_track["artist"])
+
+	# If failed, retrieve Spotify URI via Spotify's `/search` API
+	if track_uri == None:
+		print(f"{raw_track["title"]} {raw_track["artist"]} - Track uri not found; fetching from Spotify")
+		spotify_track = search_track_on_spotify(raw_track["title"], raw_track["artist"])
+		track_uris.append(spotify_track["spotify_uri"])
+		print("RAW: ", raw_track["title"], raw_track["artist"], "| SPOTIFY: ", spotify_track["title"], spotify_track["artist_name"])
+
+	else:
+		track_uris.append(track_uri)
+		print(f"Found track uri for {raw_track["title"]} {raw_track["artist"]}")
+
+```
+
+<Aside icon={{ text: "⚠️", "aria-label": "Warning" }}>
+  The Spotify search results are not perfect. You might get the incorrect Spotify URI and therefore
+  the incorrect song added to your playlist. Although annoying, you may have to manually review the
+  results to verify if the right songs have been added.
+</Aside>
+
+### Dumping the Spotify URIs into the Playlist
+
+Now that we have a list of Spotify URIs, lets actually add them to our playlist:
+
+```python
+SPOTIFY_TOKEN = ""
+PLAYLIST_ID = ""
+
+def add_songs_to_playlist(spotify_uris: list[str]):
+	r = requests.post(
+		f"https://api.spotify.com/v1/playlists/{PLAYLIST_ID}/tracks",
+		json={
+			"uris": spotify_uris
+		},
+		headers={
+			"Authorization": "Bearer " + SPOTIFY_TOKEN
+		}
+	)
+
+	# If error occurred
+	if r.status_code >= 400:
+		# If we've been rate limited sleep until rate limit is over
+		if "Retry-After" in r.headers:
+			sleep_time = int(r.headers["Retry-After"])
+		# If it's something else just sleep for 20 seconds
+		else:
+			sleep_time = 20
+
+		print(f"Error occurred for adding songs to playlist. Trying again after {sleep_time}s...", r.status_code)
+		time.sleep(sleep_time)
+		return add_songs_to_playlist(spotify_uris)
+
+	print(f"Added {len(spotify_uris)} songs to playlist", r)
+
+# We can send up to 100 songs in one HTTP request, so just create batches of
+# 99 Spotify URIs and send them out
+
+batched_track_uris = []
+
+for uri in track_uris:
+	batched_track_uris.append(uri)
+
+	if len(batched_track_uris) >= 99:
+		add_songs_to_playlist(batched_track_ids)
+		batched_track_uris = []
+		time.sleep(0.5)
+
+if len(batched_track_uris) > 0:
+		add_songs_to_playlist(batched_track_ids)
+		batched_track_uris = []
+		time.sleep(0.5)
+```
+
+You should end up with a playlist with all of the tracks that will compose your “Liked Songs” collection! At this point I recommend making sure that the right songs were added and fixing the songs that Spotify or Last.fm provided an incorrect Spotify URI for.
+
+## Part 5: Dumping the Playlist into Liked Songs
+
+We have a nice playlist, but it’s a playlist: our goal is to add these songs to our Liked Songs collection.
+
+This is just a matter of writing a script that fetches all the songs in our current playlist, then likes them so they get saved in our Liked Songs collection:
+
+```python
+import requests
+import time
+
+SPOTIFY_TOKEN = ""
+PLAYLIST_ID = ""
+
+spotify_track_ids = []
+
+# Method that likes songs
+# Pass a list of Spotify IDs (ex: "4PTG3Z6ehGkBFwjybzWkR8")
+# Note: Spotify URIs != Spotify IDs!
+def like_song_ids(ids: list[str]):
+	r = requests.put(
+		"https://api.spotify.com/v1/me/tracks",
+		json={
+			"ids": ids
+		},
+		headers={
+			"Authorization": "Bearer " + SPOTIFY_TOKEN
+		}
+	)
+
+	print(f"Dumped {len(ids)} in liked songs", r)
+
+# Get all the songs from a playlist
+# We aren't able to get all the songs in one HTTP request: we have to send multiple requests
+def recursively_get_spotify_track_ids_from_playlist(url=f"https://api.spotify.com/v1/playlists/{PLAYLIST_ID}/tracks"):
+	r = requests.get(
+		url,
+		headers={
+			"Authorization": "Bearer " + SPOTIFY_TOKEN
+		}
+	)
+
+	data = r.json()
+
+	print(r)
+	print(f"Fetched {len(data["items"])} song ids from offset {data["offset"]}")
+
+	# Iterate through every item - can be a track or something else
+	for item in data["items"]:
+		# Validate if item is a track
+		if "track" not in item or item["track"] == None:
+			print(f"Warning: item at offset {data["offset"]} does not have a valid track object", item)
+		else:
+			spotify_track_ids.append(item["track"]["id"])
+
+	# If there are more songs we still need to access
+	if "next" in data and data["next"] != None:
+		recursively_get_spotify_track_ids_from_playlist(url=data["next"])
+		time.sleep(0.5)
+
+	else:
+		print("Done fetching song ids")
+
+# Fetch all songs from playlist
+recursively_get_spotify_track_ids_from_playlist()
+
+# Now go through every track id and add to liked songs in increments of 50 (that is maximum)
+batched_track_ids = []
+
+for track_id in spotify_track_ids:
+	batched_track_ids.append(track_id)
+
+	if len(batched_track_ids) >= 49:
+		like_song_ids(batched_track_ids)
+		batched_track_ids = []
+		time.sleep(0.5)
+
+if len(batched_track_ids) > 0:
+	like_song_ids(batched_track_ids)
+	batched_track_ids = []
+	time.sleep(0.5)
+
+```
+
+Once you run this, it will dump the contents of your playlist into your Liked Songs collection. And now, you finally have the Liked Songs collection of your dreams!
+
+## Conclusion
+
+It took a bit of work, but at last we were able to create the Liked Songs collection based on what we listened to throughout the years.
+
+One major downside to the approach I’ve outlined throughout this post is the heavy reliance on Last.fm. Not many people use the site, and even if you start now, it would take some time for it to build up the scrobbles (the same dilemma we faced when we wanted a Liked Songs collection).
+
+One potential solution that could make something like this more accessible to all Spotify users is by [requesting your entire listening history from Spotify](https://support.stats.fm/docs/import/spotify-import/) and then processing the raw data from Spotify in a fashion similar to how we processed our raw Last.fm scrobbles. Interestingly, the same person who created lastfmstats.com also created [spotifystats.app](http://spotifystats.app), which could be a potential source to use to make the raw Spotify data more friendly to process. Additionally, we probably wouldn’t have to deal with the issue of finding Spotify URIs as Spotify should provide them within the data. This is all speculation since I didn’t go this route, but it could be an interesting path to pursue.
+
+I have open-sourced the three scripts I used in this post. You can check them out at [Armster15/liked-songs-shenanigans-scripts](https://github.com/Armster15/liked-songs-shenanigans-scripts)
