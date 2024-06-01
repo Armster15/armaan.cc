@@ -18,9 +18,7 @@ const { icon } = Astro.props;
     )
   }
 
-  <div class="mb-2 mt-0 min-w-0 gap-1">
-    <section>
-      <slot />
-    </section>
-  </div>
+  <section class="min-w-0 [&_strong]:font-semibold">
+    <slot />
+  </section>
 </aside>
