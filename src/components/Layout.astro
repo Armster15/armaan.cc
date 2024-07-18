@@ -76,6 +76,9 @@ const canonicalURL = new URL(Astro.url).href;
       )
     }
 
+    <!-- Tota11y -->
+    {import.meta.env.DEV && <script src="https://unpkg.com/@khanacademy/tota11y" />}
+
     <!-- Basic SEO -->
     <title>{seo.title}</title>
     <link rel="canonical" href={canonicalURL} />
