@@ -43,7 +43,14 @@ const { Content } = await post.render();
 
   <p class="-mt-2 mb-6 text-gray-500">{formatDate(date)}</p>
 
-  <div class="prose mb-8 text-gray-800 prose-headings:font-semibold prose-strong:font-semibold">
+  <div
+    class:list={[
+      "prose mb-8 text-gray-800",
+      "prose-headings:font-semibold prose-strong:font-semibold",
+      // These are the same styles that are applied when `prose-lg` is used
+      "prose-p:text-lg prose-p:leading-[calc(32/18)]",
+    ]}
+  >
     <Content components={{ a: Link }} />
   </div>
 
