@@ -63,7 +63,7 @@ const canonicalURL = new URL(Astro.url).href;
       }
     </style>
 
-    <!-- Google Analytics -->
+    {/* Google Analytics */}
     {
       import.meta.env.MODE === "production" && (
         <>
@@ -76,17 +76,17 @@ const canonicalURL = new URL(Astro.url).href;
       )
     }
 
-    <!-- Tota11y -->
+    {/* Tota11y */}
     {import.meta.env.DEV && <script src="https://unpkg.com/@khanacademy/tota11y" />}
 
-    <!-- Basic SEO -->
+    {/* Basic SEO */}
     <title>{seo.title}</title>
     <link rel="canonical" href={canonicalURL} />
     <meta name="title" content={seo.title} />
     <meta name="description" content={seo.description} />
     {seo.themeColor && <meta property="theme-color" content={seo.themeColor} />}
 
-    <!-- OpenGraph -->
+    {/* OpenGraph */}
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={seo.title} />
@@ -95,7 +95,7 @@ const canonicalURL = new URL(Astro.url).href;
     <meta property="og:site_name" content={seo.og?.site_name ?? "armaan"} />
     {imageURL && <meta property="og:image" content={imageURL} />}
 
-    <!-- Twitter -->
+    {/* Twitter */}
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={seo.title} />
     <meta property="twitter:description" content={seo.description} />

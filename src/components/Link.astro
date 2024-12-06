@@ -8,11 +8,13 @@ const { class: className, href, target: _target, ...props } = Astro.props;
 const target = _target ?? !href?.toString().startsWith("/") ? "_blank" : undefined;
 ---
 
-<!-- 
+{
+  /*
   As hideous as this formatting looks, this is required in order to prevent a space after the link content.
   Astro seems to be very sensitive to whitespace.
   See https://github.com/withastro/astro/issues/5737
--->
+*/
+}
 <a
   class:list={[
     "not-prose text-gray-600 underline decoration-gray-400/70 underline-offset-4",
