@@ -1,0 +1,26 @@
+<a
+  id="skip-to-content"
+  href="#main"
+  class:list={[
+    "absolute z-20 -translate-y-[100vh] focus:translate-y-4",
+    "rounded bg-blue-500 px-3 py-2 text-white outline-offset-4 active:bg-blue-600",
+  ]}
+>
+  Skip to content
+</a>
+
+<script>
+  const linkEl = document.getElementById("skip-to-content")!;
+
+  linkEl.addEventListener("click", (ev) => {
+    ev.preventDefault();
+
+    const mainContainer = document.querySelector<HTMLDivElement>("#main");
+    if (!mainContainer) {
+      console.warn("[SkipToContent.astro] Main container does not exist!");
+      window.location.hash = "#main";
+    } else {
+      mainContainer.focus();
+    }
+  });
+</script>
