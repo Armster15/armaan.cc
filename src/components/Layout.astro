@@ -76,6 +76,21 @@ const canonicalURL = new URL(Astro.url).href;
       }
     </style>
 
+    <style>
+      #background-root {
+        height: 100vh;
+        width: 100vw;
+      }
+
+      /* Override if dvh is supported */
+      @supports (height: 100dvh) {
+        #background-root {
+          height: 100dvh;
+          width: 100dvw;
+        }
+      }
+    </style>
+
     {/* Google Analytics */}
     {
       import.meta.env.MODE === "production" && (
@@ -133,7 +148,8 @@ const canonicalURL = new URL(Astro.url).href;
   <body class="flex min-h-screen flex-col sm:items-center sm:px-4 sm:text-lg">
     {/* Background */}
     <div
-      class="fixed top-0 z-[-1] h-screen w-screen bg-gradient-to-br from-armaan-blue/10 to-armaan-red/10"
+      id="background-root"
+      class="fixed top-0 z-[-1] bg-gradient-to-br from-armaan-blue/10 to-armaan-red/10"
     >
     </div>
 
