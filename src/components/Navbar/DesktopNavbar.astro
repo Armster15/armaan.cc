@@ -1,0 +1,57 @@
+---
+import { Icon } from "astro-icon";
+import Socials from "./Socials.astro";
+import Links from "./Links.astro";
+---
+
+<nav
+  class:list={[
+    "mt-4 hidden sm:flex lg:mt-8",
+    "sticky inset-x-0 top-0 z-10 w-full max-w-4xl items-center justify-between rounded-xl bg-white/10 p-4 shadow backdrop-blur-md transition-shadow duration-100",
+    "data-[at-top]:rounded-t-none data-[at-top]:shadow-md",
+  ]}
+>
+  {/* Icon + "armaan" */}
+  <a href="/" class="flex items-center gap-2">
+    <Icon name="icon" class="w-[4ch] rounded-full" aria-hidden />
+    <header class="text-2xl font-semibold">armaan</header>
+  </a>
+
+  <Links />
+
+  <Socials />
+</nav>
+
+{/* Adds/removes data-at-top attr from navbar if navbar touches top of viewport */}
+<script>
+  function main() {
+    const navbar = document.querySelector("nav")!;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio < 1) {
+          // Navbar is touching the top (partially out of view)
+          navbar.setAttribute("data-at-top", "");
+        } else {
+          // Navbar is fully in view
+          navbar.removeAttribute("data-at-top");
+        }
+      },
+      {
+        threshold: [1.0],
+        // This root margin creates a virtual margin above the viewport
+        // to detect when navbar approaches the top
+        rootMargin: "-1px 0px 0px 0px",
+      },
+    );
+
+    observer.observe(navbar);
+  }
+
+  main();
+
+  // Reapply listener after client side nav occurs
+  document.addEventListener("astro:after-swap", () => {
+    main();
+  });
+</script>

@@ -13,9 +13,9 @@ export async function getStaticPaths() {
     {
       slug: "home",
       title: "👋 hey, i'm armaan!",
-      subtitle: "i'm a student who likes to build stuff with code",
+      subtitle: "i'm a student who likes to build real products for real people",
     },
-    { slug: "projects", title: "Projects", subtitle: "Check out what I've built" },
+    { slug: "work", title: "My work", subtitle: "Check out what I've built" },
   ].map(({ slug, title, subtitle }) => {
     return {
       params: { slug },

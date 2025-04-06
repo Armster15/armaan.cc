@@ -1,18 +1,31 @@
 ---
 import { Image, type LocalImageProps } from "astro:assets";
 import type { HTMLAttributes } from "astro/types";
+import Icon from "astro-icon";
 
 interface Props {
   title: string;
+  role?: string;
   description: string;
   imgSrc: LocalImageProps["src"];
   imgBgClass: string;
   href: string;
   tags: string[];
+  headingType: "h1" | "h2" | "h3" | "h4" | "h5" | "h5";
   target?: HTMLAttributes<"a">["target"];
 }
 
-const { title, description, imgSrc, imgBgClass, href, tags, target = "_blank" } = Astro.props;
+const {
+  title,
+  description,
+  imgSrc,
+  imgBgClass,
+  href,
+  tags,
+  headingType: Heading,
+  role,
+  target = "_blank",
+} = Astro.props;
 
 const TAG_CLASS_MAP = [
   "bg-gray-100 text-gray-800",
@@ -25,21 +38,46 @@ const TAG_CLASS_MAP = [
 <a
   href={href}
   target={target}
-  class="flex h-full min-h-64 flex-col rounded-2xl shadow duration-200 hover:shadow-lg focus:shadow-lg"
+  class="group flex h-full flex-col rounded-2xl bg-white/50 shadow duration-200 hover:shadow-lg focus:shadow-lg active:shadow-lg sm:flex-row"
 >
-  <div class:list={["flex items-center justify-center rounded-t-2xl py-6", imgBgClass]}>
-    <Image src={imgSrc} alt="" width="256" class="w-20 rounded-2xl shadow" />
+  <div
+    class:list={[
+      "flex items-center justify-center p-4 max-sm:rounded-t-2xl sm:rounded-l-2xl",
+      imgBgClass,
+    ]}
+  >
+    <Image
+      src={imgSrc}
+      alt=""
+      width="256"
+      class="w-16 rounded-2xl shadow duration-200 group-hover:scale-[1.03] group-focus:scale-[1.03] group-active:scale-[1.03]"
+    />
   </div>
 
-  <div class="flex flex-1 flex-col justify-between p-5">
-    <div>
-      <h2 class="mb-3 font-medium underline decoration-neutral-400 decoration-1 underline-offset-4">
-        {title}
-      </h2>
-      <p class="my-2 text-base text-gray-700">{description}</p>
+  <div class="flex flex-1 flex-col justify-between p-4">
+    <div class="mb-4 sm:mb-2">
+      <div class="*:inline-block *:w-fit">
+        <Heading class="break-all text-lg font-medium">
+          <span>{title}</span>
+          <Icon
+            class="inline -rotate-45 text-subtitle-light duration-200 group-hover:text-subtitle group-focus:text-subtitle group-active:text-subtitle sm:hidden"
+            name="ion:arrow-forward"
+            width="20"
+            aria-hidden
+          />
+        </Heading>
+
+        {/* Role on desktop */}
+        {role && <p class="text-base italic text-subtitle max-sm:hidden">— {role}</p>}
+      </div>
+
+      {/* Role on mobile */}
+      {role && <p class="mb-2 text-sm italic text-subtitle sm:hidden">{role}</p>}
+
+      <p class="text-sm font-normal text-subtitle">{description}</p>
     </div>
 
-    <div class="my-5 gap-6">
+    <div class="gap-6">
       {
         tags.map((tag, index) => (
           <span
@@ -53,5 +91,14 @@ const TAG_CLASS_MAP = [
         ))
       }
     </div>
+  </div>
+
+  <div class="hidden items-center justify-center px-4 sm:flex">
+    <Icon
+      class="-rotate-45 text-subtitle-light duration-200 group-hover:text-subtitle group-focus:text-subtitle group-active:text-subtitle"
+      name="ion:arrow-forward"
+      width="20"
+      aria-hidden
+    />
   </div>
 </a>

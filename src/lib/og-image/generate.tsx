@@ -31,7 +31,11 @@ export async function generateOgImage({ title, subtitle }: GenerateOgImage) {
   }
 
   const markup = (
-    <div tw="flex p-10 h-full w-full bg-white flex-col">
+    <div
+      tw="flex p-10 h-full w-full flex-col"
+      // from-armaan-blue/10 to-armaan-red-10; opacities calculated on white bg
+      style={{ background: "linear-gradient(to bottom right, #e8f5ff, #fee9e9)" }}
+    >
       <header tw="flex items-center w-full">
         <svg tw="rounded-full h-24 w-24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
           <path d="M 0 0 L 100 100 L 0 100" fill="#1e9afe" />
@@ -56,7 +60,8 @@ export async function generateOgImage({ title, subtitle }: GenerateOgImage) {
           </div>
         </div>
 
-        <div tw="mt-5 flex text-5xl text-gray-500">{subtitle}</div>
+        {/* text-gray-600 = subtitle color (see tailwind config) */}
+        <div tw="mt-5 flex text-5xl text-gray-600 leading-1.25">{subtitle}</div>
       </main>
     </div>
   );

@@ -1,0 +1,12 @@
+---
+interface Props {
+  title: string;
+  headingType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h5";
+}
+
+const { title, headingType: Heading = "h1" } = Astro.props;
+---
+
+<Heading class="mb-4 mt-8 text-2xl font-semibold sm:mb-6 sm:text-[28px] sm:leading-[32px]">
+  {title}
+</Heading>

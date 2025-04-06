@@ -1,7 +1,9 @@
 ---
-import { Icon } from "astro-icon";
 import Layout from "$/components/Layout.astro";
+import Project from "$/components/Project.astro";
 import Link from "$/components/Link.astro";
+
+import bessyImg from "$/images/projects/bessy.png";
 ---
 
 <Layout
@@ -13,56 +15,46 @@ import Link from "$/components/Link.astro";
       isLargeImage: true,
     },
   }}
-  class="pt-2 sm:pt-8 2xl:pt-14"
 >
-  <div class="space-y-6">
-    <div class="space-y-2 text-2xl">
-      <Icon name="icon" class="w-[6ch] rounded-full" aria-hidden />
-      <h1 class="font-semibold">armaan</h1>
-    </div>
+  <h1 class="sr-only">Home</h1>
 
-    <div class="space-y-2 lowercase text-gray-700">
-      <p>I'm a student who likes to build stuff with computers.</p>
-      <p>I want to build stuff that solve real problems for real people.</p>
-    </div>
+  <div class="mt-6 space-y-12 sm:mt-8">
+    <div class="space-y-2">
+      <h2 class="text-xl font-semibold">Hey, I'm armaan! I...</h2>
 
-    <div class="flex gap-4 lowercase">
-      <Link href="/blog" class="hover:text-blue-600 focus:text-blue-600">Blog</Link>
-      <Link href="/projects" class="hover:text-green-700 focus:text-green-700">Projects</Link>
-      <Link href="/about" class="hover:text-purple-600 focus:text-purple-600">More About Me</Link>
-    </div>
-
-    <div class="flex gap-4">
-      <a href="https://github.com/Armster15" target="_blank" aria-label="GitHub" title="GitHub">
-        <Icon
-          class="h-6 w-6 text-gray-400 duration-100 hover:text-gray-600 focus:text-gray-600"
-          name="simple-icons:github"
-        />
-      </a>
-
-      <a
-        href="https://twitter.com/ArmsterDev"
-        target="_blank"
-        aria-label="X (formerly known as Twitter)"
-        title="X (formerly known as Twitter)"
+      <ul
+        class="ml-4 list-outside list-disc space-y-2 marker:text-subtitle-light [&_*>b]:font-medium"
       >
-        <Icon
-          class="h-6 w-6 text-gray-400 duration-100 hover:text-gray-600 focus:text-gray-600"
-          name="twitter-as-x"
-        />
-      </a>
+        <li>build <b>real products</b> that <b>real people</b> love</li>
 
-      <a
-        href="https://bsky.app/profile/armaan.cc"
-        target="_blank"
-        aria-label="Bluesky"
-        title="Bluesky"
-      >
-        <Icon
-          class="h-6 w-6 text-gray-400 duration-100 hover:text-gray-600 focus:text-gray-600"
-          name="bluesky"
-        />
-      </a>
+        <!-- prettier-ignore -->
+        <li>
+          contribute to <b>open-source</b>; my code has been merged into <Link
+            href="https://github.com/expo/expo/pull/32567"
+          >
+            Expo</Link>, the <Link href="https://github.com/bluesky-social/social-app/pull/7523">
+            Bluesky <span class="hidden sm:inline">mobile</span> app</Link>, and more
+        </li>
+
+        <li>have had my work covered by publications like techcrunch and fast company</li>
+      </ul>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-xl font-semibold">Some of My Notable Work</h2>
+
+      <Project
+        title="Bessy"
+        role="Creator & Developer"
+        description="A better way to use Schoology and Infinite Campus; 90K+ students from all 50 states"
+        imgSrc={bessyImg}
+        imgBgClass="bg-[#f4ede4]"
+        href="https://www.bessy.io"
+        tags={["React", "Next.js", "React Native/Expo", "Swift"]}
+        headingType="h3"
+      />
+
+      <Link href="/work" class="!mt-4 block text-right text-base">View more -></Link>
     </div>
   </div>
 </Layout>

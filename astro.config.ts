@@ -13,6 +13,9 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: "viewport",
   },
+  redirects: {
+    "/projects": "/work",
+  },
   integrations: [
     tailwind(),
     expressiveCode({

@@ -1,0 +1,30 @@
+---
+import { Icon } from "astro-icon";
+---
+
+<div
+  class="flex gap-4 *:text-subtitle-light *:duration-100 hover:*:text-subtitle focus:*:text-subtitle active:*:text-subtitle"
+>
+  <a href="https://github.com/Armster15" target="_blank" aria-label="GitHub" title="GitHub">
+    <Icon class="h-6 w-6" name="simple-icons:github" />
+  </a>
+
+  <a
+    href="https://twitter.com/ArmsterDev"
+    target="_blank"
+    aria-label="X (formerly known as Twitter)"
+    title="X (formerly known as Twitter)"
+  >
+    <Icon class="h-6 w-6" name="twitter-as-x" />
+  </a>
+
+  <a
+    class="max-xs:hidden"
+    href="https://bsky.app/profile/armaan.cc"
+    target="_blank"
+    aria-label="Bluesky"
+    title="Bluesky"
+  >
+    <Icon class="h-6 w-6" name="bluesky" />
+  </a>
+</div>

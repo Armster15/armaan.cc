@@ -1,0 +1,23 @@
+---
+import { Icon } from "astro-icon";
+import Socials from "./Socials.astro";
+import Links from "./Links.astro";
+---
+
+<nav class="px-4 pb-0 pt-6 xs:px-6 sm:hidden">
+  <div class="flex w-full items-center justify-between">
+    <div class="flex items-center justify-center gap-3">
+      <a href="/"><Icon name="icon" class="w-[4ch] rounded-full" aria-hidden /></a>
+
+      <div class="text-left">
+        <a href="/">
+          <header class="text-xl font-semibold">armaan</header>
+        </a>
+
+        <Links />
+      </div>
+    </div>
+
+    <Socials />
+  </div>
+</nav>

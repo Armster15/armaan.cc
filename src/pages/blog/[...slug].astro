@@ -4,7 +4,7 @@ import { formatDate } from "$/lib/date";
 import type { CollectionEntry } from "astro:content";
 
 import Layout from "$/components/Layout.astro";
-import Header from "$/components/Header.astro";
+import PageTitle from "$/components/PageTitle.astro";
 import Link from "$/components/Link.astro";
 
 export async function getStaticPaths() {
@@ -39,16 +39,16 @@ const { Content } = await post.render();
     },
   }}
 >
-  <Header title={title} />
+  <PageTitle title={title} />
 
-  <p class="-mt-2 mb-6 text-gray-500">{formatDate(date)}</p>
+  <p class="-mt-4 mb-6 text-base text-subtitle">{formatDate(date)}</p>
 
   <div
     class:list={[
-      "prose mb-8 text-gray-700",
+      "prose mb-8 max-w-none text-subtitle",
       "prose-headings:font-semibold prose-strong:font-semibold",
       // These are the same styles that are applied when `prose-lg` is used
-      "prose-p:text-lg prose-p:leading-[calc(32/18)]",
+      "prose-p:text-base prose-p:leading-[calc(32/18)] sm:prose-p:text-lg",
     ]}
   >
     <Content components={{ a: Link }} />

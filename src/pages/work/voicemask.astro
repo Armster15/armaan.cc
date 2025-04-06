@@ -1,6 +1,6 @@
 ---
 import Layout from "$/components/Layout.astro";
-import Header from "$/components/Header.astro";
+import PageTitle from "$/components/PageTitle.astro";
 import Link from "$/components/Link.astro";
 ---
 
@@ -10,9 +10,9 @@ import Link from "$/components/Link.astro";
     description: "VoiceMask was a Discord bot I made in August 2020 that became quite popular",
   }}
 >
-  <Header title="VoiceMask" />
+  <PageTitle title="VoiceMask" />
 
-  <div class="prose prose-lg mb-8 text-gray-700">
+  <div class="prose prose-lg mb-8 text-subtitle">
     <p>
       VoiceMask was a Discord bot I made back in August 2020. Discord has a feature called voice
       channels, which are mini spaces for voice chat. Although they are quite useful, for those that
@@ -44,5 +44,5 @@ import Link from "$/components/Link.astro";
     </p>
   </div>
 
-  <Link href="/projects">{`<- Projects`}</Link>
+  <Link href="/work">{`<- Work`}</Link>
 </Layout>

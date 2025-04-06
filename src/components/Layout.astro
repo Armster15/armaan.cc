@@ -1,6 +1,10 @@
 ---
+import { ViewTransitions } from "astro:transitions";
 import GoogleAnalytics from "$/components/GoogleAnalytics.astro";
+import DesktopNavbar from "$/components/Navbar/DesktopNavbar.astro";
+import MobileNavbar from "$/components/Navbar/MobileNavbar.astro";
 import faviconImg from "$/icons/icon.svg";
+
 import "@fontsource-variable/inter";
 
 interface Props {
@@ -51,7 +55,15 @@ const canonicalURL = new URL(Astro.url).href;
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
+    <ViewTransitions />
+
     <style is:global>
+      /* Turn off view transition animations */
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none;
+      }
+
       /* Prevents code blocks from overflowing */
       .expressive-code {
         max-width: 85vw;
@@ -117,8 +129,17 @@ const canonicalURL = new URL(Astro.url).href;
     }
   </head>
 
-  <body class="flex min-h-screen justify-center bg-white p-8 pb-14 text-lg">
-    <div class:list={["w-full max-w-2xl", className]}>
+  <body class="flex min-h-screen flex-col sm:items-center sm:px-4 sm:text-lg">
+    {/* Background */}
+    <div
+      class="fixed top-0 z-[-1] h-screen w-screen bg-gradient-to-br from-armaan-blue/10 to-armaan-red/10"
+    >
+    </div>
+
+    <DesktopNavbar />
+    <MobileNavbar />
+
+    <div class:list={["w-full max-w-4xl px-4 pb-14 xs:px-6 sm:px-4", className]}>
       <slot />
     </div>
   </body>

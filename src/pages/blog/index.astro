@@ -3,8 +3,7 @@ import { getCollection } from "astro:content";
 import { formatDate, sortPostsByDate } from "$/lib/date";
 
 import Layout from "$/components/Layout.astro";
-import Header from "$/components/Header.astro";
-import Link from "$/components/Link.astro";
+import PageTitle from "$/components/PageTitle.astro";
 
 const posts = sortPostsByDate(await getCollection("blog"));
 ---
@@ -15,17 +14,23 @@ const posts = sortPostsByDate(await getCollection("blog"));
     description: "armaan's Blog on the internet",
   }}
 >
-  <Header title="Blog" />
+  <PageTitle title="Blog" />
 
-  <ul class="space-y-6">
+  <ul class="ml-4 list-outside list-disc space-y-6">
     {
       posts.map(({ data: { title, date }, slug }) => (
-        <li class="space-y-1">
-          <Link class="font-normal" href={`/blog/${slug}`}>
-            {title}
-          </Link>
+        <li class="space-y-1 marker:text-subtitle-light">
+          <div>
+            <a
+              class="font-medium text-subtitle underline-offset-4 hover:underline focus:underline active:underline"
+              href={`/blog/${slug}`}
+            >
+              {title}
+              <span aria-hidden>-></span>
+            </a>
 
-          <p class="text-gray-600">{formatDate(date)}</p>
+            <p class="text-subtitle">{formatDate(date)}</p>
+          </div>
         </li>
       ))
     }

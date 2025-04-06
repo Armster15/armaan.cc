@@ -1,6 +1,6 @@
 ---
 import Layout from "$/components/Layout.astro";
-import Header from "$/components/Header.astro";
+import PageTitle from "$/components/PageTitle.astro";
 import Project from "$/components/Project.astro";
 
 import bessyImg from "$/images/projects/bessy.png";
@@ -13,23 +13,31 @@ import voicemaskImg from "$/images/projects/voicemask.png";
     title: "Projects",
     description: "A page listing all of my notable projects that I have built",
     image: {
-      src: "/og-image/projects.png",
+      src: "/og-image/work.png",
       isLargeImage: true,
     },
   }}
 >
-  <Header title="Projects" />
+  <h1 class="sr-only">Work and Projects</h1>
 
-  <div class="grid gap-5 sm:grid-cols-2">
+  <PageTitle title="Work" headingType="h2" />
+
+  <div class="mb-12 grid gap-4 sm:gap-2">
     <Project
       title="Bessy"
-      description="A better way to use Schoology"
+      role="Creator & Developer"
+      description="A better way to use Schoology and Infinite Campus; 90K+ students from all 50 states"
       imgSrc={bessyImg}
       imgBgClass="bg-[#f4ede4]"
       href="https://www.bessy.io"
-      tags={["React", "Next.js", "Expo", "Swift"]}
+      tags={["React", "Next.js", "React Native/Expo", "Swift"]}
+      headingType="h3"
     />
+  </div>
 
+  <PageTitle title="Projects" headingType="h2" />
+
+  <div class="grid gap-4 sm:gap-2">
     <Project
       title="Doblar"
       description="An open source fully local image converter that runs in your browser"
@@ -37,6 +45,7 @@ import voicemaskImg from "$/images/projects/voicemask.png";
       imgBgClass="bg-blue-100"
       href="https://doblar.armaan.cc"
       tags={["React", "Vite", "ImageMagick", "PWA"]}
+      headingType="h3"
     />
 
     <Project
@@ -44,9 +53,10 @@ import voicemaskImg from "$/images/projects/voicemask.png";
       description="A Discord bot that allowed you to talk in a voice channel without using your actual voice"
       imgSrc={voicemaskImg}
       imgBgClass="bg-gray-400"
-      href="/projects/voicemask"
+      href="/work/voicemask"
       target="_self"
       tags={["Python", "discord.py", "MongoDB", "AWS"]}
+      headingType="h3"
     />
   </div>
 </Layout>
