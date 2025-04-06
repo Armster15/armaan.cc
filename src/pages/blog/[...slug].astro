@@ -39,9 +39,9 @@ const { Content } = await post.render();
     },
   }}
 >
-  <PageTitle title={title} />
+  <PageTitle title={title} class="mb-2" />
 
-  <p class="-mt-2 mb-6 text-base text-subtitle">{formatDate(date)}</p>
+  <p class="mb-6 text-base text-subtitle">{formatDate(date)}</p>
 
   <div
     class:list={[

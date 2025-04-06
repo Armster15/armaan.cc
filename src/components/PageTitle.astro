@@ -1,12 +1,13 @@
 ---
-interface Props {
+type Props = {
   title: string;
   headingType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h5";
-}
+  class?: string;
+};
 
-const { title, headingType: Heading = "h1" } = Astro.props;
+const { title, headingType: Heading = "h1", class: className } = Astro.props;
 ---
 
-<Heading class="mb-4 mt-8 text-2xl font-semibold sm:text-[28px] sm:leading-[32px]">
+<Heading class:list={["mt-8 text-2xl font-semibold sm:text-[28px] sm:leading-[32px]", className]}>
   {title}
 </Heading>
