@@ -74,7 +74,11 @@ const TAG_CLASS_MAP = [
       {/* Role on mobile */}
       {role && <p class="mb-2 text-sm italic text-subtitle sm:hidden">{role}</p>}
 
-      <p class="text-sm font-normal text-subtitle">{description}</p>
+      {
+        /* Using <pre> so you can pass "\n" to description strings and have that rendered as line breaks */
+      }
+      <pre
+        class="whitespace-pre-wrap font-[inherit] text-sm font-normal text-subtitle">{description}</pre>
     </div>
 
     <div class="gap-6">
