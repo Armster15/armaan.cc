@@ -5,6 +5,7 @@ import Links from "./Links.astro";
 ---
 
 <nav
+  id="desktop-navbar"
   class:list={[
     "mt-4 hidden sm:flex lg:mt-8",
     "sticky inset-x-0 top-0 z-10 w-full max-w-4xl items-center justify-between rounded-xl bg-white/10 p-4 shadow backdrop-blur-md transition-shadow duration-100",
@@ -25,7 +26,7 @@ import Links from "./Links.astro";
 {/* Adds/removes data-at-top attr from navbar if navbar touches top of viewport */}
 <script>
   function main() {
-    const navbar = document.querySelector("nav")!;
+    const navbar = document.getElementById("desktop-navbar")!;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
