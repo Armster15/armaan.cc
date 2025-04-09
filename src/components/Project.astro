@@ -50,7 +50,11 @@ const TAG_CLASS_MAP = [
       src={imgSrc}
       alt=""
       width="256"
-      class="w-16 rounded-2xl shadow duration-200 group-hover:scale-[1.03] group-focus:scale-[1.03] group-active:scale-[1.03]"
+      class:list={[
+        "w-16 rounded-2xl shadow duration-150",
+        "group-hover:-rotate-2 group-focus:-rotate-2 group-active:-rotate-2",
+        "group-hover:scale-[1.03] group-focus:scale-[1.03] group-active:scale-[1.03]",
+      ]}
     />
   </div>
 
@@ -99,7 +103,12 @@ const TAG_CLASS_MAP = [
 
   <div class="hidden items-center justify-center px-4 sm:flex">
     <Icon
-      class="-rotate-45 text-subtitle-light duration-200 group-hover:text-subtitle group-focus:text-subtitle group-active:text-subtitle"
+      class:list={[
+        "-rotate-45 text-subtitle-light duration-200",
+        "group-hover:-translate-y-[1px] group-focus:-translate-y-[1px] group-active:-translate-y-[1px]",
+        "group-hover:translate-x-[1px] group-focus:translate-x-[1px] group-active:translate-x-[1px]",
+        "group-hover:text-subtitle group-focus:text-subtitle group-active:text-subtitle",
+      ]}
       name="ion:arrow-forward"
       width="20"
       aria-hidden
