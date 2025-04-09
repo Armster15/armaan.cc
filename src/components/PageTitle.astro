@@ -8,6 +8,6 @@ type Props = {
 const { title, headingType: Heading = "h1", class: className } = Astro.props;
 ---
 
-<Heading class:list={["mt-8 text-2xl font-semibold sm:text-[28px] sm:leading-[32px]", className]}>
+<Heading class:list={["text-2xl font-semibold sm:text-[28px] sm:leading-[32px]", className]}>
   {title}
 </Heading>
