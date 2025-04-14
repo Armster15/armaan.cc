@@ -9,6 +9,7 @@ import { readFileSync } from "node:fs";
 // https://astro.build/config
 export default defineConfig({
   site: "https://armaan.cc",
+  trailingSlash: "never",
   prefetch: {
     prefetchAll: true,
     defaultStrategy: "viewport",
