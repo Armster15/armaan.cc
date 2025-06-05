@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       fontFamily: { sans: ["Inter Variable", ...defaultTheme.fontFamily.sans] },
       screens: {
-        xs: "325px",
+        xs: "335px",
       },
       colors: {
         "armaan-red": "#ff2928",

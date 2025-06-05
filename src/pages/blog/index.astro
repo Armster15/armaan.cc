@@ -11,7 +11,6 @@ const posts = sortPostsByDate(await getCollection("blog"));
 <Layout
   seo={{
     title: "Blog",
-    description: "armaan's Blog on the internet",
   }}
 >
   <PageTitle title="Blog" class="mb-4" />
@@ -26,7 +25,7 @@ const posts = sortPostsByDate(await getCollection("blog"));
               href={`/blog/${slug}`}
             >
               {title}
-              <span aria-hidden>-></span>
+              <span aria-hidden>→</span>
             </a>
 
             <p class="text-subtitle">{formatDate(date)}</p>

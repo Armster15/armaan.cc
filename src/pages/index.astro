@@ -8,8 +8,8 @@ import bessyImg from "$/images/work/bessy.png";
 
 <Layout
   seo={{
-    title: "armaan",
-    description: "armaan's home page on the internet",
+    title: "Armaan Aggarwal",
+    description: "18 y/o developer building consumer-facing products",
     image: {
       src: "/og-image/home.png",
       isLargeImage: true,
@@ -19,25 +19,32 @@ import bessyImg from "$/images/work/bessy.png";
   <h1 class="sr-only">Home</h1>
 
   <div class="space-y-12">
-    <div class="space-y-2">
-      <h2 class="text-xl font-semibold">Hey, I'm armaan! I...</h2>
+    <div class="space-y-4 text-pretty leading-7 sm:leading-8">
+      <p>
+        I'm an 18-year-old software engineer in the San Francisco Bay Area, currently working at <Link
+          href="https://coconote.app"
+          target="_blank"
+        >
+          {"Coconote"}
+        </Link>.
+      </p>
 
-      <ul
-        class="ml-4 list-outside list-disc space-y-2 marker:text-subtitle-light [&_*>b]:font-medium"
-      >
-        <li>build products that people <b>love</b></li>
+      <p>
+        I love building and scaling products that all sorts of people love. My work has been
+        featured in publications like TechCrunch and Fast Company, and is trusted by hundreds of
+        thousands worldwide every day.
+      </p>
 
-        <!-- prettier-ignore -->
-        <li>
-          contribute to <b>open-source</b>; my code has been merged into <Link
-            href="https://github.com/expo/expo/pull/32567"
-          >
-            Expo</Link>, the <Link href="https://github.com/bluesky-social/social-app/pull/7523">
-            Bluesky <span class="hidden sm:inline">mobile</span> app</Link>, and more
-        </li>
-
-        <li>have had my work covered by publications like techcrunch and fast company</li>
-      </ul>
+      <p>
+        I also enjoy being involved in open source, especially within the React Native ecosystem.
+        I've contributed code to <Link href="https://github.com/expo/expo/pull/32567">
+          {"Expo"}
+        </Link>{","} the <Link href="https://github.com/bluesky-social/social-app/pull/7523">
+          {"Bluesky "}
+          <span class="hidden sm:inline">mobile</span>
+          {"app"}
+        </Link>, and <Link href="https://github.com/Armster15">more</Link>.
+      </p>
     </div>
 
     <div class="space-y-2">
@@ -54,7 +61,7 @@ import bessyImg from "$/images/work/bessy.png";
         headingType="h3"
       />
 
-      <Link href="/work" class="!mt-4 block text-right text-base">View more -></Link>
+      <Link href="/work" class="!mt-4 block text-right text-base">View more →</Link>
     </div>
   </div>
 </Layout>

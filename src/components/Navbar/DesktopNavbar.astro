@@ -14,8 +14,11 @@ import Links from "./Links.astro";
 >
   {/* Icon + "armaan" */}
   <a href="/" class="flex items-center gap-2">
-    <Icon name="icon" class="w-[3.5ch] rounded-full" aria-hidden />
-    <header class="text-2xl font-semibold">armaan</header>
+    <Icon name="icon" class="w-[3.5ch] shrink-0 rounded-full" aria-hidden />
+    <header class="text-[22px] font-semibold leading-[30px]">
+      <span>armaan</span>
+      <span class="sr-only lg:not-sr-only">aggarwal</span>
+    </header>
   </a>
 
   <Links />

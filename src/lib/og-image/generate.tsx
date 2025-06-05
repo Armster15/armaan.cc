@@ -44,7 +44,7 @@ export async function generateOgImage({ title, subtitle }: GenerateOgImage) {
           <path d="M 65.5 31 v 38" stroke-width="5" stroke="white" />
         </svg>
 
-        <div tw="ml-5 font-semibold text-5xl">armaan</div>
+        <div tw="ml-5 font-semibold text-5xl">armaan aggarwal</div>
       </header>
 
       <main tw="flex grow pb-3 flex-col justify-center">

@@ -6,14 +6,16 @@ import MobileNavbar from "$/components/Navbar/MobileNavbar.astro";
 import SkipToContent from "./SkipToContent.astro";
 import faviconImg from "$/icons/icon.svg";
 
-import "@fontsource-variable/inter";
+// This project uses the Satoshi font, which is a proprietary font.
+// Please view its license at <root>/assets/satoshi/LICENSE.txt
+import "./assets/satoshi/satoshi.css";
 
 interface Props {
   class?: string;
 
   seo: {
     title: string;
-    description: string;
+    description?: string;
     /**
      * Should be a valid HTML color
      * Corresponds to <meta property="theme-color" content="" />
@@ -46,6 +48,8 @@ const { class: className, seo } = Astro.props;
 
 const imageURL = seo.image?.src ? new URL(seo.image.src, Astro.url).href : undefined;
 const canonicalURL = new URL(Astro.url).href;
+
+const defaultDescription = "18 y/o developer building consumer-facing products";
 ---
 
 <html lang="en">
@@ -108,25 +112,25 @@ const canonicalURL = new URL(Astro.url).href;
     {import.meta.env.DEV && <script src="https://unpkg.com/@khanacademy/tota11y" />}
 
     {/* Basic SEO */}
-    <title>{seo.title}</title>
+    <title>{seo.title === "Armaan Aggarwal" ? seo.title : seo.title + " | Armaan Aggarwal"}</title>
     <link rel="canonical" href={canonicalURL} />
     <meta name="title" content={seo.title} />
-    <meta name="description" content={seo.description} />
+    <meta name="description" content={seo.description ?? defaultDescription} />
     {seo.themeColor && <meta name="theme-color" content={seo.themeColor} />}
 
     {/* OpenGraph */}
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={seo.title} />
-    <meta property="og:description" content={seo.description} />
+    <meta property="og:description" content={seo.description ?? defaultDescription} />
     <meta property="og:locale" content={seo.og?.locale ?? "en_US"} />
-    <meta property="og:site_name" content={seo.og?.site_name ?? "armaan"} />
+    <meta property="og:site_name" content={seo.og?.site_name ?? "Armaan Aggarwal"} />
     {imageURL && <meta property="og:image" content={imageURL} />}
 
     {/* Twitter */}
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={seo.title} />
-    <meta property="twitter:description" content={seo.description} />
+    <meta property="twitter:description" content={seo.description ?? defaultDescription} />
     {
       seo.twitter?.card_type ? (
         <meta property="twitter:card" content={seo.twitter?.card_type} />
