@@ -6,14 +6,17 @@ import Links from "./Links.astro";
 
 <nav class="px-4 pb-0 pt-6 xs:px-6 sm:hidden">
   <div class="flex w-full items-center">
-    <div class="flex flex-1 items-center justify-start gap-3">
-      <a href="/"><Icon name="icon" class="w-[4ch] rounded-full" aria-hidden /></a>
+    <div class="flex flex-1 items-start justify-start gap-3">
+      <a class="mt-1" href="/"><Icon name="icon" class="w-[4ch] rounded-full" aria-hidden /></a>
 
       <div class="text-left">
         <a href="/">
-          <header class="text-xl font-semibold lowercase">
+          <header
+            class="mb-2 text-xl font-semibold lowercase leading-[20px] xs:mb-0 xs:leading-normal"
+          >
             <span>Armaan</span>
-            <span class="sr-only xs:not-sr-only">Aggarwal</span>
+            <br class="xs:hidden" />
+            <span>Aggarwal</span>
           </header>
         </a>
 

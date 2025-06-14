@@ -8,7 +8,8 @@ module.exports = {
     extend: {
       fontFamily: { sans: ["Satoshi Variable", ...defaultTheme.fontFamily.sans] },
       screens: {
-        xs: "335px",
+        xxs: "335px",
+        xs: "400px",
       },
       colors: {
         "armaan-red": "#ff2928",

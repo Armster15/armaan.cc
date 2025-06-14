@@ -8,7 +8,7 @@ const pathname = Astro.url.pathname;
     "*:text-subtitle-light *:duration-200 hover:*:text-subtitle focus:*:text-subtitle active:*:text-subtitle data-[is-current-page]:*:text-subtitle",
   ]}
 >
-  <a class="max-xs:hidden" data-is-current-page={pathname === "/"} href="/">home</a>
+  <a class="max-xxs:hidden" data-is-current-page={pathname === "/"} href="/">home</a>
   <a data-is-current-page={pathname.startsWith("/blog")} href="/blog">blog</a>
   <a data-is-current-page={pathname.startsWith("/work")} href="/work">work</a>
 </div>
