@@ -5,7 +5,9 @@ interface Props extends HTMLAttributes<"a"> {}
 const { class: className, href, target: _target, ...props } = Astro.props;
 
 // If target is not provided, set it to _blank if link is external, else let it be its default
-const target = _target ?? !href?.toString().startsWith("/") ? "_blank" : undefined;
+const target =
+  _target ??
+  (href?.toString().startsWith("/") || href?.toString().startsWith("#") ? undefined : "_blank");
 ---
 
 {
