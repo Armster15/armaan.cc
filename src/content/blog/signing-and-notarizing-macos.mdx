@@ -1,10 +1,10 @@
 ---
 title: "An Exhaustive Guide to Signing and Notarizing in macOS"
 description: "A lengthy yet detailed guide on how to distribute basically anything on macOS, whether it be an app, executable, dynamic library, or something else. This guide also is helpful for navigating .dmg and .zip best practices."
-date: "June 19, 2025"
+date: "June 23, 2025"
 ---
 
-{/* Talk about .pkg */}
+{/* TODO: Talk about .pkg */}
 {/* DO I NEED TO SIGN THE .PKG CONTENTS?? */}
 {/* "This is because `codesign` and `notarytool` do not recursively sign nor notarize nested executables". -> This may need to be changed for `.pkg`s */}
 
@@ -399,6 +399,6 @@ Also note: you would only need to sign and notarize binaries that aren't already
 
 To summarize: for distributing a code item on macOS, you must code sign for authenticity, notarize to validate it doesn't contain malware, and staple the ticket.
 
-Hopefully this saves you some trouble. My goal for this post was to have once nice little place for everything related to distributing on Mac. For many of these things, I had to do things like compare man pages from various different Xcode versions. I even ended up submitting a PR fixing a bug in the way Electron notarizes apps, which I only discovered while writing this post. So yeah, I went through hell writing this post.
+Hopefully this saves you some trouble. My goal for this post was to have once nice little place for everything related to distributing on Mac. For many of these things, I had to do things like compare man pages from various different Xcode versions. I even ended up submitting a PR to Electron to fix a bug/add a supported feature for notarization, which I only discovered while writing this post. So yeah, I went through hell writing this post.
 
 Now go get that bag!
