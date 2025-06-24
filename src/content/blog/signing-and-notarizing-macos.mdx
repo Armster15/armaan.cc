@@ -1,0 +1,404 @@
+---
+title: "An Exhaustive Guide to Signing and Notarizing in macOS"
+description: "A lengthy yet detailed guide on how to distribute basically anything on macOS, whether it be an app, executable, dynamic library, or something else. This guide also is helpful for navigating .dmg and .zip best practices."
+date: "June 19, 2025"
+---
+
+{/* Talk about .pkg */}
+{/* DO I NEED TO SIGN THE .PKG CONTENTS?? */}
+{/* "This is because `codesign` and `notarytool` do not recursively sign nor notarize nested executables". -> This may need to be changed for `.pkg`s */}
+
+import { Image } from "astro:assets";
+import Aside from "$/components/Aside.astro";
+
+import xcodeViewTeamsImg from "$/images/blog-images/signing-and-notarizing-macos/xcode-view-teams.png";
+import xcodeViewCertificatesImg from "$/images/blog-images/signing-and-notarizing-macos/xcode-view-certificates.png";
+import xcodeExportCertificateImg from "$/images/blog-images/signing-and-notarizing-macos/xcode-export-certificate.png";
+import downloadCertificateImg from "$/images/blog-images/signing-and-notarizing-macos/download-certificate.png";
+import creatingTeamApiKey from "$/images/blog-images/signing-and-notarizing-macos/creating-team-api-key.png";
+import creatingIndApiKey from "$/images/blog-images/signing-and-notarizing-macos/creating-ind-api-key.png";
+
+Recently I was building an Electron app and we hit a point where we wanted to release it to the world. Since I mostly do stuff with JavaScript, my day-to-day routine for this is usually `pnpm build` and `git push`. Oh how spoiled I am, for the world of desktop apps is far different.
+
+The general overview of building a Mac app for distribution is seemingly straightforward: create a production build, "sign" it, then release it to the world. That is, if you can figure out how to sign it (P.S. there's not just "signing" involved: you also have to "notarize" it!).
+
+You must both code sign _and_ notarize your app in order to not upset [Gatekeeper](https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web), a security feature built into macOS which in short only allows apps that are code signed and notarized to be installed.
+
+If you live in the Xcode world [this is actually pretty straightforward](https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution#Notarize-your-app-automatically-as-part-of-the-distribution-process). If you're doing anything else, whether it be an Electron app or a standalone compiled executable (or even doing both!), it can get a bit confusing.
+
+This is the guide I wished I had back when I was figuring out how to distribute on macOS, painfully put together after hours of compiling Apple documentation, scrutinizing random discussion threads, and talking in vain to LLMs. Whether it be a standalone .app, figuring how to deal with `.dmg`s, or a Mach-O executable (a fancy term for a compiled executable for Mac), I hope this guide will answer all of your questions.
+
+If you're lazy, [feel free to chat with ChatGPT about this article](https://chatgpt.com/?q=https%3A%2F%2Farmaan.cc%2Fblog%2Fsigning-and-notarizing-macos%20Help%20me%20with%20this!&hints=search) instead and ask it all your specific questions.
+
+<Aside icon={{ text: "ℹ️", "aria-label": "Note" }}>
+  This guide is assuming that you're distributing your application in production for *real users*.
+  If you want something simply for development, this guide is not for you: just code-sign your app
+  with a development certificate and move on with your day.
+</Aside>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+- A macOS machine
+- Xcode and the Xcode Command Line Tools
+- A **paid** Apple Developer account (must be enrolled in the Apple Developer Program)
+  - This is because a paid account is required to create a Developer ID Application certificate (which we'll get into later)
+
+For the purposes of this post, my project is a [simple executable built from a Swift package](https://www.swiftbysundell.com/articles/building-a-command-line-tool-using-the-swift-package-manager/). To get an executable for production, I run `swift build -c release`, and I get a built Mach-O executable at `.build/release/my-binary`. But this can be anything: a `.app`, a Mach-O compiled executable (Swift, Rust, Go, ...), a `.dylib`, etc.
+
+<h2 id="signing">Signing</h2>
+
+When you sign your executable/app/whatever, you're asserting that the code is legit and it's been verified as such by you. Therefore, if someone tampers with it after it's been signed, the signature won't be valid since it no longer matches what you originally approved.
+
+You must have a **Developer ID Application** certificate in order to both sign _and_ notarize your app for distribution. This can only be generated with a paid Apple Developer account.
+
+You may already have this certificate installed on your machine — if so, no need to create a new one. To check, run the following:
+
+```
+security find-identity -vp codesigning
+```
+
+This command is used to find all the Apple certificate names installed on your current machine. If you see a certificate with "Developer ID Application" in the name, that means you have one and don't need to create one. Otherwise, you need to create one.
+
+### Creating a Developer ID Application Certificate
+
+1. Open Xcode
+2. In the Xcode menu bar, click "Xcode" (next to the Apple logo)
+3. Click "Settings"
+4. Click "Apple Accounts" and select your Apple account
+5. Navigate to your team
+   <Image
+     src={xcodeViewTeamsImg}
+     alt={`An image of the Xcode settings pane where you can view all the teams a particular Apple Account belongs to`}
+   />
+6. Click "Manage Certificates"
+7. Click the "+" icon in the bottom left corner
+8. Click "Developer ID Application"
+   <Image
+     src={xcodeViewCertificatesImg}
+     alt={`An image of an Xcode modal where you can view the certificates of a specific team`}
+   />
+
+<Aside icon={{text: "ℹ️", "aria-label": "Note"}}>
+  Only the *owner* of the team can create a Developer ID Application certificate. It must be *the* account holder: not even a mere admin is sufficient.
+
+If you are a developer on a team but aren't the account holder but still need the Developer ID Application certificate, ask the account holder to create a certificate using the steps above and export the certificate (see below) and send it to you.
+
+</Aside>
+
+### Exporting the Developer ID Application (so non-account holders can use the certificate)
+
+You only need to follow this step if you are _not_ a root account holder and need the certificate on your machine. **If you are a root account holder, skip this step.**
+
+These steps need to be followed by the root account holder. This also assumes they created the Developer ID Application certificate on their end (if not, follow the instructions above):
+
+1. Right-click the Developer ID Application certificate and click "Export Certificate"
+   <Image
+     src={xcodeExportCertificateImg}
+     alt={`An image of an Xcode modal where you can view the certificates of a specific team. In this case, the context menu for a "Developer ID Application" certificate is shown, and there is an option to "Export Certificate."`}
+   />
+2. This will export a .p12 file, which is the **private key** of the certificate. You will also be asked to give it a password, which you will need to give to your team members.
+3. Visit the ["Certificates, Identities & Profiles" page in Apple Developer](https://developer.apple.com/account/resources/certificates/list)
+4. Click the certificate to view its details
+5. Click the "Download" button in the top right corner. This will export a .cer file, which is the **public key** of the certificate
+   <Image
+     src={downloadCertificateImg}
+     alt={`An image of Apple Developer showing the page where you can view the specific details of a particular certificate, in this case our "Developer ID Application" certificate. There is a blue "Download" button in the top right corner.`}
+   />
+6. Send the .cer (public key) and .p12 (private key) to your team member
+7. Ask your team member to double click both of the files to open them in Keychain Access, which will then install the certificate on their machine.
+
+### Verifying Our Certificate Is Installed
+
+Now let's rerun that command to view our code-signing certificates installed:
+
+```
+security find-identity -vp codesigning
+```
+
+You should see something similar to this:
+
+```
+  1) ABCD1234567890FEDCBA0987654321ABCDE12345 "Developer ID Application: John Doe (ABCDEFGHIJ)"
+     1 valid identity found
+```
+
+Provided there is an entry with "Developer ID Application" in it, you're good! You have the necessary certificate to code-sign Mac apps.
+
+The string in quotes (`Developer ID Application: John Doe (ABCDEFGHIJ)`) is the **identity name** of the certificate. Copy it as we'll need it.
+
+### Actually Signing Our App (or whatever it is you're signing)
+
+Run the following:
+
+```sh
+codesign \
+  --verbose \
+  --options runtime \
+  --timestamp \
+  --entitlements ./entitlements.plist \
+  --sign "Developer ID Application: John Doe (ABCDEFGHIJ)" \
+  ".build/release/my-binary"
+```
+
+Walking through the arguments passed:
+
+- `--verbose`: This will log a message to confirm that the code signing was successful. It's not actually that verbose :)
+- `--options runtime`: To enable [hardened runtime](https://developer.apple.com/documentation/security/hardened-runtime), which is required for notarization
+- `--timestamp`: To include a secure timestamp for when the digital signature was created. Required for notarization.
+- `--entitlements ./entitlements.plist` **(optional)**: **Remove this line if you aren't using additional entitlements.** Otherwise, provide the file path to your entitlements file here.
+- `--sign`: We provide the identity name of our Developer ID Application certificate we extracted from before
+- The final argument is the path to our app/executable/whatever-that-we're-signing.
+
+<Aside icon={{ text: "ℹ️", "aria-label": "Note" }}>
+  If you are including additional entitlements, for notarization, you are not allowed to have
+  `com.apple.security.get-task-allow` set to `true` or to any sort of affirmative value. See the
+  [official Apple
+  documentation](https://developer.apple.com/documentation/security/resolving-common-notarization-issues#Avoid-the-get-task-allow-entitlement)
+  for more info.
+</Aside>
+
+<Aside icon={{ text: "ℹ️", "aria-label": "Note" }}>
+  Signing a Mac Installer Package (`.pkg`) does *not* involve using `codesign`. If you're dealing
+  with installer packages, see [Distribution](#distribution) to learn how to properly code sign
+  them.
+</Aside>
+
+Once you run this, your app will be signed! We can additionally verify that our app was signed like so:
+
+```
+codesign --verify --verbose ".build/release/my-binary"
+```
+
+You should hopefully see something like this:
+
+```
+.build/release/my-binary: valid on disk
+.build/release/my-binary: satisfies its Designated Requirement
+```
+
+And with that, we've finished signing our app! 🥳
+
+<h2 id="notarizing">Notarizing</h2>
+
+Apple additionally requires us to **notarize** our app. In this step, we upload our binaries to Apple, which then checks it for malware. Don't worry though, this isn't App Review where we have to wait a day if we're lucky — it's a fully automated process, so it will take anywhere from a few seconds to a few minutes, depending on how large your app is.
+
+[According to Apple themselves:](https://developer.apple.com/documentation/security/customizing-the-notarization-workflow#Avoid-long-notarization-response-times-and-size-limits)
+
+> Notarization completes for most software within 5 minutes, and for 98 percent of software within 15 minutes.
+
+To upload to Apple's notary service, we need to zip our app and upload the resultant archive. Zip your app like so:
+
+```
+ditto -c -k --sequesterRsrc --keepParent ".build/release/my-binary" "payload.zip"
+```
+
+<Aside icon={{ text: "ℹ️", "aria-label": "Note" }}>
+  If you're curious, we use the `ditto` command instead of `zip` because ditto preserves
+  macOS-specific metadata critical for notarization.
+</Aside>
+
+### `notarytool`: Three Authentication Options, Which Path Do You Choose?
+
+To notarize our app, we use a tool called `notarytool`. You have three options to choose from as to how to authenticate.
+
+#### Option 1: Using an app-specific password
+
+This by far is the most convenient, albeit the most insecure, method. You provide your Apple ID, your [Apple Team ID](https://web.archive.org/web/20250620081649/https://support.subsplash.com/en/articles/8841517-finding-your-apple-developer-team-id-and-team-name), and an [app-specific password](https://support.apple.com/en-us/HT204397).
+
+An app-specific password is basically the equivalent of your normal password, in that it can be used to authenticate with your Apple ID, except it's not your _actual_ password. They cannot be scoped, so treat it like it gives access to your entire Apple account.
+
+To create one, [view Apple's help page on app-specific passwords](https://support.apple.com/en-us/HT204397). To be able to notarize your Apple account's role in the team [must be either Developer, App Manager, Admin, or Account Holder](https://developer.apple.com/help/account/access/roles/).
+
+Once you have created an app-specific password, you can notarize your app like so:
+
+```sh
+xcrun notarytool submit payload.zip \
+  --apple-id "johndoe@example.com" \
+  --team-id "ABCDEFGHIJ" \
+  --password "john-doe-likes-apples" \
+  --wait
+```
+
+#### Option 2: Using an App Store Connect API Key
+
+You can also authenticate with an App Store Connect API key. Apple has two types of API keys: **team API keys** and **individual API keys**.
+
+##### Team API Keys
+
+These can only be generated by team administrators (account holders and admins). Provided you have this access, you can go to [App Store Connect's Users and Access page](https://appstoreconnect.apple.com/access/integrations/api) to create a key.
+
+When creating the key, ensure it's role/access permission is either [Developer, App Manager, or Admin](https://developer.apple.com/help/account/access/roles/).
+
+<Image
+  src={creatingTeamApiKey}
+  alt={`An image of the screen where you can create team API keys. On the top there is a section titled "Issuer ID," which a user can copy. Additionally, at the bottom there is an API key with the name "Notary Key." The key has the "Developer" role, has a key ID (blurred out for privacy), and on the right side there is a "Download" button which can be clicked to download the API key.`}
+/>
+
+Copy the Issuer ID and the Key ID and download the key and store it at a specific path which you can reference.
+
+Then call `notarytool` like so to notarize your app:
+
+```sh
+xcrun notarytool submit payload.zip \
+  --key "<path-to-downloaded-api-key>" \
+  --key-id "<key-id>" \
+  --issuer "<issuer-id-uuid>" \
+  --wait
+```
+
+##### Individual API Keys
+
+You can also use an individual API key, which only has the permissions of the provided user granted by the team. One advantage with Individual API keys is that they don't need to be created by an account holder nor an admin, but the user still must have permission to create Individual API keys.
+
+<Aside icon={{ text: "ℹ️", "aria-label": "Note" }}>
+  Signing with an individual API key is only possible in Xcode 26 and above. If you are on a lower
+  version of Xcode, your only option is to sign with a team API key. If you're curious, I document
+  this further [in a PR I submitted to Electron](https://github.com/electron/notarize/pull/246).
+</Aside>
+
+To generate an individual API key:
+
+1. Go to App Store Connect
+2. In the top right corner, click your name
+3. Click "Edit Profile"
+4. Scroll down to "Individual API Key" and create a key
+
+Once you create the key, you should see the Key ID and a link to download the API key. Copy the Key ID, and download the API key and save it to a path you can reference.
+
+<Image
+  src={creatingIndApiKey}
+  alt={`A screenshot of the "Individual API Key" section. There is a row with one key, displaying the Key ID, when it was last used, a button to download the API key, and a button to revoke the API key.`}
+/>
+
+Then call `notarytool` like so to notarize your app:
+
+```sh
+xcrun notarytool submit payload.zip \
+  --key "<path-to-downloaded-api-key>" \
+  --key-id "<key-id>" \
+  --wait
+```
+
+Do _not_ provide an issuer ID for an individual API key. If you do, Apple will return a "401 Unauthorized" error.
+
+#### Option 3: Storing Credentials in a Keychain
+
+Instead of directly providing your credentials whenever you notarize, you can store them in a keychain, then reference them by the name of the keychain profile.
+
+To do so, run:
+
+```
+xcrun notarytool store-credentials
+```
+
+It will ask you for the credentials to store and to name your profile. As an added bonus, it even validates your credentials to make sure they're valid!
+
+Then to notarize your app:
+
+```sh
+xcrun notarytool submit payload.zip \
+  --keychain-profile "<name>" \
+  --wait
+```
+
+By default, it looks up the profile in the iCloud keychain. If you have a different path to read the keychain from, you can provide it with the `--keychain` argument, and then pass the path to a keychain file to use for reading the keychain item.
+
+### Post `notarytool submit`
+
+The `--wait` option keeps notarytool running until notarization has either succeeded or failed.
+
+If notarization fails, you can inspect the reason for why it failed like so:
+
+1. Search and copy the submission ID in the logs for when you ran `notarytool submit`
+2. Run the following:
+   ```
+   xcrun notarytool log <submission-id>
+   ```
+   And be sure to pass the arguments you used for authentication previously (`--team-id`, `--apple-id`, `--password`, `--key`, `--key-id`, `--issuer`, `--keychain-profile`, etc.)
+
+Otherwise, notarization was successful! You can delete the zip file as this is only used for uploading to `notarytool`. Don't worry though: the app at your original path will still be notarized.
+
+You can verify your app was notarized successfully like so:
+
+```
+spctl --assess -vv --type install <path>
+```
+
+Where `<path>` is the path to your app (not the zip file).
+
+You made it! You both signed _and_ notarized your app!
+
+<h2 id="stapling">Stapling</h2>
+
+Well, you almost made it. Just one final step.
+
+When you notarize your app, Apple creates a ticket which Gatekeeper will use to verify that your app has been notarized when someone tries installing it. When you staple, you are attaching this ticket directly to your app, so Gatekeeper can directly use a local copy. Otherwise, if you do not staple the ticket, Gatekeeper will find the ticket online. You can easily avoid that extra network request for your users!
+
+<Aside icon={{text: "ℹ️", "aria-label": "Note"}}>
+  If your app is a **standalone Mach-O executable**, **skip this step** — you're completely done! This is because it's not possible to staple tickets to standalone executables. 
+  
+  If you notarized a **ZIP archive**, extract the files, run `stapler` on each file, and create a new ZIP archive. You do not need to re-notarize the new archive.
+
+For everything else, you should do this step, even though it's technically optional.
+
+</Aside>
+
+To staple the ticket to your app, run the following:
+
+```
+xcrun stapler staple -v <path>
+```
+
+And that's it, you're completely done!
+
+<h2 id="distribution">Distribution</h2>
+
+If you're shipping a `.app` for example, your users typically don't download the `.app` directly. Instead they download a `.dmg` or `.pkg`.
+
+### `.dmg` and `.zip`: Do Not Sign Nor Notarize!
+
+While it is possible to sign and notarize a `.dmg` and a `.zip`, you don't need to, [and it's best not to](https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/#:~:text=4.%20Don%E2%80%99t%20sign%20your%20DMG). What matters is that the _contents_ of the archive are signed and notarized.
+See [this Apple Developer Forum thread response from an official Apple Engineer](https://developer.apple.com/forums/thread/650288?answerId=614507022#614507022) for more information.
+
+If you for whatever reason decide to sign and notarize these, the instructions are all the same.
+
+### `.pkg`: Must Be Signed and Notarized
+
+To sign a `.pkg`, you must use a **Developer ID Installer** certificate (Installer, not Application).
+
+You can create a Developer ID Installer certificate the same way as you do for creating a Developer ID Application certificate (just be sure to select "Developer ID Installer" and not "Developer ID Application").
+
+Then, to sign the `.pkg`, use the `productsign` CLI tool instead of `codesign`. Aside from that, I am unfortunately currently not very knowledgable about how to sign Mac Installer Packages.
+
+## Other Potential Things
+
+### "Do I Need To Sign and Notarize Bundled Code Items, Like Executables?"
+
+**Yes.** Every bundled code item (executables, binaries, dylibs, etc) must be both signed _and_ notarized independently and _then_ bundled in your app. Your overall app must also be signed and notarized after.
+
+To provide a more concrete example: let's say you have an Electron app that bundles an executable built in, say, Rust. You would first sign and notarize that executable compiled by Rust. Then you would bundle that signed + notarized Rust executable in your Electron app. Finally, you would sign and notarize your built Electron app.
+
+This is necessary because `codesign` and `notarytool` do not recursively sign nor notarize nested code items.
+
+<Aside icon={{text: "ℹ️", "aria-label": "Note"}}>
+  **"But what about `--deep`?"**
+
+You may come across this syntax in old discussion threads:
+
+```
+codesign ... --sign "<identity-name>" --deep --force <path>
+```
+
+This will recursively sign all nested code items within whatever it is you're signing. However, you should not use this because for one **this was deprecated in macOS 13.0.** But even if it wasn't, this approach is very dangerous anyways as different executables have different signing requirements (ex: entitlements). Additionally, if you're bundling an executable like Java or ffmpeg, why overwrite their digital signature and notarization?
+
+</Aside>
+
+Also note: you would only need to sign and notarize binaries that aren't already (ex: stuff you yourself are compiling). If you're using frameworks or executables from other people, there's a good chance it's already signed and notarized.
+
+## Conclusion
+
+To summarize: for distributing a code item on macOS, you must code sign for authenticity, notarize to validate it doesn't contain malware, and staple the ticket.
+
+Hopefully this saves you some trouble. My goal for this post was to have once nice little place for everything related to distributing on Mac. For many of these things, I had to do things like compare man pages from various different Xcode versions. I even ended up submitting a PR fixing a bug in the way Electron notarizes apps, which I only discovered while writing this post. So yeah, I went through hell writing this post.
+
+Now go get that bag!
