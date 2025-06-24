@@ -10,7 +10,7 @@ interface Props {
   imgSrc: LocalImageProps["src"];
   imgBgClass: string;
   href: string;
-  tags: string[];
+  tags?: string[];
   headingType: "h1" | "h2" | "h3" | "h4" | "h5" | "h5";
   target?: HTMLAttributes<"a">["target"];
 }
@@ -59,7 +59,7 @@ const TAG_CLASS_MAP = [
   </div>
 
   <div class="flex flex-1 flex-col justify-between p-4">
-    <div class="mb-4 sm:mb-2">
+    <div>
       <div class="*:inline-block *:w-fit">
         <Heading class="break-all text-lg font-medium">
           <span>{title}</span>
@@ -85,20 +85,22 @@ const TAG_CLASS_MAP = [
         class="whitespace-pre-wrap font-[inherit] text-sm font-normal leading-6 text-subtitle">{description}</pre>
     </div>
 
-    <div class="gap-6">
-      {
-        tags.map((tag, index) => (
-          <span
-            class:list={[
-              "mr-2 inline-flex rounded  px-2 py-0.5 text-xs font-medium",
-              TAG_CLASS_MAP[index],
-            ]}
-          >
-            {tag}
-          </span>
-        ))
-      }
-    </div>
+    {
+      tags && (
+        <div class="mt-4 gap-6 sm:mt-2">
+          {tags.map((tag, index) => (
+            <span
+              class:list={[
+                "mr-2 inline-flex rounded  px-2 py-0.5 text-xs font-medium",
+                TAG_CLASS_MAP[index],
+              ]}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )
+    }
   </div>
 
   <div class="hidden items-center justify-center px-4 sm:flex">
