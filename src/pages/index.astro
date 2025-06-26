@@ -4,6 +4,7 @@ import Project from "$/components/Project.astro";
 import Link from "$/components/Link.astro";
 
 import bessyImg from "$/images/work/bessy.png";
+import coconoteImg from "$/images/work/coconote.webp";
 ---
 
 <Layout
@@ -55,8 +56,17 @@ import bessyImg from "$/images/work/bessy.png";
       <h2 class="text-xl font-semibold">Some of My Notable Work</h2>
 
       <Project
+        title="Coconote"
+        description="The AI note-taker for students and professionals; 1M+ users worldwide."
+        imgSrc={coconoteImg}
+        imgBgClass="bg-[#f4ede4]"
+        href="https://coconote.app"
+        tags={["React", "React Router 7", "Swift"]}
+        headingType="h3"
+      />
+
+      <Project
         title="Bessy"
-        role="Creator & Developer"
         description="A better way to use Schoology and Infinite Campus; 100K+ students from all 50 states"
         imgSrc={bessyImg}
         imgBgClass="bg-[#f4ede4]"

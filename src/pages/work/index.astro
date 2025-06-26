@@ -4,6 +4,7 @@ import PageTitle from "$/components/PageTitle.astro";
 import Project from "$/components/Project.astro";
 
 import bessyImg from "$/images/work/bessy.png";
+import coconoteImg from "$/images/work/coconote.webp";
 import doblarImg from "$/images/work/doblar.svg";
 import voicemaskImg from "$/images/work/voicemask.png";
 ---
@@ -22,6 +23,16 @@ import voicemaskImg from "$/images/work/voicemask.png";
   <PageTitle title="Work" headingType="h2" class="mb-2" />
 
   <div class="mb-12 grid gap-3">
+    <Project
+      title="Coconote"
+      description={`The AI note-taker for students and professionals; 1M+ users worldwide.`.trim()}
+      imgSrc={coconoteImg}
+      imgBgClass="bg-[#f4ede4]"
+      href="https://coconote.app"
+      tags={["React", "React Router 7", "Swift"]}
+      headingType="h3"
+    />
+
     <Project
       title="Bessy"
       role="Creator & Developer"
