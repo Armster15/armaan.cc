@@ -95,11 +95,11 @@ const defaultDescription = "18 y/o developer building consumer-facing products";
       }
     </style>
 
-    {/* Google Analytics */}
+    {/* Analytics */}
     {
       import.meta.env.MODE === "production" && (
         <>
-          <script async data-api="/_hive" src="/bee.js" />
+          <script defer src="/oneds.js" data-debug="armaan.cc" />
 
           {import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID && (
             <GoogleAnalytics id={import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID} />

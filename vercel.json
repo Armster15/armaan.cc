@@ -9,12 +9,8 @@
   ],
   "rewrites": [
     {
-      "source": "/bee.js",
-      "destination": "https://cdn.splitbee.io/sb.js"
-    },
-    {
-      "source": "/_hive/:slug",
-      "destination": "https://hive.splitbee.io/:slug"
+      "source": "/oneds.js",
+      "destination": "https://assets.onedollarstats.com/stonks.js"
     }
   ]
 }
