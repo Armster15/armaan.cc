@@ -99,7 +99,12 @@ const defaultDescription = "18 y/o developer building consumer-facing products";
     {
       import.meta.env.MODE === "production" && (
         <>
-          <script defer src="/oneds.js" data-debug="armaan.cc" />
+          <script
+            defer
+            src="/oneds.js"
+            data-debug="armaan.cc"
+            data-url={new URL("/_oneds", canonicalURL).href}
+          />
 
           {import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID && (
             <GoogleAnalytics id={import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID} />

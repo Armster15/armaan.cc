@@ -9,6 +9,10 @@
   ],
   "rewrites": [
     {
+      "source": "/_oneds/:slug",
+      "destination": "https://collector.onedollarstats.com/events/:slug"
+    },
+    {
       "source": "/oneds.js",
       "destination": "https://assets.onedollarstats.com/stonks.js"
     }
