@@ -2,6 +2,7 @@
 import Layout from "$/components/Layout.astro";
 import Project from "$/components/Project.astro";
 import Link from "$/components/Link.astro";
+import { Icon } from "astro-icon";
 
 import bessyImg from "$/images/work/bessy.png";
 import coconoteImg from "$/images/work/coconote.webp";
@@ -22,11 +23,12 @@ import coconoteImg from "$/images/work/coconote.webp";
   <div class="space-y-12">
     <div class="space-y-4 text-pretty leading-7 sm:leading-8">
       <p>
-        I'm an 18-year-old software engineer in San Francisco, currently building at <Link
-          href="https://coconote.app"
-          target="_blank"
-        >
-          {"Coconote"}
+        I'm an 18-year-old software engineer in San Francisco, currently working full-time at{" "}
+        <Link href="https://replit.com" target="_blank">
+          <Icon
+            name="replit"
+            class="ml-[2px] inline-block h-[0.9em] w-[0.9em] -translate-y-px rounded bg-[#F26207]"
+          />{" Replit"}
         </Link>.
       </p>
 
