@@ -5,6 +5,7 @@ import Project from "$/components/Project.astro";
 
 import bessyImg from "$/images/work/bessy.png";
 import coconoteImg from "$/images/work/coconote.webp";
+import replitImg from "$/icons/replit.svg";
 import doblarImg from "$/images/work/doblar.svg";
 import voicemaskImg from "$/images/work/voicemask.png";
 ---
@@ -24,7 +25,23 @@ import voicemaskImg from "$/images/work/voicemask.png";
 
   <div class="mb-12 grid gap-3">
     <Project
+      title="Replit"
+      role="Software Engineer"
+      description={`
+Making software creation accessible to all through natural language.
+I work on the mobile app full-time to make vibe-coding easier for everyone.
+`.trim()}
+      imgSrc={replitImg}
+      imgBgClass="bg-[#F26207]/20"
+      imgClass="bg-[#F26207]"
+      href="https://replit.com"
+      tags={["React Native/Expo"]}
+      headingType="h3"
+    />
+
+    <Project
       title="Coconote"
+      role="Founding Engineer"
       description={`
 The AI note-taker for students and professionals. $300K+ MRR.
 I built and scaled the web app from zero to 1M+ users.
