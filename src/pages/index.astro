@@ -22,6 +22,10 @@ import coconoteImg from "$/images/work/coconote.webp";
 
   <div class="space-y-12">
     <div class="space-y-4 text-pretty leading-7 sm:leading-8">
+      <p id="bessy-notice" class="text-sm sm:text-base" hidden="">
+        ‼️ Please do not contact me about Bessy; I sold it and am no longer involved with it :)
+      </p>
+
       <p>
         I'm an <span class="hidden sm:inline">18 y/o</span>
         <span class="sm:hidden">18-year-old</span> software engineer in San Francisco, building the
@@ -88,3 +92,10 @@ import coconoteImg from "$/images/work/coconote.webp";
     </div>
   </div>
 </Layout>
+
+<script>
+  const bessyNotice = document.getElementById("bessy-notice");
+  if (bessyNotice && document.referrer.includes("bessy.io")) {
+    bessyNotice.removeAttribute("hidden");
+  }
+</script>
