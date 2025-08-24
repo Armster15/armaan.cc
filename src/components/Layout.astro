@@ -111,8 +111,7 @@ const defaultDescription = "18 y/o developer building consumer-facing products";
 
     {/* Analytics */}
     {
-      (
-        // import.meta.env.MODE === "production" && (
+      import.meta.env.MODE === "production" && (
         <>
           <script
             defer
@@ -125,7 +124,6 @@ const defaultDescription = "18 y/o developer building consumer-facing products";
             <GoogleAnalytics id={import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID} />
           )}
         </>
-        // )
       )
     }
 
