@@ -95,11 +95,9 @@ const defaultDescription = "18 y/o developer building consumer-facing products";
       }
     </style>
 
-    <script>
-      // @ts-expect-error - Google Analytics
+    <script is:inline>
       window["ga-disable-TRACKING-ID"] = document.cookie.includes("no-stonks=true");
 
-      // OneDS
       if (document.cookie.includes("no-stonks=true")) {
         console.info("Stonks are disabled");
         const meta = document.createElement("meta");
