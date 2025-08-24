@@ -95,6 +95,9 @@ const defaultDescription = "18 y/o developer building consumer-facing products";
       }
     </style>
 
+    {
+      /* Disables analytics if no-stonks=true cookie set. This cookie can be set by visiting /stonks. */
+    }
     <script is:inline>
       window["ga-disable-TRACKING-ID"] = document.cookie.includes("no-stonks=true");
 
