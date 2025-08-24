@@ -1,0 +1,37 @@
+---
+
+---
+
+<script>
+  const text = document.getElementById("text")!;
+
+  if (document.cookie.includes("no-stonks=true")) {
+    // document.cookie = "no-stonks=false";
+    text.innerHTML = `You are opted <span class="font-bold">OUT</span> of stonks.`;
+  } else {
+    // document.cookie = "no-stonks=true";
+    text.innerHTML = `You are opted <span class="font-bold">IN</span> to stonks.`;
+  }
+
+  const optIn = document.getElementById("opt-in")!;
+  const optOut = document.getElementById("opt-out")!;
+
+  optIn.addEventListener("click", () => {
+    document.cookie = "no-stonks=false; max-age=31536000; path=/";
+    window.location.href = window.location.href;
+  });
+
+  optOut.addEventListener("click", () => {
+    document.cookie = "no-stonks=true; max-age=31536000; path=/";
+    window.location.href = window.location.href;
+  });
+</script>
+
+<div class="p-4">
+  <h1 class="mb-4 text-2xl font-bold">Stonks Status</h1>
+  <p id="text" class="mb-4 text-center text-lg">Loading...</p>
+  <div class="flex gap-4">
+    <button id="opt-in" class="border-2 border-gray-300 p-4">Opt IN</button>
+    <button id="opt-out" class="border-2 border-gray-300 p-4">Opt OUT</button>
+  </div>
+</div>

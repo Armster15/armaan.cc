@@ -95,9 +95,24 @@ const defaultDescription = "18 y/o developer building consumer-facing products";
       }
     </style>
 
+    <script>
+      // @ts-expect-error - Google Analytics
+      window["ga-disable-TRACKING-ID"] = document.cookie.includes("no-stonks=true");
+
+      // OneDS
+      if (document.cookie.includes("no-stonks=true")) {
+        console.info("Stonks are disabled");
+        const meta = document.createElement("meta");
+        meta.name = "stonks-collect";
+        meta.content = "false";
+        document.head.appendChild(meta);
+      }
+    </script>
+
     {/* Analytics */}
     {
-      import.meta.env.MODE === "production" && (
+      (
+        // import.meta.env.MODE === "production" && (
         <>
           <script
             defer
@@ -110,6 +125,7 @@ const defaultDescription = "18 y/o developer building consumer-facing products";
             <GoogleAnalytics id={import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID} />
           )}
         </>
+        // )
       )
     }
 
