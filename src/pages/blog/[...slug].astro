@@ -33,10 +33,6 @@ const { Content } = await post.render();
   seo={{
     title,
     description,
-    image: {
-      src: `/og-image/${post.slug}.png`,
-      isLargeImage: true,
-    },
   }}
 >
   <PageTitle title={title} class="mb-2" />
