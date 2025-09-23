@@ -109,10 +109,22 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
           </li>
 
           <li>
-            I <Link href="https://en.wikipedia.org/wiki/OR6A2" target="_blank">
-              {"cannot eat cilantro"}
+            I love Taco Bell but strongly dislike <Link
+              href="https://en.wikipedia.org/wiki/OR6A2"
+              target="_blank"
+            >
+              {"cilantro"}
             </Link>
-             even though my whole family loves it
+          </li>
+
+          <li>
+            My <Link class="whitespace-nowrap" href="/icon.svg" target="_blank">
+              <Icon
+                name="icon"
+                aria-hidden
+                class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded-full"
+              />{"old profile picture"}
+            </Link> was an SVG I I hand-wrote from scratch (inspect element to see the code!)
           </li>
 
           <li>
@@ -124,7 +136,7 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
               <Icon
                 name="michigan"
                 aria-hidden
-                class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded-sm bg-[#F26207]"
+                class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded-sm"
               />{"Michigan Wolverines"}
             </Link> and <Link
               class="whitespace-nowrap"
