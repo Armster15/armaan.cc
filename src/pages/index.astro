@@ -1,11 +1,11 @@
 ---
 import Layout from "$/components/Layout.astro";
-import Project from "$/components/Project.astro";
 import Link from "$/components/Link.astro";
 import { Icon } from "astro-icon";
 
-import bessyImg from "$/images/work/bessy.png";
-import coconoteImg from "$/images/work/coconote.webp";
+const LIST_CLASS =
+  "ml-[16px] list-disc space-y-4 marker:text-subtitle/70 sm:ml-[21px] sm:space-y-2 [&_ul>*]:marker:text-subtitle-light";
+const NESTED_LIST_CLASS = "ml-[16px] mt-4 list-disc space-y-4 sm:ml-[21px] sm:mt-2 sm:space-y-2";
 ---
 
 <Layout
@@ -35,9 +35,7 @@ import coconoteImg from "$/images/work/coconote.webp";
       <div class="space-y-2">
         <p>Some things I'm grateful for:</p>
 
-        <ul
-          class="ml-[16px] list-disc space-y-4 marker:text-subtitle/70 sm:ml-[21px] sm:space-y-2 [&_ul>*]:marker:text-subtitle-light"
-        >
+        <ul class={LIST_CLASS}>
           <li>
             I exited <Link href="https://www.bessy.io" target="_blank">my first company</Link> while
             in high school
@@ -47,7 +45,7 @@ import coconoteImg from "$/images/work/coconote.webp";
             I was a founding engineer at <Link href="https://coconote.app" target="_blank">
               {"a consumer startup"}
             </Link> ($300K+ MRR, 1M+ users)
-            <ul class="ml-[16px] mt-4 list-disc space-y-4 sm:ml-[21px] sm:mt-2 sm:space-y-2">
+            <ul class={NESTED_LIST_CLASS}>
               <li>
                 My work went viral on <Link
                   href="https://www.tiktok.com/@sidstudiesadhd/video/7438758153044413742"
@@ -75,12 +73,10 @@ import coconoteImg from "$/images/work/coconote.webp";
       <div class="space-y-2">
         <p>Other fun facts:</p>
 
-        <ul
-          class="ml-[16px] list-disc space-y-4 marker:text-subtitle/70 sm:ml-[21px] sm:space-y-2 [&_ul>*]:marker:text-subtitle-light"
-        >
+        <ul class={LIST_CLASS}>
           <li>
             I'm fairly involved with open source, particularly within the React Native ecosystem
-            <ul class="ml-[16px] mt-4 list-disc space-y-4 sm:ml-[21px] sm:mt-2 sm:space-y-2">
+            <ul class={NESTED_LIST_CLASS}>
               <li>
                 I've contributed code to <Link href="https://github.com/expo/expo/pull/32567">
                   {"Expo"}
