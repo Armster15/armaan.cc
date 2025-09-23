@@ -81,21 +81,6 @@ const canonicalURL = new URL(Astro.url).href;
       }
     </style>
 
-    <style>
-      #background-root {
-        height: 100vh;
-        width: 100vw;
-      }
-
-      /* Override if dvh is supported */
-      @supports (height: 100dvh) {
-        #background-root {
-          height: 100dvh;
-          width: 100dvw;
-        }
-      }
-    </style>
-
     {
       /* Disables analytics if no-stonks=true cookie set. This cookie can be set by visiting /stonks. */
     }
@@ -173,14 +158,13 @@ const canonicalURL = new URL(Astro.url).href;
     }
   </head>
 
-  <body class="flex min-h-screen flex-col sm:items-center sm:px-4">
-    {/* Background */}
-    <div
-      id="background-root"
-      class="fixed top-0 z-[-1] bg-gradient-to-br from-[#fddb92]/[0.4] to-[#d1fdff]/[0.4]"
-    >
-    </div>
-
+  <body
+    class:list={[
+      "flex min-h-screen flex-col sm:items-center sm:px-4",
+      // we do only right on touch devices because Apple has weird behaviors with gradients on iOS and also iOS 26 Safari's new address bar broke `dvh` with `display: fixed` containers
+      "bg-gradient-to-br from-[#fddb92]/[0.4] to-[#d1fdff]/[0.4] [@media(hover:none)]:bg-gradient-to-r",
+    ]}
+  >
     <SkipToContent />
 
     <DesktopNavbar />
