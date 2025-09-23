@@ -1,11 +1,11 @@
 ---
 import Layout from "$/components/Layout.astro";
-import Project from "$/components/Project.astro";
 import Link from "$/components/Link.astro";
 import { Icon } from "astro-icon";
 
-import bessyImg from "$/images/work/bessy.png";
-import coconoteImg from "$/images/work/coconote.webp";
+const LIST_CLASS =
+  "ml-[16px] list-disc space-y-4 marker:text-subtitle/70 sm:ml-[21px] sm:space-y-2 [&_ul>*]:marker:text-subtitle-light";
+const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:space-y-2";
 ---
 
 <Layout
@@ -16,13 +16,13 @@ import coconoteImg from "$/images/work/coconote.webp";
   <h1 class="sr-only">Home</h1>
 
   <div class="space-y-12">
-    <div class="space-y-4 text-pretty leading-7 sm:leading-8">
+    <div class="space-y-6 text-pretty leading-7 sm:leading-8">
       <p id="bessy-notice" class="text-sm sm:text-base" hidden="">
         ‼️ Please do not contact me about Bessy; I sold it and am no longer involved with it :)
       </p>
 
       <p>
-        I'm an 18-year-old software engineer currently working full-time at
+        I'm an 18-year-old software engineer in San Francisco. I'm currently working full-time at
         <Link class="whitespace-nowrap" href="https://replit.com" target="_blank">
           <Icon
             name="replit"
@@ -32,68 +32,79 @@ import coconoteImg from "$/images/work/coconote.webp";
         </Link>.
       </p>
 
-      <p>
-        Some things I'm grateful for include: exiting my first company while in high school,
-        unintentionally getting my work covered by
-        <Link
-          href="https://techcrunch.com/2024/11/20/pdf-to-brainrot-study-tools-are-a-strange-iteration-on-a-tiktok-trend/"
-          target="_blank"
-        >
-          {"TechCrunch"}
-        </Link> and
-        <Link
-          href="https://www.fastcompany.com/91235324/pdf-to-brainrot-tools-are-bringing-tiktok-visuals-to-gen-alphas-academics"
-          target="_blank"
-        >
-          {"Fast Company"}
-        </Link>, and meeting some incredible people while living in San Francisco.
-      </p>
+      <div class="space-y-2">
+        <p>Some things I'm grateful for:</p>
 
-      <p>
-        I'm also regularly involved with open source, particularly within the React Native
-        ecosystem. I've contributed code to <Link href="https://github.com/expo/expo/pull/32567">
-          {"Expo"}
-        </Link>{","} the <Link href="https://github.com/bluesky-social/social-app/pull/7523">
-          {"Bluesky "}
-          <span class="hidden sm:inline">mobile</span>
-          {"app"}
-        </Link>, and <Link href="https://github.com/Armster15/expo-xml-font">a</Link>
-        <Link
-          href="https://github.com/search?q=is%3Apr+author%3AArmster15+react+native&type=pullrequests"
-        >
-          {"bunch"}
-        </Link>
-        {" "}
-        <Link href="https://github.com/Armster15?tab=repositories&q=expo&sort=stargazers">
-          {"more"}
-        </Link>.
-      </p>
-    </div>
+        <ul class={LIST_CLASS}>
+          <li>
+            I exited <Link href="https://www.bessy.io" target="_blank">my first company</Link> while
+            in high school
+          </li>
 
-    <div class="space-y-2">
-      <h2 class="text-xl font-semibold">Some of My Other Notable Work</h2>
+          <li>
+            I was a founding engineer at <Link href="https://coconote.app" target="_blank">
+              {"a consumer startup"}
+            </Link> ($300K+ MRR, 1M+ users)
+            <ul class={NESTED_LIST_CLASS}>
+              <li>
+                My work went viral on <Link
+                  href="https://www.tiktok.com/@sidstudiesadhd/video/7438758153044413742"
+                  target="_blank"
+                >
+                  {"TikTok"}
+                </Link> and was covered by <Link
+                  href="https://techcrunch.com/2024/11/20/pdf-to-brainrot-study-tools-are-a-strange-iteration-on-a-tiktok-trend/"
+                  target="_blank"
+                >
+                  {"TechCrunch"}
+                </Link> and
+                <Link
+                  href="https://www.fastcompany.com/91235324/pdf-to-brainrot-tools-are-bringing-tiktok-visuals-to-gen-alphas-academics"
+                  target="_blank"
+                >
+                  {"Fast Company"}
+                </Link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
 
-      <Project
-        title="Coconote"
-        description="The AI note-taker for students and professionals. $300K+ MRR. 1M+ users worldwide."
-        imgSrc={coconoteImg}
-        imgBgClass="bg-[#f4ede4]"
-        href="https://coconote.app"
-        tags={["React", "React Router 7", "Swift"]}
-        headingType="h3"
-      />
+      <div class="space-y-2">
+        <p>Other fun facts:</p>
 
-      <Project
-        title="Bessy"
-        description="A better way to use Schoology and Infinite Campus. Exited at 18. 100K+ students via purely organic ASO."
-        imgSrc={bessyImg}
-        imgBgClass="bg-[#f4ede4]"
-        href="https://www.bessy.io"
-        tags={["React", "Next.js", "React Native/Expo", "Swift"]}
-        headingType="h3"
-      />
+        <ul class={LIST_CLASS}>
+          <li>
+            I'm fairly involved with open source, particularly within the React Native ecosystem
+            <ul class={NESTED_LIST_CLASS}>
+              <li>
+                I've contributed code to <Link href="https://github.com/expo/expo/pull/32567">
+                  {"Expo"}
+                </Link>{","} the <Link
+                  href="https://github.com/bluesky-social/social-app/pull/7523"
+                >
+                  {"Bluesky "}
+                  <span class="hidden sm:inline">mobile</span>
+                  {"app"}
+                </Link>, and <Link href="https://github.com/Armster15/expo-xml-font">a</Link>
+                <Link
+                  href="https://github.com/search?q=is%3Apr+author%3AArmster15+react+native&type=pullrequests"
+                >
+                  {"bunch"}
+                </Link>
+                {" "}
+                <Link href="https://github.com/Armster15?tab=repositories&q=expo&sort=stargazers">
+                  {"more"}
+                </Link>.
+              </li>
+            </ul>
+          </li>
 
-      <Link href="/work" class="!mt-4 block text-right text-base">View more →</Link>
+          <li>I cannot eat cilantro even though my whole family loves it</li>
+
+          <li>I may or may not hoard too much Michigan Wolverines and Cinnamoroll merch</li>
+        </ul>
+      </div>
     </div>
   </div>
 </Layout>

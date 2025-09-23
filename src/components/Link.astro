@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-interface Props extends HTMLAttributes<"a"> {}
+export interface Props extends HTMLAttributes<"a"> {}
 const { class: className, href, target: _target, ...props } = Astro.props;
 
 // If target is not provided, set it to _blank if link is external, else let it be its default
