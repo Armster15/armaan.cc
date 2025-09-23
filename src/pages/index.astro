@@ -78,8 +78,16 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
             I'm fairly involved with open source, particularly within the React Native ecosystem
             <ul class={NESTED_LIST_CLASS}>
               <li>
-                I've contributed code to <Link href="https://github.com/expo/expo/pull/32567">
-                  {"Expo"}
+                I've contributed code to <Link
+                  class="whitespace-nowrap"
+                  href="https://github.com/expo/expo/pull/32567"
+                  target="_blank"
+                >
+                  <Icon
+                    name="expo"
+                    aria-hidden
+                    class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded"
+                  />{"Expo"}
                 </Link>{","} the <Link
                   href="https://github.com/bluesky-social/social-app/pull/7523"
                 >
@@ -102,7 +110,25 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
 
           <li>I cannot eat cilantro even though my whole family loves it</li>
 
-          <li>I may or may not hoard too much Michigan Wolverines and Cinnamoroll merch</li>
+          <li>
+            I may or may not hoard too much <Link
+              class="whitespace-nowrap"
+              href="https://mgoblue.com"
+              target="_blank"
+            >
+              <Icon
+                name="michigan"
+                aria-hidden
+                class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded-sm bg-[#F26207]"
+              />{"Michigan Wolverines"}
+            </Link> and <Link
+              class="whitespace-nowrap"
+              href="https://www.sanrio.com/collections/cinnamoroll"
+              target="_blank"
+            >
+              {"Cinnamoroll"}
+            </Link> merch
+          </li>
         </ul>
       </div>
     </div>
