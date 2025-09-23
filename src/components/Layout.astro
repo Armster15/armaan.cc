@@ -5,7 +5,6 @@ import DesktopNavbar from "$/components/Navbar/DesktopNavbar.astro";
 import MobileNavbar from "$/components/Navbar/MobileNavbar.astro";
 import SkipToContent from "./SkipToContent.astro";
 import faviconImg from "$/icons/icon.svg";
-import defaultOgImage from "$/images/casual-pfp.jpg?url";
 
 // This project uses the Satoshi font, which is a proprietary font.
 // Please view its license at <root>/assets/satoshi/LICENSE.txt
@@ -49,7 +48,7 @@ const { class: className, seo } = Astro.props;
 
 const imageURL = seo.image?.src
   ? new URL(seo.image.src, Astro.url).href
-  : new URL(defaultOgImage, Astro.url).href;
+  : new URL("/casual-pfp.jpg", Astro.url).href;
 
 const canonicalURL = new URL(Astro.url).href;
 ---
