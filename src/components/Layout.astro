@@ -48,8 +48,6 @@ const { class: className, seo } = Astro.props;
 
 const imageURL = seo.image?.src ? new URL(seo.image.src, Astro.url).href : undefined;
 const canonicalURL = new URL(Astro.url).href;
-
-const defaultDescription = "18 y/o developer building consumer-facing products";
 ---
 
 <html lang="en">
@@ -135,14 +133,14 @@ const defaultDescription = "18 y/o developer building consumer-facing products";
     <title>{seo.title === "Armaan Aggarwal" ? seo.title : seo.title + " | Armaan Aggarwal"}</title>
     <link rel="canonical" href={canonicalURL} />
     <meta name="title" content={seo.title} />
-    <meta name="description" content={seo.description ?? defaultDescription} />
+    <meta name="description" content={seo.description} />
     {seo.themeColor && <meta name="theme-color" content={seo.themeColor} />}
 
     {/* OpenGraph */}
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={seo.title} />
-    <meta property="og:description" content={seo.description ?? defaultDescription} />
+    <meta property="og:description" content={seo.description} />
     <meta property="og:locale" content={seo.og?.locale ?? "en_US"} />
     <meta property="og:site_name" content={seo.og?.site_name ?? "Armaan Aggarwal"} />
     {imageURL && <meta property="og:image" content={imageURL} />}
@@ -150,7 +148,7 @@ const defaultDescription = "18 y/o developer building consumer-facing products";
     {/* Twitter */}
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={seo.title} />
-    <meta property="twitter:description" content={seo.description ?? defaultDescription} />
+    <meta property="twitter:description" content={seo.description} />
     {
       seo.twitter?.card_type ? (
         <meta property="twitter:card" content={seo.twitter?.card_type} />
