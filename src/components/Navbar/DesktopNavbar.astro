@@ -1,7 +1,9 @@
 ---
-import { Icon } from "astro-icon";
+import { Image } from "astro:assets";
 import Socials from "./Socials.astro";
 import Links from "./Links.astro";
+
+import ProfilePicture from "$/../public/casual-pfp.jpg";
 ---
 
 <nav
@@ -14,7 +16,14 @@ import Links from "./Links.astro";
 >
   {/* Icon + "armaan" */}
   <a href="/" class="flex items-center gap-2">
-    <Icon name="icon" class="w-[3.5ch] shrink-0 rounded-full" aria-hidden />
+    <Image
+      src={ProfilePicture}
+      alt={""}
+      class="w-[3.5ch] shrink-0 rounded-full"
+      aria-hidden
+      width={300}
+    />
+
     <header class="text-[22px] font-semibold lowercase leading-[30px]">
       <span>Armaan</span>
       <span class="sr-only lg:not-sr-only">Aggarwal</span>

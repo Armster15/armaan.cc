@@ -1,13 +1,23 @@
 ---
-import { Icon } from "astro-icon";
+import { Image } from "astro:assets";
 import Socials from "./Socials.astro";
 import Links from "./Links.astro";
+
+import ProfilePicture from "$/../public/casual-pfp.jpg";
 ---
 
 <nav class="px-4 pb-0 pt-6 xs:px-6 sm:hidden">
   <div class="flex w-full items-center">
     <div class="flex flex-1 items-start justify-start gap-3">
-      <a class="mt-1" href="/"><Icon name="icon" class="w-[4ch] rounded-full" aria-hidden /></a>
+      <a class="mt-1 shrink-0" href="/">
+        <Image
+          src={ProfilePicture}
+          alt={""}
+          class="w-[3.5ch] rounded-full"
+          aria-hidden
+          width={300}
+        />
+      </a>
 
       <div class="text-left">
         <a href="/">
