@@ -1,7 +1,10 @@
 ---
 import Layout from "$/components/Layout.astro";
 import Link from "$/components/Link.astro";
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon";
+
+import CinnamorollImg from "$/images/cinnamoroll.jpg";
 
 const LIST_CLASS =
   "ml-[16px] list-disc space-y-4 marker:text-subtitle/70 sm:ml-[21px] sm:space-y-2 [&_ul>*]:marker:text-subtitle-light";
@@ -143,7 +146,11 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
               href="https://www.sanrio.com/collections/cinnamoroll"
               target="_blank"
             >
-              {"Cinnamoroll"}
+              <Image
+                src={CinnamorollImg}
+                alt=""
+                class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded-sm"
+              />{"Cinnamoroll"}
             </Link> merch
           </li>
         </ul>
