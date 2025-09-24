@@ -158,13 +158,7 @@ const canonicalURL = new URL(Astro.url).href;
     }
   </head>
 
-  <body
-    class:list={[
-      "flex min-h-screen flex-col sm:items-center sm:px-4",
-      // we do only right on touch devices because Apple has weird behaviors with gradients on iOS and also iOS 26 Safari's new address bar broke `dvh` with `display: fixed` containers
-      "bg-gradient-to-br from-[#fddb92]/[0.4] to-[#d1fdff]/[0.4] [@media(hover:none)]:bg-gradient-to-r",
-    ]}
-  >
+  <body class="flex min-h-screen flex-col bg-[#f7f6e4] sm:items-center sm:px-4">
     <SkipToContent />
 
     <DesktopNavbar />
