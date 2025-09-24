@@ -5,6 +5,7 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon";
 
 import CinnamorollImg from "$/images/cinnamoroll.jpg";
+import ContraryImg from "$/images/contrary.jpg";
 
 const LIST_CLASS =
   "ml-[16px] list-disc space-y-4 marker:text-subtitle/70 sm:ml-[21px] sm:space-y-2 [&_ul>*]:marker:text-subtitle-light";
@@ -128,6 +129,20 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
                 class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded-full"
               />{"old profile picture"}
             </Link> was an SVG I hand-wrote from scratch (inspect element to see the code!)
+          </li>
+
+          <li>
+            I'm a Venture Partner at <Link
+              class="whitespace-nowrap"
+              href="https://contrary.com"
+              target="_blank"
+            >
+              <Image
+                src={ContraryImg}
+                alt=""
+                class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px select-none rounded-full"
+              />{"Contrary"}
+            </Link>, a talent and research-driven investment firm
           </li>
 
           <li>
