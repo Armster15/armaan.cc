@@ -19,6 +19,7 @@ module.exports = {
         "bessy-purple": "#8A15FF",
         subtitle: colors["gray"]["600"],
         "subtitle-light": colors["gray"]["600"] + "80", // opacity
+        "page-bg": "#f7f6e4",
       },
     },
   },
