@@ -2,8 +2,11 @@
 import Layout from "$/components/Layout.astro";
 import Link from "$/components/Link.astro";
 import { Image } from "astro:assets";
-import { Icon } from "astro-icon";
 
+import ReplitIcon from "$/icons/replit.svg";
+import ExpoIcon from "$/icons/expo.svg";
+import MichiganIcon from "$/icons/michigan.svg";
+import PfpIcon from "$/icons/icon.svg";
 import CinnamorollImg from "$/images/cinnamoroll.jpg";
 import ContraryImg from "$/images/contrary.jpg";
 
@@ -28,8 +31,7 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
       <p>
         I'm an 18-year-old software engineer in San Francisco. I'm currently working full-time at
         <Link class="whitespace-nowrap" href="https://replit.com" target="_blank">
-          <Icon
-            name="replit"
+          <ReplitIcon
             aria-hidden
             class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded bg-[#F26207]"
           />{"Replit"}
@@ -87,8 +89,7 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
                   href="https://github.com/expo/expo/pull/32567"
                   target="_blank"
                 >
-                  <Icon
-                    name="expo"
+                  <ExpoIcon
                     aria-hidden
                     class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded"
                   />{"Expo"}
@@ -122,6 +123,7 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
                 src={ContraryImg}
                 alt=""
                 class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px select-none rounded-full"
+                loading="eager"
               />{"Contrary"}
             </Link>, a talent and research-driven investment firm
           </li>
@@ -137,8 +139,7 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
 
           <li>
             My <Link class="whitespace-nowrap" href="/icon.svg" target="_blank">
-              <Icon
-                name="icon"
+              <PfpIcon
                 aria-hidden
                 class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded-full"
               />{"old profile picture"}
@@ -151,8 +152,7 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
               href="https://mgoblue.com"
               target="_blank"
             >
-              <Icon
-                name="michigan"
+              <MichiganIcon
                 aria-hidden
                 class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded-sm"
               />{"Michigan Wolverines"}
@@ -165,6 +165,7 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
                 src={CinnamorollImg}
                 alt=""
                 class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px select-none rounded-sm"
+                loading="eager"
               />{"Cinnamoroll"}
             </Link> merch
           </li>
