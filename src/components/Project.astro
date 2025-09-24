@@ -10,6 +10,7 @@ interface Props {
   imgSrc: LocalImageProps["src"];
   imgBgClass: string;
   imgClass?: string;
+  imgLoading?: LocalImageProps["loading"];
   href: string;
   tags?: string[];
   headingType: "h1" | "h2" | "h3" | "h4" | "h5" | "h5";
@@ -22,6 +23,7 @@ const {
   imgSrc,
   imgBgClass,
   imgClass,
+  imgLoading,
   href,
   tags,
   headingType: Heading,
@@ -50,6 +52,7 @@ const TAG_CLASS_MAP = [
   >
     <Image
       src={imgSrc}
+      loading={imgLoading}
       alt=""
       width="256"
       class:list={[
