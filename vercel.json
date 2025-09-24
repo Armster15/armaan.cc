@@ -9,15 +9,15 @@
   ],
   "rewrites": [
     {
-      "source": "/_oneds",
+      "source": "/_1ds",
       "destination": "https://collector.onedollarstats.com/events"
     },
     {
-      "source": "/_oneds/:slug",
+      "source": "/_1ds/:slug",
       "destination": "https://collector.onedollarstats.com/events/:slug"
     },
     {
-      "source": "/oneds.js",
+      "source": "/1ds.js",
       "destination": "https://assets.onedollarstats.com/stonks.js"
     }
   ]

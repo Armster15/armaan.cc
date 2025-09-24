@@ -17,12 +17,12 @@ const posts = sortPostsByDate(await getCollection("blog"));
 
   <ul class="ml-4 list-outside list-disc space-y-6">
     {
-      posts.map(({ data: { title, date }, slug }) => (
+      posts.map(({ data: { title, date }, id }) => (
         <li class="space-y-1 marker:text-subtitle-light">
           <div>
             <a
               class="font-medium text-subtitle underline-offset-4 hover:underline focus:underline active:underline"
-              href={`/blog/${slug}`}
+              href={`/blog/${id}`}
             >
               {title}
               <span class="select-none" aria-hidden>
