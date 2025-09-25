@@ -1,0 +1,19 @@
+---
+interface Props {
+  isNested?: boolean;
+}
+const { isNested } = Astro.props;
+---
+
+<li>
+  <div class="flex items-start">
+    <span
+      class:list={[
+        "mr-2 mt-[0.9em] h-1 w-1 shrink-0 rounded-full",
+        isNested ? "bg-subtitle-light" : "bg-subtitle/70",
+      ]}
+      aria-hidden></span>
+    <span><slot /></span>
+  </div>
+  <slot name="nested" />
+</li>

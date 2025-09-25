@@ -1,6 +1,8 @@
 ---
 import Layout from "$/components/Layout.astro";
 import Link from "$/components/Link.astro";
+import List from "$/components/List.astro";
+import ListItem from "$/components/ListItem.astro";
 import { Image } from "astro:assets";
 
 import ReplitIcon from "$/icons/replit.svg";
@@ -9,10 +11,6 @@ import MichiganIcon from "$/icons/michigan.svg";
 import PfpIcon from "$/icons/icon.svg";
 import ContraryIcon from "$/icons/contrary.svg";
 import CinnamorollImg from "$/images/cinnamoroll.jpg";
-
-const LIST_CLASS =
-  "ml-[16px] list-disc space-y-4 marker:text-subtitle/70 sm:ml-[21px] sm:space-y-2 [&_ul>*]:marker:text-subtitle-light";
-const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:space-y-2";
 ---
 
 <Layout
@@ -41,18 +39,17 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
       <div class="space-y-2">
         <p>Some things I'm grateful for:</p>
 
-        <ul class={LIST_CLASS}>
-          <li>
+        <List>
+          <ListItem>
             I exited <Link href="https://www.bessy.io" target="_blank">my first company</Link> while
             in high school
-          </li>
-
-          <li>
+          </ListItem>
+          <ListItem>
             I was the founding engineer at <Link href="https://coconote.app" target="_blank">
               {"a consumer startup"}
             </Link> with $300K+ MRR and 1M+ users
-            <ul class={NESTED_LIST_CLASS}>
-              <li>
+            <List slot="nested" isNested>
+              <ListItem isNested>
                 My work went viral on <Link
                   href="https://www.tiktok.com/@sidstudiesadhd/video/7438758153044413742"
                   target="_blank"
@@ -70,20 +67,20 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
                 >
                   {"Fast Company"}
                 </Link>
-              </li>
-            </ul>
-          </li>
-        </ul>
+              </ListItem>
+            </List>
+          </ListItem>
+        </List>
       </div>
 
       <div class="space-y-2">
         <p>Other fun facts:</p>
 
-        <ul class={LIST_CLASS}>
-          <li>
+        <List>
+          <ListItem>
             I'm fairly involved with open source, particularly within the React Native ecosystem
-            <ul class={NESTED_LIST_CLASS}>
-              <li>
+            <List slot="nested" isNested>
+              <ListItem isNested>
                 I've contributed code to <Link
                   class="whitespace-nowrap"
                   href="https://github.com/expo/expo/pull/32567"
@@ -109,11 +106,11 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
                 <Link href="https://github.com/Armster15?tab=repositories&q=expo&sort=stargazers">
                   {"more"}
                 </Link>
-              </li>
-            </ul>
-          </li>
+              </ListItem>
+            </List>
+          </ListItem>
 
-          <li>
+          <ListItem>
             I'm a Venture Partner at <Link
               class="whitespace-nowrap"
               href="https://contrary.com"
@@ -124,27 +121,27 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
                 class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px select-none rounded-full"
               />{"Contrary"}
             </Link>, a talent and research-driven investment firm
-          </li>
+          </ListItem>
 
-          <li>
+          <ListItem>
             I love Taco Bell but strongly dislike <Link
               href="https://en.wikipedia.org/wiki/OR6A2"
               target="_blank"
             >
               {"cilantro"}
             </Link>
-          </li>
+          </ListItem>
 
-          <li>
+          <ListItem>
             My <Link class="whitespace-nowrap" href="/icon.svg" target="_blank">
               <PfpIcon
                 aria-hidden
                 class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded-full"
               />{"old profile picture"}
             </Link> was an SVG I hand-wrote from scratch (inspect element to see the code!)
-          </li>
+          </ListItem>
 
-          <li>
+          <ListItem>
             I may or may not hoard too much <Link
               class="whitespace-nowrap"
               href="https://mgoblue.com"
@@ -166,8 +163,8 @@ const NESTED_LIST_CLASS = "ml-[16px] mt-2 list-disc space-y-4 sm:ml-[21px] sm:sp
                 loading="eager"
               />{"Cinnamoroll"}
             </Link> merch
-          </li>
-        </ul>
+          </ListItem>
+        </List>
       </div>
     </div>
   </div>
