@@ -25,7 +25,7 @@ const posts = sortPostsByDate(await getCollection("blog"));
               href={`/blog/${id}`}
             >
               {title}
-              <span class="select-none" aria-hidden>
+              <span class="select-none" aria-hidden="true">
                 →
               </span>
             </a>
