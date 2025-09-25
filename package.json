@@ -7,7 +7,8 @@
     "build": "astro build",
     "serve": "astro preview",
     "astro": "astro",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
