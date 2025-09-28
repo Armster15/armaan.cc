@@ -1,0 +1,28 @@
+---
+import Link from "./Link.astro";
+
+interface Props {
+  firstName: string;
+  lastName: string;
+  imageUrl: string;
+  title: string;
+  quoteText: string;
+  href: string;
+}
+
+const { firstName, lastName, imageUrl, title, quoteText } = Astro.props as Props;
+---
+
+<p class={`before:content-['“'] after:content-['”']`}>{quoteText}</p>
+<p class="ml-4 text-subtitle sm:ml-5">
+  —
+  <span class="whitespace-nowrap"
+    ><img
+      src={imageUrl}
+      alt=""
+      class="ml-[2px] mr-[4px] inline-block h-[1.2em] w-[1.2em] -translate-y-px select-none rounded-full"
+      loading="eager"
+    />{firstName}</span
+  >
+  {lastName}, <span class="italic">{title}</span>
+</p>

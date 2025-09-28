@@ -9,9 +9,8 @@ import ProfilePicture from "$/../public/casual-pfp.jpg";
 <nav
   id="desktop-navbar"
   class:list={[
-    "mt-4 hidden sm:flex lg:mt-8",
-    "sticky inset-x-0 top-0 z-10 w-full max-w-4xl rounded-xl bg-white/10 px-5 py-4 shadow backdrop-blur-md transition-shadow duration-100 *:flex-1",
-    "data-[at-top]:rounded-t-none data-[at-top]:shadow-md",
+    "mt-4 hidden border-[0.5px] border-[#f0ede6] shadow-sm sm:flex lg:mt-8",
+    "sticky inset-x-0 top-2 z-10 w-full max-w-4xl rounded-full py-4 pl-4 pr-6 backdrop-blur-md transition-shadow duration-100 *:flex-1",
   ]}
 >
   {/* Icon + "armaan" */}
@@ -20,7 +19,7 @@ import ProfilePicture from "$/../public/casual-pfp.jpg";
       src={ProfilePicture}
       alt={""}
       class="w-[3.5ch] shrink-0 rounded-full"
-      aria-hidden
+      aria-hidden="true"
       width={300}
       loading="eager"
     />
@@ -36,10 +35,25 @@ import ProfilePicture from "$/../public/casual-pfp.jpg";
   <Socials />
 </nav>
 
+<style>
+  nav[data-at-top] {
+    border-color: transparent;
+
+    /* Open Props: --inner-shadow-2 */
+    box-shadow:
+      rgba(37, 38, 39, 0.1) 0px 1px 4px 0px inset,
+      rgb(255, 255, 255) 0px -0.5px 0px 0px inset,
+      rgba(0, 0, 0, 0.067) 0px 0.5px 0px 0px inset;
+  }
+</style>
+
 {/* Adds/removes data-at-top attr from navbar if navbar touches top of viewport */}
 <script>
   function main() {
     const navbar = document.getElementById("desktop-navbar")!;
+
+    const topValue = window.getComputedStyle(navbar).top; // e.g. "8px"
+    const topInPixels = parseInt(topValue, 10);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -54,8 +68,9 @@ import ProfilePicture from "$/../public/casual-pfp.jpg";
       {
         threshold: [1.0],
         // This root margin creates a virtual margin above the viewport
-        // to detect when navbar approaches the top
-        rootMargin: "-1px 0px 0px 0px",
+        // to detect when navbar approaches the top.
+        // The "+ 1" is to ensure the intersection ratio is < 1
+        rootMargin: `-${topInPixels + 1}px 0px 0px 0px`,
       },
     );
 
