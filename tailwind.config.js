@@ -17,8 +17,8 @@ module.exports = {
         "armaan-purple": "#7b1ea2",
         "bessy-purple-light": "#E3C7FF",
         "bessy-purple": "#8A15FF",
-        subtitle: colors["gray"]["600"],
-        "subtitle-light": colors["gray"]["600"] + "80", // opacity
+        subtitle: "#525252",
+        "subtitle-light": "#525252" + "80", // opacity
         "page-bg": "#fefcf8",
       },
     },
