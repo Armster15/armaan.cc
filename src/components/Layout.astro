@@ -47,7 +47,7 @@ const { class: className, seo } = Astro.props;
 
 const imageURL = seo.image?.src
   ? new URL(seo.image.src, Astro.url).href
-  : new URL("/casual-pfp.jpg", Astro.url).href;
+  : new URL("/headshot.jpg", Astro.url).href;
 
 const canonicalURL = new URL(Astro.url).href;
 ---
