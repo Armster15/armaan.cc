@@ -6,7 +6,6 @@ import ListItem from "$/components/ListItem.astro";
 import { Image } from "astro:assets";
 
 import ReplitIcon from "$/icons/replit.svg";
-import ExpoIcon from "$/icons/expo.svg";
 import MichiganIcon from "$/icons/michigan.svg";
 import PfpIcon from "$/icons/icon.svg";
 import CinnamorollImg from "$/images/cinnamoroll.jpg";
@@ -52,14 +51,10 @@ import CinnamorollImg from "$/images/cinnamoroll.jpg";
             <List slot="nested" isNested>
               <ListItem isNested>
                 I've contributed code to <Link
-                  class="whitespace-nowrap"
                   href="https://github.com/expo/expo/pull/32567"
                   target="_blank"
                 >
-                  <ExpoIcon
-                    aria-hidden="true"
-                    class="ml-[2px] mr-[4px] inline-block h-[1em] w-[1em] -translate-y-px rounded"
-                  />{"Expo"}
+                  {"Expo"}
                 </Link>{","} the <Link
                   href="https://github.com/bluesky-social/social-app/pull/7523"
                 >
