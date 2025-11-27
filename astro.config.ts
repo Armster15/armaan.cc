@@ -34,6 +34,11 @@ export default defineConfig({
       changefreq: "weekly",
       priority: 0.7,
       lastmod: new Date(),
+      // all pages except /stonks
+      filter: (page) => {
+        const { pathname } = new URL(page);
+        return !pathname.startsWith("/stonks");
+      },
     }),
   ],
 });
