@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --breakpoint-xxs: 335px;
+  --breakpoint-xs: 400px;
+
+  --font-sans: "Satoshi Variable", sans-serif;
+
+  --color-subtitle: #525252;
+  --color-subtitle-light: #52525280;
+  --color-page-bg: #fefcf8;
+}
+
+/* Turn off view transition animations */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+/* Prevents code blocks from overflowing */
+.expressive-code {
+  @apply max-w-4xl;
+}
+
+/* Prevent layout shifts caused by scrollbar */
+html {
+  scrollbar-gutter: stable;
+}
