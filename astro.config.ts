@@ -19,7 +19,7 @@ export default defineConfig({
   integrations: [
     icon(),
     expressiveCode({
-      // remove box shadow-sm from code snippets
+      // remove box shadow from code snippets
       styleOverrides: {
         frames: {
           frameBoxShadowCssValue: "",
