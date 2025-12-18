@@ -1,9 +1,9 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,7 +17,6 @@ export default defineConfig({
     "/projects": "/work",
   },
   integrations: [
-    tailwind(),
     icon(),
     expressiveCode({
       // remove box shadow from code snippets
@@ -41,4 +40,7 @@ export default defineConfig({
       },
     }),
   ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

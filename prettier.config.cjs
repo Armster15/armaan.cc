@@ -13,4 +13,5 @@ module.exports = {
       },
     },
   ],
+  tailwindStylesheet: "./src/styles/globals.css",
 };

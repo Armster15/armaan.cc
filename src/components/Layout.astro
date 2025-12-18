@@ -1,4 +1,6 @@
 ---
+import "$/styles/globals.css";
+
 import GoogleAnalytics from "$/components/GoogleAnalytics.astro";
 import DesktopNavbar from "$/components/Navbar/DesktopNavbar.astro";
 import MobileNavbar from "$/components/Navbar/MobileNavbar.astro";
@@ -59,26 +61,6 @@ const canonicalURL = new URL(Astro.url).href;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-
-    {/* <ViewTransitions /> */}
-
-    <style is:global>
-      /* Turn off view transition animations */
-      ::view-transition-old(root),
-      ::view-transition-new(root) {
-        animation: none;
-      }
-
-      /* Prevents code blocks from overflowing */
-      .expressive-code {
-        @apply max-w-4xl;
-      }
-
-      /* Prevent layout shifts caused by scrollbar */
-      html {
-        scrollbar-gutter: stable;
-      }
-    </style>
 
     {
       /* Disables analytics if no-stonks=true cookie set. This cookie can be set by visiting /stonks. */

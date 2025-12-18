@@ -9,7 +9,7 @@ export interface Props {
 const { icon } = Astro.props;
 ---
 
-<aside class="not-prose flex gap-2 rounded-lg border-2 bg-white/70 p-4">
+<aside class="not-prose flex gap-2 rounded-lg border-2 border-gray-200 bg-white/70 p-4">
   {
     icon && (
       <span class="text-xl" aria-label={icon["aria-label"]} aria-hidden={!icon["aria-label"]}>

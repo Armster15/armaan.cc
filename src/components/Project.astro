@@ -42,7 +42,7 @@ const TAG_CLASS_MAP = [
 <a
   href={href}
   target={target}
-  class="group flex h-full flex-col rounded-2xl bg-white/50 shadow duration-200 hover:shadow-lg focus:shadow-lg active:shadow-lg sm:flex-row"
+  class="group flex h-full flex-col rounded-2xl bg-white/50 shadow-sm duration-200 hover:shadow-lg focus:shadow-lg active:shadow-lg sm:flex-row"
 >
   <div
     class:list={[
@@ -56,7 +56,7 @@ const TAG_CLASS_MAP = [
       alt=""
       width="256"
       class:list={[
-        "w-16 rounded-2xl shadow duration-150",
+        "w-16 rounded-2xl shadow-sm duration-150",
         "group-hover:-rotate-2 group-focus:-rotate-2 group-active:-rotate-2",
         "group-hover:scale-[1.03] group-focus:scale-[1.03] group-active:scale-[1.03]",
         imgClass,
@@ -67,7 +67,7 @@ const TAG_CLASS_MAP = [
   <div class="flex flex-1 flex-col justify-between p-4">
     <div>
       <div class="*:inline-block *:w-fit">
-        <Heading class="break-all text-lg font-medium">
+        <Heading class="text-lg font-medium break-all">
           <span>{title}</span>
           <Icon
             class="inline -rotate-45 text-subtitle-light duration-200 group-hover:text-subtitle group-focus:text-subtitle group-active:text-subtitle sm:hidden"
@@ -78,17 +78,17 @@ const TAG_CLASS_MAP = [
         </Heading>
 
         {/* Role on desktop */}
-        {role && <p class="text-base italic text-subtitle max-sm:hidden">— {role}</p>}
+        {role && <p class="text-base text-subtitle italic max-sm:hidden">— {role}</p>}
       </div>
 
       {/* Role on mobile */}
-      {role && <p class="mb-2 text-sm italic text-subtitle sm:hidden">{role}</p>}
+      {role && <p class="mb-2 text-sm text-subtitle italic sm:hidden">{role}</p>}
 
       {
         /* Using <pre> so you can pass "\n" to description strings and have that rendered as line breaks */
       }
       <pre
-        class="whitespace-pre-wrap font-[inherit] text-sm font-normal leading-6 text-subtitle">{description}</pre>
+        class="font-[inherit] text-sm leading-6 font-normal whitespace-pre-wrap text-subtitle">{description}</pre>
     </div>
 
     {
@@ -97,7 +97,7 @@ const TAG_CLASS_MAP = [
           {tags.map((tag, index) => (
             <span
               class:list={[
-                "mr-2 inline-flex rounded  px-2 py-0.5 text-xs font-medium",
+                "mr-2 inline-flex rounded-sm px-2 py-0.5 text-xs font-medium",
                 TAG_CLASS_MAP[index],
               ]}
             >
@@ -113,8 +113,8 @@ const TAG_CLASS_MAP = [
     <Icon
       class:list={[
         "-rotate-45 text-subtitle-light duration-200",
-        "group-hover:-translate-y-[1px] group-focus:-translate-y-[1px] group-active:-translate-y-[1px]",
-        "group-hover:translate-x-[1px] group-focus:translate-x-[1px] group-active:translate-x-[1px]",
+        "group-hover:-translate-y-px group-focus:-translate-y-px group-active:-translate-y-px",
+        "group-hover:translate-x-px group-focus:translate-x-px group-active:translate-x-px",
         "group-hover:text-subtitle group-focus:text-subtitle group-active:text-subtitle",
       ]}
       name="ion:arrow-forward"

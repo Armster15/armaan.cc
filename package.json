@@ -14,23 +14,23 @@
     "@astrojs/check": "0.9.4",
     "@astrojs/mdx": "4.3.6",
     "@astrojs/sitemap": "3.6.0",
-    "@astrojs/tailwind": "6.0.2",
     "@iconify-json/ion": "^1.2.6",
     "@iconify-json/simple-icons": "^1.2.53",
-    "@tailwindcss/typography": "^0.5.10",
+    "@tailwindcss/vite": "^4.1.18",
     "astro": "5.13.10",
     "astro-expressive-code": "^0.41.3",
     "astro-icon": "^1.1.5",
     "sharp": "^0.32.6",
-    "tailwindcss": "^3.4.3",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.5.6"
+    "prettier-plugin-tailwindcss": "^0.7.2"
   },
   "trustedDependencies": [
     "sharp"
