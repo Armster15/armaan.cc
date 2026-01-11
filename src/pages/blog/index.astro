@@ -1,9 +1,10 @@
 ---
 import { getCollection } from "astro:content";
-import { formatDate, sortPostsByDate } from "$/lib/date";
 
 import Layout from "$/components/Layout.astro";
 import PageTitle from "$/components/PageTitle.astro";
+
+import { formatDate, sortPostsByDate } from "$/lib/date";
 
 const posts = sortPostsByDate(await getCollection("blog"));
 ---
