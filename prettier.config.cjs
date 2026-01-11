@@ -16,12 +16,12 @@ module.exports = {
   ],
   tailwindStylesheet: "./src/styles/globals.css",
   importOrder: [
-    // astro, builtin, third-party
+    // astro
     "^astro($|:|/)",
     "^@astrojs/",
     "",
 
-    // third party modules, nodejs
+    // nodejs, third party modules
     "<BUILTIN_MODULES>",
     "<THIRD_PARTY_MODULES>",
     "",
