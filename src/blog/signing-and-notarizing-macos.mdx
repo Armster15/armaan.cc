@@ -9,14 +9,15 @@ date: "June 23, 2025"
 {/* "This is because `codesign` and `notarytool` do not recursively sign nor notarize nested executables". -> This may need to be changed for `.pkg`s */}
 
 import { Image } from "astro:assets";
+
 import Aside from "$/components/Aside.astro";
 
-import xcodeViewTeamsImg from "$/images/blog-images/signing-and-notarizing-macos/xcode-view-teams.png";
-import xcodeViewCertificatesImg from "$/images/blog-images/signing-and-notarizing-macos/xcode-view-certificates.png";
-import xcodeExportCertificateImg from "$/images/blog-images/signing-and-notarizing-macos/xcode-export-certificate.png";
-import downloadCertificateImg from "$/images/blog-images/signing-and-notarizing-macos/download-certificate.png";
-import creatingTeamApiKey from "$/images/blog-images/signing-and-notarizing-macos/creating-team-api-key.png";
 import creatingIndApiKey from "$/images/blog-images/signing-and-notarizing-macos/creating-ind-api-key.png";
+import creatingTeamApiKey from "$/images/blog-images/signing-and-notarizing-macos/creating-team-api-key.png";
+import downloadCertificateImg from "$/images/blog-images/signing-and-notarizing-macos/download-certificate.png";
+import xcodeExportCertificateImg from "$/images/blog-images/signing-and-notarizing-macos/xcode-export-certificate.png";
+import xcodeViewCertificatesImg from "$/images/blog-images/signing-and-notarizing-macos/xcode-view-certificates.png";
+import xcodeViewTeamsImg from "$/images/blog-images/signing-and-notarizing-macos/xcode-view-teams.png";
 
 Recently I was building an Electron app and we hit a point where we wanted to release it to the world. Since I mostly do stuff with JavaScript, my day-to-day routine for this is usually `pnpm build` and `git push`. Oh how spoiled I am, for the world of desktop apps is far different.
 
