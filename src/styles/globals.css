@@ -31,7 +31,7 @@
 
   --color-surface: oklch(0.98 0.01 var(--shades-hue));
   --color-surface-elevated-1: oklch(0.993 0.009 var(--shades-hue));
-  --color-surface-elevated-2: oklch(0.97 0.01 var(--shades-hue));
+  --color-surface-elevated-2: oklch(0.95 0.02 var(--shades-hue));
 
   --color-shades-border: oklch(0.945 calc(var(--shades-chroma)) var(--shades-hue));
 
