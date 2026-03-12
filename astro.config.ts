@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 
@@ -17,6 +17,27 @@ export default defineConfig({
   redirects: {
     "/projects": "/work",
   },
+  // This project uses the Satoshi font, which is a proprietary font.
+  // Please view its license at ./assets/satoshi/LICENSE.txt
+  fonts: [
+    {
+      name: "Satoshi Variable",
+      cssVariable: "--font-satoshi",
+      provider: fontProviders.local(),
+      options: {
+        variants: [
+          {
+            src: [
+              "./assets/satoshi/Satoshi-Variable.woff2",
+              "./assets/satoshi/Satoshi-Variable.woff",
+              "./assets/satoshi/Satoshi-Variable.ttf",
+            ],
+            weight: "300 900",
+          },
+        ],
+      },
+    },
+  ],
   integrations: [
     icon(),
     expressiveCode({

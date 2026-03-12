@@ -1,8 +1,0 @@
-@font-face {
-  font-family: "Satoshi Variable";
-  src: url("./Satoshi-Variable.woff2"), url("./Satoshi-Variable.woff"),
-    url("./Satoshi-Variable.ttf");
-  font-weight: 300 900;
-  font-display: swap;
-  font-style: normal;
-}

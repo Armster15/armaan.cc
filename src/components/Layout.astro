@@ -1,16 +1,14 @@
 ---
 import "$/styles/globals.css";
 
+import { Font } from "astro:assets";
+
 import GoogleAnalytics from "$/components/GoogleAnalytics.astro";
 import DesktopNavbar from "$/components/Navbar/DesktopNavbar.astro";
 import MobileNavbar from "$/components/Navbar/MobileNavbar.astro";
 import SkipToContent from "$/components/SkipToContent.astro";
 
 import faviconImg from "$/icons/icon.svg";
-
-// This project uses the Satoshi font, which is a proprietary font.
-// Please view its license at <root>/assets/satoshi/LICENSE.txt
-import "../../assets/satoshi/satoshi.css";
 
 interface Props {
   class?: string;
@@ -62,6 +60,8 @@ const canonicalURL = new URL(Astro.url).href;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <Font cssVariable="--font-satoshi" preload />
 
     {
       /* Disables analytics if no-stonks=true cookie set. This cookie can be set by visiting /stonks. */
