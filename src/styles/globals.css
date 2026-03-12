@@ -7,9 +7,46 @@
 
   --font-sans: var(--font-satoshi);
 
-  --color-subtitle: #525252;
-  --color-subtitle-light: #52525280;
-  --color-page-bg: #fefcf8;
+  /*
+  Colors are oklch and are hand-written manually by me :)
+
+  L is perceived lightness. It ranges from 0 (black) to 1 (white). 
+  
+  C is chroma (color saturation). In theory, its range is 0 (gray) -> ∞. In practice the limit 
+  depends on the display gamut and hue. Maximum chroma is roughly ~0.32 in sRGB and ~0.37 in Display-P3.
+  Note: because the range is small, chroma is really sensitive: a change like 0.05 → 0.10 is already a large visual shift.
+  Practical rules: 0–0.02 → nearly gray, 0.02–0.08 → subtle UI colors, 0.08–0.18 → normal saturated colors, 0.18–0.32 → very vivid (near sRGB limits)
+
+  H is the hue angle. It goes from 0 to 360, through red 20, yellow 90, green 140, blue 220, 
+  purple 320 and then back to red. You can use Roy G. Biv mnemonic by giving around 50° to each letter. 
+  Since it is an angle, 0 and 360 encode the same hue. H can be written with units 60deg, or without 60.
+  
+  a is opacity (0-1 or 0-100%).
+
+  - https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl + manual modifications
+  */
+
+  --shades-hue: 85;
+  --shades-chroma: 0.02; /* muted */
+
+  --color-surface: oklch(0.98 0.01 var(--shades-hue));
+  --color-surface-elevated-1: oklch(0.993 0.009 var(--shades-hue));
+  --color-surface-elevated-2: oklch(0.97 0.01 var(--shades-hue));
+
+  --color-shades-border: oklch(0.945 calc(var(--shades-chroma)) var(--shades-hue));
+
+  --color-shades-shadow-muted: oklch(0.95 var(--shades-chroma) var(--shades-hue));
+  --color-shades-shadow: oklch(0.91 calc(var(--shades-chroma)) var(--shades-hue));
+
+  --color-shades-title: oklch(0.1 0 var(--shades-hue));
+
+  --color-subtitle: oklch(0.45 var(--shades-chroma) var(--shades-hue));
+  --color-subtitle-light: oklch(0.74 var(--shades-chroma) var(--shades-hue));
+
+  --color-caption: oklch(0.554 var(--shades-chroma) var(--shades-hue));
+
+  --color-underline: oklch(0.84 var(--shades-chroma) var(--shades-hue));
+  --color-underline-active: oklch(0.7 var(--shades-chroma) var(--shades-hue));
 }
 
 /* Turn off view transition animations */
