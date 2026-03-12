@@ -5,7 +5,7 @@
   --breakpoint-xxs: 335px;
   --breakpoint-xs: 400px;
 
-  --font-sans: "Satoshi Variable", sans-serif;
+  --font-sans: var(--font-satoshi);
 
   --color-subtitle: #525252;
   --color-subtitle-light: #52525280;
