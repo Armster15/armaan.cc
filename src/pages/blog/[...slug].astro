@@ -39,14 +39,19 @@ const { Content } = await render(post);
 >
   <PageTitle title={title} class="mb-2" />
 
-  <p class="mb-6 text-base text-subtitle">{formatDate(date)}</p>
+  <p class="mb-6 text-base text-caption">{formatDate(date)}</p>
 
   <div
     class:list={[
-      "prose mb-8 max-w-none text-subtitle",
+      "prose mb-8 max-w-none",
       "prose-headings:font-semibold prose-strong:font-semibold prose-code:break-all",
       // These are the same styles that are applied when `prose-lg` is used
       "leading-8 sm:prose-li:text-base",
+
+      // https://github.com/tailwindlabs/tailwindcss-typography?tab=readme-ov-file#element-modifiers
+      "text-subtitle marker:text-caption prose-code:text-shades-title",
+      // https://github.com/tailwindlabs/tailwindcss-typography?tab=readme-ov-file#adding-custom-color-themes
+      "[--tw-prose-quote-borders:var(--color-subtitle-light)]",
     ]}
   >
     <Content components={{ a: Link }} />
