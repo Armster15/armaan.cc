@@ -33,17 +33,20 @@ const {
 } = Astro.props;
 
 const TAG_CLASS_MAP = [
-  "bg-gray-100 text-gray-800",
-  "bg-blue-100 text-blue-800",
-  "bg-indigo-100 text-indigo-800",
-  "bg-green-100 text-green-800",
+  "bg-surface-elevated-2/75 text-subtitle",
+  "bg-blue-100/75 text-blue-800",
+  "bg-indigo-100/75 text-indigo-800",
+  "bg-green-100/75 text-green-800",
 ];
 ---
 
 <a
   href={href}
   target={target}
-  class="group flex h-full flex-col rounded-2xl bg-white/50 shadow-sm duration-200 hover:shadow-lg focus:shadow-lg active:shadow-lg sm:flex-row"
+  class:list={[
+    "group flex h-full flex-col rounded-2xl bg-surface-elevated-1 duration-200 sm:flex-row",
+    "shadow-xs shadow-shades-shadow hover:shadow-md focus:shadow-md active:shadow-md",
+  ]}
 >
   <div
     class:list={[
