@@ -41,10 +41,28 @@ export default defineConfig({
   integrations: [
     icon(),
     expressiveCode({
-      // remove box shadow from code snippets
+      // https://expressive-code.com/reference/style-overrides
       styleOverrides: {
+        borderColor: "var(--color-shades-border)",
+        codeBackground: "var(--color-surface-elevated-1)",
+        borderRadius: "var(--radius-lg)", // same as Aside.astro
         frames: {
-          frameBoxShadowCssValue: "",
+          frameBoxShadowCssValue: "", // remove box shadow from code snippets
+
+          editorBackground: "var(--color-surface-elevated-1)",
+          editorTabBarBackground: "var(--color-surface-elevated-2)",
+          editorTabBarBorderBottomColor: "var(--color-shades-border)",
+          editorActiveTabBackground: "var(--color-surface-elevated-1)",
+          editorActiveTabIndicatorBottomColor: "var(--color-surface-elevated-1)",
+          editorActiveTabBorderColor: "var(--color-shades-border)",
+
+          terminalBackground: "var(--color-surface-elevated-1)",
+          terminalTitlebarBackground: "var(--color-surface-elevated-2)",
+          terminalTitlebarBorderBottomColor: "var(--color-shades-border)",
+
+          inlineButtonBorder: "var(--color-shades-border)",
+          inlineButtonBorderOpacity: "100%",
+          inlineButtonForeground: "var(--color-subtitle)",
         },
       },
       themes: ["github-light"],
