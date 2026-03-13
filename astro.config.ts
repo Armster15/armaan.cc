@@ -5,6 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
+import { Features } from "lightningcss";
 
 // https://astro.build/config
 export default defineConfig({
@@ -84,6 +85,10 @@ export default defineConfig({
     plugins: [tailwindcss()],
     css: {
       transformer: "lightningcss",
+      lightningcss: {
+        include: Features.LightDark, // safe-guard to ensure that the light-dark css function is always transformed
+        exclude: Features.OklabColors, // don't transform oklab/oklch colors
+      },
     },
   },
 });
