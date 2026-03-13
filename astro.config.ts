@@ -65,8 +65,8 @@ export default defineConfig({
           inlineButtonForeground: "var(--color-subtitle)",
         },
       },
-      themes: ["github-light"],
-      useDarkModeMediaQuery: false,
+      themes: ["github-light", "github-dark"],
+      useDarkModeMediaQuery: true,
     }),
     mdx(),
     sitemap({
