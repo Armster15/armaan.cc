@@ -17,7 +17,7 @@
     "@iconify-json/ion": "^1.2.6",
     "@iconify-json/simple-icons": "^1.2.53",
     "@tailwindcss/vite": "^4.2.1",
-    "astro": "6.0.3",
+    "astro": "^6.0.4",
     "astro-expressive-code": "^0.41.7",
     "astro-icon": "^1.1.5",
     "sharp": "^0.32.6",
