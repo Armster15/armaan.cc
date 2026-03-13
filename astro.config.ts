@@ -82,10 +82,6 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
-    // TEMPORARY: the light-dark css function is kinda buggy in chrome, but fine in other browsers like firefox.
-    // therefore, we use lightningcss to transform the css so it doesn't use the light-dark function.
-    // ideally we get rid of this once chrome fixes the bug.
-    // https://groups.google.com/g/google-chrome-developer-tools/c/Wpj1uliTa3g
     css: {
       transformer: "lightningcss",
     },
