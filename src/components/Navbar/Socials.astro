@@ -1,12 +1,14 @@
 ---
-import { Icon } from "astro-icon/components";
+import GithubIcon from "$/icons/vendored/simple-icons:github.svg";
+import LinkedInIcon from "$/icons/vendored/simple-icons:linkedin.svg";
+import XIcon from "$/icons/vendored/simple-icons:x.svg";
 ---
 
 <div
   class="flex items-center gap-4 *:text-subtitle-light *:duration-100 *:hover:text-subtitle *:focus:text-subtitle *:active:text-subtitle sm:justify-end"
 >
   <a href="https://github.com/Armster15" target="_blank" aria-label="GitHub" title="GitHub">
-    <Icon class="h-6 w-6" name="simple-icons:github" />
+    <GithubIcon class="h-6 w-6" />
   </a>
 
   <a
@@ -15,7 +17,7 @@ import { Icon } from "astro-icon/components";
     aria-label="X (formerly known as Twitter)"
     title="X (formerly known as Twitter)"
   >
-    <Icon class="h-6 w-6" name="simple-icons:x" />
+    <XIcon class="h-6 w-6" />
   </a>
 
   <a
@@ -24,6 +26,6 @@ import { Icon } from "astro-icon/components";
     aria-label="LinkedIn"
     title="LinkedIn"
   >
-    <Icon class="h-6 w-6" name="simple-icons:linkedin" />
+    <LinkedInIcon class="h-6 w-6" />
   </a>
 </div>
