@@ -70,7 +70,7 @@
 
   --color-subtitle: light-dark(
     oklch(0.45 var(--shades-chroma) var(--shades-hue)),
-    oklch(0.92 var(--shades-chroma) var(--shades-hue))
+    oklch(0.955 var(--shades-chroma) var(--shades-hue))
   );
 
   --color-subtitle-light: light-dark(
