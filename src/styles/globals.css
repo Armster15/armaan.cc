@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+:root {
+  color-scheme: light dark;
+}
+
 @theme {
   --breakpoint-xxs: 335px;
   --breakpoint-xs: 400px;
@@ -29,24 +33,65 @@
   --shades-hue: 85;
   --shades-chroma: 0.02; /* muted */
 
-  --color-surface: oklch(0.98 0.01 var(--shades-hue));
-  --color-surface-elevated-1: oklch(0.993 0.009 var(--shades-hue));
-  --color-surface-elevated-2: oklch(0.95 0.02 var(--shades-hue));
+  --color-surface: light-dark(
+    oklch(0.98 0.01 var(--shades-hue)),
+    oklch(0.19 0.01 var(--shades-hue))
+  );
 
-  --color-shades-border: oklch(0.945 calc(var(--shades-chroma)) var(--shades-hue));
+  --color-surface-elevated-1: light-dark(
+    oklch(0.993 0.009 var(--shades-hue)),
+    oklch(0.23 0.01 var(--shades-hue))
+  );
 
-  --color-shades-shadow-muted: oklch(0.95 var(--shades-chroma) var(--shades-hue));
-  --color-shades-shadow: oklch(0.91 calc(var(--shades-chroma)) var(--shades-hue));
+  --color-surface-elevated-2: light-dark(
+    oklch(0.95 0.02 var(--shades-hue)),
+    oklch(0.32 0.011 var(--shades-hue))
+  );
 
-  --color-shades-title: oklch(0.1 0 var(--shades-hue));
+  --color-shades-border: light-dark(
+    oklch(0.945 calc(var(--shades-chroma)) var(--shades-hue)),
+    oklch(0.23 calc(var(--shades-chroma)) var(--shades-hue))
+  );
 
-  --color-subtitle: oklch(0.45 var(--shades-chroma) var(--shades-hue));
-  --color-subtitle-light: oklch(0.74 var(--shades-chroma) var(--shades-hue));
+  --color-shades-shadow-muted: light-dark(
+    oklch(0.95 var(--shades-chroma) var(--shades-hue)),
+    oklch(0.28 0.015 var(--shades-hue))
+  );
 
-  --color-caption: oklch(0.554 var(--shades-chroma) var(--shades-hue));
+  --color-shades-shadow: light-dark(
+    oklch(0.91 var(--shades-chroma) var(--shades-hue)),
+    oklch(0.3 0.01 var(--shades-hue))
+  );
 
-  --color-underline: oklch(0.84 var(--shades-chroma) var(--shades-hue));
-  --color-underline-active: oklch(0.7 var(--shades-chroma) var(--shades-hue));
+  --color-shades-title: light-dark(
+    oklch(0.1 0 var(--shades-hue)),
+    oklch(0.995 0.008 var(--shades-hue))
+  );
+
+  --color-subtitle: light-dark(
+    oklch(0.45 var(--shades-chroma) var(--shades-hue)),
+    oklch(0.92 var(--shades-chroma) var(--shades-hue))
+  );
+
+  --color-subtitle-light: light-dark(
+    oklch(0.74 var(--shades-chroma) var(--shades-hue)),
+    oklch(0.67 var(--shades-chroma) var(--shades-hue))
+  );
+
+  --color-caption: light-dark(
+    oklch(0.554 var(--shades-chroma) var(--shades-hue)),
+    oklch(0.8 var(--shades-chroma) var(--shades-hue))
+  );
+
+  --color-underline: light-dark(
+    oklch(0.84 var(--shades-chroma) var(--shades-hue)),
+    oklch(0.5 var(--shades-chroma) var(--shades-hue))
+  );
+
+  --color-underline-active: light-dark(
+    oklch(0.7 var(--shades-chroma) var(--shades-hue)),
+    oklch(0.75 var(--shades-chroma) var(--shades-hue))
+  );
 }
 
 /* Turn off view transition animations */
