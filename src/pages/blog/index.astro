@@ -20,18 +20,21 @@ const posts = sortPostsByDate(await getCollection("blog"));
     {
       posts.map(({ data: { title, date }, id }) => (
         <li class="w-fit marker:text-subtitle-light">
-          <a class="group w-fit space-y-0.5" href={`/blog/${id}`}>
-            <p class="font-medium text-subtitle">
-              {/* rendered blog post title -- below prettier-ignore is required or else it will add a blank space after the text */}
-              {/* prettier-ignore */}
-              <span class="decoration-underline underline-offset-4 group-hover:underline group-focus:underline group-active:underline">{title}</span>
-              <span class="inline-block text-caption select-none" aria-hidden="true">
-                →
-              </span>
-            </p>
+          {/* Empty div wrapper required for Firefox to have the content be inline with the bullet marker */}
+          <div>
+            <a class="group w-fit space-y-0.5" href={`/blog/${id}`}>
+              <p class="font-medium text-subtitle">
+                {/* rendered blog post title -- below prettier-ignore is required or else it will add a blank space after the text */}
+                {/* prettier-ignore */}
+                <span class="decoration-underline underline-offset-4 group-hover:underline group-focus:underline group-active:underline">{title}</span>
+                <span class="inline-block text-caption select-none" aria-hidden="true">
+                  →
+                </span>
+              </p>
 
-            <p class="text-caption">{formatDate(date)}</p>
-          </a>
+              <p class="text-caption">{formatDate(date)}</p>
+            </a>
+          </div>
         </li>
       ))
     }
