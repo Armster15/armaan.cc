@@ -49,8 +49,8 @@
   );
 
   --color-shades-border: light-dark(
-    oklch(0.945 calc(var(--shades-chroma)) var(--shades-hue)),
-    oklch(0.23 calc(var(--shades-chroma)) var(--shades-hue))
+    oklch(0.945 var(--shades-chroma) var(--shades-hue)),
+    oklch(0.23 var(--shades-chroma) var(--shades-hue))
   );
 
   --color-shades-shadow-muted: light-dark(
