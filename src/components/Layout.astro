@@ -66,8 +66,11 @@ const canonicalURL = new URL(Astro.url).href;
     {
       /* Disables analytics if no-stonks=true cookie set. This cookie can be set by visiting /stonks. */
     }
-    <script is:inline>
-      window["ga-disable-TRACKING-ID"] = document.cookie.includes("no-stonks=true");
+    <script>
+      const GA_ID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
+      if (typeof GA_ID === "string") {
+        (window as any)[`ga-disable-${GA_ID}`] = document.cookie.includes("no-stonks=true");
+      }
 
       if (document.cookie.includes("no-stonks=true")) {
         console.info("Stonks are disabled");
