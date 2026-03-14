@@ -6,5 +6,7 @@
       "$/*": ["./src/*"]
     },
     "jsx": "react"
-  }
+  },
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
 }
