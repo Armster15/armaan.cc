@@ -4,7 +4,6 @@ import sitemap from "@astrojs/sitemap";
 
 import tailwindcss from "@tailwindcss/vite";
 import expressiveCode from "astro-expressive-code";
-import icon from "astro-icon";
 import { Features } from "lightningcss";
 
 // https://astro.build/config
@@ -40,7 +39,6 @@ export default defineConfig({
     },
   ],
   integrations: [
-    icon(),
     expressiveCode({
       // https://expressive-code.com/reference/style-overrides
       styleOverrides: {
