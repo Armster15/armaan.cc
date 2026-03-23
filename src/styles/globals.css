@@ -35,32 +35,32 @@
 
   --color-surface: light-dark(
     oklch(0.98 0.01 var(--shades-hue)),
-    oklch(0.19 0.01 var(--shades-hue))
+    oklch(0.15 0.01 var(--shades-hue))
   );
 
   --color-surface-elevated-1: light-dark(
     oklch(0.993 0.009 var(--shades-hue)),
-    oklch(0.23 0.01 var(--shades-hue))
+    oklch(0.19 0.01 var(--shades-hue))
   );
 
   --color-surface-elevated-2: light-dark(
     oklch(0.95 0.02 var(--shades-hue)),
-    oklch(0.32 0.011 var(--shades-hue))
+    oklch(0.28 0.011 var(--shades-hue))
   );
 
   --color-shades-border: light-dark(
     oklch(0.945 var(--shades-chroma) var(--shades-hue)),
-    oklch(0.23 var(--shades-chroma) var(--shades-hue))
+    oklch(0.21 var(--shades-chroma) var(--shades-hue))
   );
 
   --color-shades-shadow-muted: light-dark(
     oklch(0.95 var(--shades-chroma) var(--shades-hue)),
-    oklch(0.28 0.015 var(--shades-hue))
+    oklch(0.25 0.015 var(--shades-hue))
   );
 
   --color-shades-shadow: light-dark(
     oklch(0.91 var(--shades-chroma) var(--shades-hue)),
-    oklch(0.3 0.01 var(--shades-hue))
+    oklch(0.28 0.01 var(--shades-hue))
   );
 
   --color-shades-title: light-dark(
