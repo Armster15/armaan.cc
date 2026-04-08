@@ -26,7 +26,12 @@ import CinnamorollImg from "$/images/cinnamoroll.jpg";
 
     <p>
       I'm a 19-year-old software engineer in San Francisco. I'm currently working full-time at
-      <Link class="whitespace-nowrap" href="https://replit.com" target="_blank">
+      <Link
+        class="whitespace-nowrap"
+        href="https://replit.com"
+        target="_blank"
+        data-s-event="home-replit-click"
+      >
         <ReplitIcon
           aria-hidden="true"
           class="mr-[3px] ml-px inline-block h-[1.1em] w-[1.1em] -translate-y-px p-[1.5px]"
@@ -37,11 +42,17 @@ import CinnamorollImg from "$/images/cinnamoroll.jpg";
     <p>
       I spent my past lives in edtech. I previously created <Link
         href="https://www.bessy.io"
-        target="_blank">Bessy</Link
+        target="_blank"
+        data-s-event="home-bessy-click">Bessy</Link
       >, an app for students that I exited shortly after graduating high school. I was also the
-      founding engineer at <Link href="https://coconote.app" target="_blank">Coconote</Link>, a
-      consumer AI company that was acquired by <Link href="https://quizlet.com" target="_blank"
-        >Quizlet</Link
+      founding engineer at <Link
+        href="https://coconote.app"
+        target="_blank"
+        data-s-event="home-coconote-click">Coconote</Link
+      >, a consumer AI company that was acquired by <Link
+        href="https://quizlet.com"
+        target="_blank"
+        data-s-event="home-quizlet-click">Quizlet</Link
       >.
     </p>
 
@@ -53,19 +64,31 @@ import CinnamorollImg from "$/images/cinnamoroll.jpg";
           <ListItem>
             I'm fairly involved with open source, <Link
               href="https://github.com/Armster15?tab=repositories&q=expo&sort=stargazers"
-              >particularly</Link
+              data-s-event="home-expo-click">particularly</Link
             >
-            <Link href="https://github.com/bluesky-social/social-app/pull/7523">around</Link>
-            <Link href="https://github.com/expo/expo/pull/32567">Expo</Link>
-            <Link href="https://github.com/Armster15/expo-xml-font">and</Link>
+            <Link
+              href="https://github.com/bluesky-social/social-app/pull/7523"
+              data-s-event="home-expo-click">around</Link
+            >
+            <Link href="https://github.com/expo/expo/pull/32567" data-s-event="home-expo-click"
+              >Expo</Link
+            >
+            <Link href="https://github.com/Armster15/expo-xml-font" data-s-event="home-expo-click"
+              >and</Link
+            >
             <Link
               href="https://github.com/search?q=is%3Apr+author%3AArmster15+react+native&type=pullrequests"
-              >React Native</Link
+              data-s-event="home-expo-click">React Native</Link
             >
           </ListItem>
 
           <ListItem>
-            My <Link class="whitespace-nowrap" href="/icon.svg" target="_blank">
+            My <Link
+              class="whitespace-nowrap"
+              href="/icon.svg"
+              target="_blank"
+              data-s-event="home-old-pfp-click"
+            >
               <PfpIcon
                 aria-hidden="true"
                 class="mr-[4px] ml-[2px] inline-block h-[1em] w-[1em] -translate-y-px rounded-full"
@@ -76,9 +99,10 @@ import CinnamorollImg from "$/images/cinnamoroll.jpg";
           <ListItem>
             I also hand-wrote <Link
               href="https://github.com/Armster15/armaan.cc/blob/main/src/styles/globals.css#L15"
-              >all the colors on this website</Link
+              data-s-event="home-gh-oklch-click">all the colors on this website</Link
             > (shout-out <Link
-              href="https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl">OKLCH</Link
+              href="https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl"
+              data-s-event="home-evilmartians-oklch-click">OKLCH</Link
             >)
           </ListItem>
 
@@ -86,6 +110,7 @@ import CinnamorollImg from "$/images/cinnamoroll.jpg";
             I love Taco Bell but strongly <Link
               href="https://en.wikipedia.org/wiki/OR6A2"
               target="_blank"
+              data-s-event="home-cilantro-click"
             >
               {"dislike cilantro"}
             </Link>
@@ -96,6 +121,7 @@ import CinnamorollImg from "$/images/cinnamoroll.jpg";
               class="whitespace-nowrap"
               href="https://mgoblue.com"
               target="_blank"
+              data-s-event="home-michigan-click"
             >
               <MichiganIcon
                 aria-hidden="true"
@@ -105,6 +131,7 @@ import CinnamorollImg from "$/images/cinnamoroll.jpg";
               class="whitespace-nowrap"
               href="https://www.sanrio.com/collections/cinnamoroll"
               target="_blank"
+              data-s-event="home-cinnamoroll-click"
             >
               <Image
                 src={CinnamorollImg}

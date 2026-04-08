@@ -41,6 +41,7 @@ const TAG_CLASS_MAP = [
 <a
   href={href}
   target={target}
+  data-s-event={`project-${title.toLowerCase().replaceAll(" ", "-")}-click`}
   class:list={[
     "group grid h-full gap-2 rounded-2xl bg-surface-elevated-1 p-4 duration-200 sm:grid-cols-[auto_1fr_auto] sm:gap-0 sm:p-0",
     "shadow-shades-shadow",
