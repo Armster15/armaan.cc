@@ -78,6 +78,15 @@ const canonicalURL = new URL(Astro.url).href;
         meta.name = "stonks-collect";
         meta.content = "false";
         document.head.appendChild(meta);
+
+        // setting stonks-collect=false doesn't disable events from being sent to 1DS, so we need to manually remove the data-s-event attributes
+        document
+          .querySelectorAll("[data-s-event], [data-s-event-path], [data-s-event-props]")
+          .forEach((el) => {
+            el.removeAttribute("data-s-event");
+            el.removeAttribute("data-s-event-path");
+            el.removeAttribute("data-s-event-props");
+          });
       }
     </script>
 
