@@ -6,7 +6,7 @@
 }
 
 @theme {
-  --breakpoint-xxs: 335px;
+  --breakpoint-2xs: 335px;
   --breakpoint-xs: 400px;
 
   --font-sans: var(--font-satoshi);
