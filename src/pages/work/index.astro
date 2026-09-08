@@ -74,6 +74,10 @@ Next.js for web, Expo for native, tRPC for the API — all managed in one TypeSc
 
     <Project
       title="VoiceMask"
+      imgClass={// HACKHACK: from color-shades-shadow, in light mode, -0.15 from lightness, and in dark mode, +0.15 to lightness
+      // the reason for this is the voicemask logo is the only one that's in dark mode, and as a result doesn't behave properly with the default shadow colors
+      // there might be a better solution but unsure for now. maybe it's not worth doing shadows on arbitrary images
+      "shadow-[color:oklch(from_var(--color-shades-shadow)_calc(l_-_0.15)_c_h)]! dark:shadow-[color:oklch(from_var(--color-shades-shadow)_calc(l_+_0.15)_c_h)]!"}
       description="A Discord bot that allowed you to talk in a voice channel without using your actual voice"
       imgSrc={voicemaskImg}
       href="/work/voicemask"
