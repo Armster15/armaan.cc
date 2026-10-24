@@ -95,6 +95,7 @@ const canonicalURL = new URL(Astro.url).href;
       import.meta.env.MODE === "production" && (
         <>
           <script
+            is:inline
             defer
             src="/1ds.js"
             data-debug="armaan.cc"
