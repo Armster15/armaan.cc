@@ -14,9 +14,6 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: "viewport",
   },
-  redirects: {
-    "/projects": "/work",
-  },
   // This project uses the Satoshi font, which is a proprietary font.
   // Please view its license at ./assets/satoshi/LICENSE.txt
   fonts: [
