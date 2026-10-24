@@ -1,19 +1,5 @@
----
-interface Props {
-  isNested?: boolean;
-}
-const { isNested } = Astro.props;
----
-
-<li>
-  <div class="flex items-start">
-    <span
-      class:list={[
-        "mt-[0.9em] mr-2 h-1 w-1 shrink-0 rounded-full",
-        isNested ? "bg-subtitle-light" : "bg-caption",
-      ]}
-      aria-hidden="true"></span>
-    <span><slot /></span>
-  </div>
+<li class="w-fit pl-1 marker:text-subtitle-light">
+  {/* Keeps the content aligned with the bullet in Firefox. */}
+  <div><slot /></div>
   <slot name="nested" />
 </li>
