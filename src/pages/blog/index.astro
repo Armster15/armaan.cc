@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 
 import Layout from "$/components/Layout.astro";
+import List from "$/components/List.astro";
+import ListItem from "$/components/ListItem.astro";
 import PageTitle from "$/components/PageTitle.astro";
 
 import { formatDate, sortPostsByDate } from "$/lib/date";
@@ -16,27 +18,21 @@ const posts = sortPostsByDate(await getCollection("blog"));
 >
   <PageTitle title="Blog" class="mb-4" />
 
-  <ul class="ml-4 list-outside list-disc space-y-6">
+  <List spacing="relaxed">
     {
       posts.map(({ data: { title, date }, id }) => (
-        <li class="w-fit marker:text-subtitle-light">
-          {/* Empty div wrapper required for Firefox to have the content be inline with the bullet marker */}
-          <div>
-            <a class="group w-fit space-y-0.5" href={`/blog/${id}`}>
-              <p class="font-medium text-subtitle">
-                {/* rendered blog post title -- below prettier-ignore is required or else it will add a blank space after the text */}
-                {/* prettier-ignore */}
-                <span class="decoration-underline underline-offset-4 group-hover:underline group-focus:underline group-active:underline">{title}</span>
-                <span class="inline-block text-caption select-none" aria-hidden="true">
-                  →
-                </span>
-              </p>
+        <ListItem>
+          <a class="group w-fit space-y-0.5" href={`/blog/${id}`}>
+            <p class="font-medium text-subtitle">
+              {/* The &nbsp; makes it so that the arrow is always accompanied by a word when going to the next line so it's never on its own line */}
+              {/* prettier-ignore */}
+              <><><span class="decoration-underline underline-offset-4 group-hover:underline group-focus:underline group-active:underline">{title}</span><span class="text-caption select-none" aria-hidden="true">&nbsp;→</span></></>
+            </p>
 
-              <p class="text-caption">{formatDate(date)}</p>
-            </a>
-          </div>
-        </li>
+            <p class="text-caption">{formatDate(date)}</p>
+          </a>
+        </ListItem>
       ))
     }
-  </ul>
+  </List>
 </Layout>
