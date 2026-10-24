@@ -16,10 +16,6 @@ import MichiganIcon from "$/icons/michigan.svg";
   <h1 class="sr-only">Home</h1>
 
   <div class="space-y-6 leading-7 text-pretty sm:leading-8">
-    <p id="bessy-notice" class="text-sm sm:text-base" hidden="" data-nosnippet>
-      ‼️ Please do not contact me about Bessy; I sold it and am no longer involved with it :)
-    </p>
-
     <p>I'm a software engineer based in San Francisco.</p>
 
     <div class="space-y-8">
@@ -79,10 +75,3 @@ import MichiganIcon from "$/icons/michigan.svg";
     </div>
   </div>
 </Layout>
-
-<script>
-  const bessyNotice = document.getElementById("bessy-notice");
-  if (bessyNotice && document.referrer.includes("bessy.io")) {
-    bessyNotice.removeAttribute("hidden");
-  }
-</script>
