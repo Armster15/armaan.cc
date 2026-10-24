@@ -1,12 +1,5 @@
 {
   "trailingSlash": false,
-  "redirects": [
-    {
-      "source": "/projects",
-      "destination": "/work",
-      "permanent": true
-    }
-  ],
   "rewrites": [
     {
       "source": "/_1ds",
