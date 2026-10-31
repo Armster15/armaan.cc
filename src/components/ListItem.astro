@@ -1,5 +1,8 @@
-<li class="w-fit pl-1 marker:text-subtitle-light">
-  {/* Keeps the content aligned with the bullet in Firefox. */}
+<li class="relative w-fit">
+  <span
+    aria-hidden="true"
+    class="absolute top-[0.5lh] -left-4.5 size-1.5 -translate-y-1/2 rounded-full bg-subtitle-light"
+  ></span>
   <div><slot /></div>
   <slot name="nested" />
 </li>

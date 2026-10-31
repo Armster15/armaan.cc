@@ -8,8 +8,9 @@ const { isNested, spacing = "default" } = Astro.props;
 ---
 
 <ul
+  role="list"
   class:list={[
-    "ml-4 list-outside list-disc sm:ml-5",
+    "list-none pl-5 sm:pl-6",
     isNested && "mt-2",
     spacing === "relaxed" ? "space-y-6" : "space-y-4 sm:space-y-2",
   ]}
